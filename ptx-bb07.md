@@ -151,10 +151,47 @@ The standard data formats are applied in a way that the Building Block specific 
 - JavaSript 
 - JSON
 
-### Mapping to Data Space Reference Architecture Models (TODO)
+### Mapping to DSSC Data Space Reference Architecture Model
 
-_Mapping to [DSSC](https://dssc.eu/space/DDP/117211137/DSSC+Delivery+Plan+-+Summary+of+assets+publication) or [IDS RAM](https://docs.internationaldataspaces.org/ids-knowledgebase/v/ids-ram-4/)_
+The Data Interoperability pillar:
 
+ - Data Models: capabilities to define and use shared semantics in a data space. DDV FOLLOWS FULLY THIS DSSC BUILDING BLOCK
+ - Data Exchange: capabilities relating to the actual exchange and sharing of data. DDV FOLLOWS FULLY THIS DSSC BUILDING BLOCK
+ - Provenance and traceability: capabilities for tracking the process of data sharing, so it becomes traceable and compliant. DDV IS TRANSPARENT ON ALL ITS WORK AND FULLY SUPPORTS THIS DSSC BB. OTHER PTX BULIDING BLOCKS EXTENDS THIS CAPAPBILITY.
+
+The Data Sovereignty and Trust pillar:
+
+ - Access and Usage Policies and Control: the ability to specify and policies within a given data space, by the data space authority and the individual participants.  DDV FOLLOWS FULLY THIS DSSC BUILDING BLOCK
+ - Identity Management: the management of identities within a data space. DDV DO NOT HANDLE IDENTITIES AT ALL. IT ENABLES ANONYMOUS AND PSEUDONYMOUS USE.
+ - Trust: being able to verify that a participant of a data space adheres to certain rules. CONNECTOR ENSURES THAT.
+
+The Data Value Creation pillar:
+
+ - Data, Services and Offering descriptions: this building block provides to data providers the tools to describe a data product. NOT VALID FOR DDV, NO LIMITATIONS OR RESTRICTIONS.
+ - Publication and Discovery: this building block allows data providers to publish the description of their data, services and offerings. NOT VALID FOR DDV, NO LIMITATIONS OR RESTRICTIONS.
+ - Marketplace: this building block provides marketplace capabilities. NOT VALID FOR DDV, NO LIMITATIONS OR RESTRICTIONS.
+
+See full [DSSC](https://dssc.eu/space/DDP/117211137/DSSC+Delivery+Plan+-+Summary+of+assets+publication) 
+
+### GDPR Mapping
+
+ - Right to be informed: Individuals have the right to be informed about the collection and use of their personal data: NO DATA STORED
+ - Right of access: Individuals have the right to access their personal data held by an organization. NO DATA STORED
+ - Right to rectification: Individuals have the right to request the correction of inaccurate or incomplete personal data held by an organization: INDIVIDUAL SHOULD ACCESS THE DATA HOLDER SHE/HE HAS CONSENTED
+ - Right to erase deata (also known as the "right to be forgotten"): Individuals can request the deletion or removal of personal data in certain circumstances, such as when the data is no longer necessary for the purpose it was originally collected. NO DATA STORED/COLLECTED
+ - Right to restrict processing: Individuals have the right to request the restriction of the processing of their personal data in certain circumstances, such as when they contest the accuracy of the data or object to its processing. BB07 PROCESS ONLY CONSENTED DATA, IF NO CONSENT, NO PROCESSING.
+ - Right to data portability: Individuals have the right to receive their personal data in a structured, commonly used, and machine-readable format. USER ALREADY CONSENTS THE DATA, SO THE PORTABILITY HAS HAPPENED.
+ - Right to object: Individuals can object to the processing of their personal data for specific purposes, such as direct marketing or profiling. INDIVIDUAL SEE ALL THE PROCESSED OUTCOMES. NO OTHER PROCESSING IS DONE.
+ - Rights in relation to automated decision-making and profiling: Individuals have the right not to be subject to a decision based solely on automated processing, including profiling, which has legal or similarly significant effects on them. They can request human intervention or challenge the decision. NO DECISION IS MADE. THIS IS ABOUT INFORMING INDIVIDUAL WHAT POSSIBILITIES THE DATA SHOWS.
+
+
+### AI Act Mapping
+
+ - Unacceptable risk: AI applications that fall under this category are banned. DVV NO NOT HAVE ANY FEATURES DESCROBED IN THIS CATEGORY.
+ - High-risk: the AI applications that pose significant threats to health, safety, or the fundamental rights of persons. DVV NO NOT HAVE ANY FEATURES DESCROBED IN THIS CATEGORY.
+ - General-purpose AI ("GPAI"): this category includes in particular foundation models. They are subject to transparency requirements. EVEN THOUGH DDV DO NOT BELONG TO THIS CATEGORY, IT IS FULLY TRANSPARENT.
+ - Limited risk: these systems are subject to transparency obligations because of possible manipulation: DVV IS TRANSPARENT AND ALL THE VISUALISATIONS AND RECOMMENDATIONS ARE TRACEABLE.
+ - Minimal risk: this includes for example AI systems used for video games or spam filters. DDV BELONGS TO THIS CATEORY AND THUS IT IS TRANSPARENT BY DESIGN.
 
 ## Input / Output Data
 
@@ -231,29 +268,29 @@ title: Distributed Data Visualisation
 ---
 
 classDiagram
-    class Api1["API"]
-    class Api2["API"]
+    class Api1["API (optional services for building and working with data)"]
+    class Api2["API (optional services for running analysis)"]
     Data --> Api1
     Api1 --|> Visualisation
     Api1 --|> Api2
     Api2 --|> Visualisation
     Data : +Consent
     Data : +Contract
-    Data : +Snowlflake()
-    Data : +Sisu, Peppi, etc.()
+    Data : +Snowlflake, Data Excahnge()
+    Data : +National data sources like Sisu, Peppi, etc.()
     Data : +Free text()
-    Data : +Koski()
-    Api1: +BKG
-    Api1 : +TTG
-    Api1 : +Digital Twin Storage()
+    Data : +Consent services like Visions, Vastuu, Koski()
+    Api1 : +Data normalisers like Build Knowlegde Graph
+    Api1 : +Data structure builders like Text To Knowledge Graph
+    Api1 : +Personal Data Storages like Inokufu, Cozy Cloud, Digital Twin Storage, etc()
     Visualisation: +Bar chart
     Visualisation: +Line chart
     Visualisation: +Hexagon
     Visualisation: +Square
     Visualisation: +Table
     Visualisation: +List
-    Api2 : +Compass
-    Api2 : +Score
+    Api2 : +Recommendation services like Headai Compass or MindMatcher recommendation
+    Api2 : +Gap analysys services like Headai Score
 
 ```
 
@@ -322,17 +359,12 @@ https://github.com/d3/d3/blob/main/LICENSE
 In order to maximise cyber security we have isolated d3.js online-dependencies in current development version, which may cause small differences on how code behaviors when developed further. This decison may change during the development.
 
 
-## OpenAPI Specification (TODO)
-
-Headai Visualizer
-
-### Functionalities
+## OpenAPI Specification 
 
 - Customize Visual Style of Visualizations
 - Strong Validation of URL Parameters (data type verification, default values for parameters, warning messages in the screen)
 - Full-Screen Mode to enable external embeddings in IFrames, this mode will hide buttons and sidebar columns. It also activates Responsive Mode (minWidth and maxWidth)
 - Store Visualization as PNG or SVG
-- Clean MindMaps, store modified data in Megatron, and get generated URL
 - Receive custom parameters via URL
 
 ### Full URL Example, development version
@@ -369,25 +401,181 @@ Data behind encrypted contract 'xwiaHk1n3p1672366166478'
 
 Click to view latest version -> [Visualiser Document](https://docs.google.com/document/d/1D2J4LmzRFRGb52NkJqp4uFK8soHuRQRq12vHUeYhlps/edit#heading=h.omblmp6i4rwg)
 
-## Test specification (Marko)
+## Test specification 
 
-_Test definitions and testing environment should be availaible, and the tests should be repeatable._
+This document outlines the test plan for the DistriButed data Visualization, subject to the specific attributes as follows:
 
-### Test plan (Marko)
-Testing strategy, tools and methods chosen, methods for acceptance criteria.
-To be detailed.
+1. **No any part of the testing system shall be released or transferred as a part of this building block.**
+2. **There will be no public implementations carried out under this plan.**
+3. **This plan adheres to and is informed by the existing implementations.**
+4. **All implementation work is the intellectual property of Headai and is proprietary.**
+5. **No any source is to be released under any circumstances.**
 
-### Unit tests (Marko)
 
-_Here specify the test cases for the components inside the BB.  
-Candidates for tools that can be used to implement the test cases: JUnit, Mockito, Pytest._
+### Test plan 
 
-### Integration tests (Marko)
+The objective of testing the “Distributed Data Visualization” function is two-fold:
 
-_Here specify how to test the integration of the components inside the BB.  
-Candidates for tools that can be used to implement the test cases: K6, Postman, stepci, Pact  
-An example tutorial is available [here](https://github.com/ftsrg-edu/swsv-labs/wiki/2b-Integration-testing)._
+1) To verify that it accurately builds a knowledge graph based on the given parameters, ensuring that the output is correct, reliable, and efficient over varying conditions.
 
-### UI test (Marko)
+2) To confirm that the Distributed Data Visualization accurately represents the data provided by the JSON URLs. This involves verifying that all nodes, connections, and groups in the visualization correctly correspond to the data structure and content specified in the JSON file.
 
-_Candidates for tools that can be used to implement the test cases: Selenium_
+Scope of Functional Tests includes:
+
+- Rendering of visualizations based on JSON data from Headai APIs.
+- Full-screen mode functionality and its impact on user experience.
+- User interactions with the visualization, including zooming, focusing on nodes, and click actions.
+- Color coding and scaling to accurately represent different groups within the data.
+- Filtering capabilities to display nodes based on specific criteria such as weight or word types.
+- Ensuring all parameters are correctly accepted and validated by the function.
+- Testing how the rendering deals with incorrect or incomplete input parameters.
+
+Resulting users can effectively interact with and derive insights from visualized data, reflecting accurate and meaningful information as intended by the data source.
+
+**Technical Description of Test Plan**
+
+This test plan outlines a comprehensive approach combining black box testing methodologies with automated testing routines to ensure functional accuracy, performance under various conditions, optimal response times, and resilience against anomalies in the system. The strategy leverages industry-standard tools and methodologies to achieve a high level of software quality and reliability.
+
+Objectives for the current approach which combines best methodologies from Black Box testing implemented using homegrown Headai Quality Assurance Framework for AI. Using this approach it is possible to achieve the following:
+
+- Validate the accuracy of the application's outputs against defined functional requirements.
+- Ensure the application performs consistently under different load conditions.
+- Verify that the application meets its performance benchmarks in terms of response times under normal and peak loads.
+- Assess the application's capability to handle and recover from unexpected events or inputs without critical failures.
+
+**Methodologies**
+
+Black Box Testing: This approach focuses on testing software functionality without knowledge of the internal workings. Test cases will be derived from functional specifications to verify the correctness of output based on varied inputs. This method effectively simulates user interactions and scenarios.
+
+Automated Testing Routines: Automating the execution of repetitive but essential test cases ensures comprehensive coverage, consistency in test execution, and efficient use of resources. Automated tests will be scheduled to run at regular intervals, ensuring continuous validation of the application's functionality and performance.
+
+**Introduction of the tools used**
+
+Headai Quality Assurance Framework for AI: 100% proprietary testing infrastructure for Natural Language Processing development. This framework facilitates the creation of repeatable automated tests in the Java environment. In particular, the attention is on backend testing, service-level testing, and integration testing, offering features for assertions, test grouping, and test lifecycle management. This framework has dashboards and reporting tools integrated with the testing tool to monitor test executions, outcomes, and performance trends over time.
+
+Selenium: For web-based applications, Selenium automates browsers, enabling the testing of web applications across various browsers and platforms. It's instrumental in performing end-to-end functional testing and verifying the correctness of web elements and response times.
+
+Postman: For RESTful APIs, Postman allows the execution of API requests to validate responses, status codes, and response times. It supports automated testing through scripting and collection runners, making it ideal for testing API endpoints.
+
+By combining black box testing with automated routines, this test plan will fully meet the requirements of the Distributed Data Visualization (“DDV”) block including but not restricted to its:
+
+- Functional requirements
+- Security requirements
+- Dependability requirements
+- Operational requirements
+
+A comprehensive evaluation of the Distributed Data Visualization's functionality, performance, resilience, and operational readiness will enhance its robustness in managing anomalies. The use of these specific tools and methodologies enhances the effectiveness of testing efforts, leading to a robust, reliable, and high-performing application ready for production deployment.
+
+### Unit tests 
+
+
+**Test Cases**
+
+| Test Case ID | TC001 |
+| --- | --- |
+| Description | Validate successful visualization rendering from a valid JSON URL. |
+| Inputs | json_url=&lt;valid_url&gt;, iframe=false |
+| Expected Result | Visualization is correctly rendered based on the JSON data. Pass if the visualization matches the JSON data structure; fail otherwise. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC002 |
+| --- | --- |
+| Description | Test Full-Screen Mode functionality for IFrame embedding. |
+| Inputs | json_url=&lt;valid_url&gt;, iframe=true |
+| Expected Result | Visualization is rendered in full-screen mode within an IFrame. Pass if the visualization occupies the full screen of the IFrame; fail if it does not. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC003 |
+| --- | --- |
+| Description | Verify the functionality of initial zoom and camera focus. |
+| Inputs | json_url=&lt;valid_url&gt;, initial_zoom=1.0, center_camera_around=&lt;node_id&gt; |
+| Expected Result | Camera is zoomed to "human readable" size focusing on the specified node. Pass if the initial view focuses and zooms as expected; fail otherwise. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC004 |
+| --- | --- |
+| Description | Check color coding functionality with custom colors for groups. |
+| Inputs | json_url=&lt;valid_url&gt;, colors=A0A000,F000F0 |
+| Expected Result | Visualization uses the specified colors to differentiate between two groups. Pass if groups are correctly colored; fail if default or incorrect colors are used. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC005 |
+| --- | --- |
+| Description | Test filtering nodes by minimum weight. |
+| Inputs | json_url=&lt;valid_url&gt;, filter_min_weight=3 |
+| Expected Result | Only nodes with weight >= 3 are displayed. Pass if visualization correctly filters nodes; fail if nodes with weight < 3 are displayed. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC006 |
+| --- | --- |
+| Description | Ensure click actions show the neighborhood of a clicked node. |
+| Inputs | json_url=&lt;valid_url&gt;, click_action=highlight |
+| Expected Result | Clicking a node highlights its neighborhood. Pass if the neighborhood is highlighted upon clicking; fail if no action occurs or the behavior is incorrect. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC007 |
+| --- | --- |
+| Description | Verify error handling for unsupported word_type input. |
+| Inputs | word_type=abc. |
+| Expected Result | An appropriate error message indicating the unsupported word_type. Fail if not failing is happening. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC008 |
+| --- | --- |
+| Description | Test performance under high load by concurrently executing multiple requests. |
+| Inputs | Multiple requests using valid parameters. |
+| Expected Result | The function maintains performance and accuracy across all requests. Pass if rendering is done correctly and within a reasonable time frame; fail otherwise. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+| Test Case ID | TC009 |
+| --- | --- |
+| Description | Check for the functionality with all parameters filled, including optional ones. |
+| Inputs | All parameters specified, including optional ones with valid data. |
+| Expected Result | A detailed knowledge graph is rendered that matches all specified criteria; fail otherwise. |
+| Actual Outcome |     |
+| Status |     |
+| Comments |     |
+
+**Acceptance Criteria**
+
+- Correct Visualization: For all test cases, the primary acceptance criterion is that the visualization accurately represents the data provided by the JSON URL (TC001).
+- Functionality: Each feature (TC002, TC003, TC004) must work as specified in the input parameters for the test to pass.
+- Performance: Visualizations should load within a reasonable time frame, without significant delays or performance issues, especially when testing with larger JSON files or higher complexity (evaluated across all test cases).
+- Usability: The visualization must be user-friendly and interactive, allowing users to easily understand and explore the visualized data (TC002, TC003, TC006).
+- The rendered must gracefully handle errors (TC007), providing clear and actionable error messages.
+
+
+### Integration tests 
+
+Al the Unit Tests are done in order to make sure Distributed Data visualisation is integrateable via HTTPS requests and via REST-API requests. 
+
+Such test should be done also when intergrating DDV into a host system. All the stest could be done with same tools introduced in Unit Test section (e.g. Postman).
+
+### UI test 
+
+Al the Unit Tests are done in order to make sure Distributed Data visualisation UI would work unders decribed conditions and environments (e.g. latest Mozilla Firefox)
+
+Such test should be done also when intergrating DDV into a host system. All the stest could be done with same tools introduced in Unit Test section (e.g. Selenium).
+
+
+
+
+
+
+
