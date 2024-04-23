@@ -1,4 +1,4 @@
-# Distributed Data Visualization Design Document
+# Distributed data visualization BB – Design Document
 
 Distributed Data Visualisation is an on-device building block to ease up building end-user UIs for showing data in an informative way. It allows AI providers to display the results of their analytics, predictions and recommendations.
 
