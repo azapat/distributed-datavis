@@ -14,12 +14,7 @@ Distributed data visualization is a sophisticated framework designed to seamless
 Distributed data visualisation builds the story /user journey for the given goal and given data sets, it applies other building blocks to modify/anonymize/analyse the data. It enables to run analysis by applying other building blocks and Data Space Services from Catalog (under contract). 
 
 
-
-
 ### Features/main functionalities
-
-_In-depth description of BB features (details).
-Again, an enumeration (ie bullet points) is useful. Take input from description for WP2_
 
 **User journey case 1:**
 
@@ -337,11 +332,6 @@ sequenceDiagram
 
 ## Configuration and deployment settings
 
-_What configuration options does this BB have?
-What is the configuration format?
-Provide examples.
-How is the component logging the operations? What are the error scenarios? What are the limits in terms of usage (e.g. number of requests, size of dataset, etc.)?_
-
 Configuration of the BB07 can be done in two places 
 - rules.json (see section Input / Output Data)
 - parameters given in visualizer HTTP-GET (see section OpenAPI Specifications)
@@ -405,11 +395,9 @@ Click to view latest version -> [Visualiser Document](https://docs.google.com/do
 
 This document outlines the test plan for the DistriButed data Visualization, subject to the specific attributes as follows:
 
-1. **No any part of the testing system shall be released or transferred as a part of this building block.**
-2. **There will be no public implementations carried out under this plan.**
-3. **This plan adheres to and is informed by the existing implementations.**
-4. **All implementation work is the intellectual property of Headai and is proprietary.**
-5. **No any source is to be released under any circumstances.**
+1. **No any part of the Headai's existing testing system shall be released or transferred as a part of this building block.**
+2. **All implementation work of the Headai's existing testing system is the intellectual property of Headai and is proprietary.**
+3. **No any source of the Headai's existing testing system  is to be released under any circumstances.**
 
 
 ### Test plan 
@@ -573,6 +561,22 @@ Al the Unit Tests are done in order to make sure Distributed Data visualisation 
 
 Such test should be done also when intergrating DDV into a host system. All the stest could be done with same tools introduced in Unit Test section (e.g. Selenium).
 
+### Partnerships & Roles
+
+#### Visions
+- Connector-specific work and expertise, including consent, contract and catalogue
+- Data space building blocks architecture
+
+#### EDUNAO
+- Domain-specific insights to end user
+- LMS integration
+- Host system operator (See dynamic sequence diagram)
+
+#### IMT
+- Domain-specific insights to end user
+- LMS integration
+- Host system operator (See dynamic sequence diagram)
+
 ### Usage in the dataspace
 
 ![Screenshot 2024-05-22 at 15.53.01](https://hackmd.io/_uploads/Hk9ghwoQC.png)
@@ -612,10 +616,3 @@ Such test should be done also when intergrating DDV into a host system. All the 
 14 : The PDC sends data to the Distributed Data Visualization (DDV) in xAPI format
 
 15 : The DDV visualizes the received traces from both the organization and the individual
-
-
-
-
-
-
-
