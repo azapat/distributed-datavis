@@ -573,6 +573,46 @@ Al the Unit Tests are done in order to make sure Distributed Data visualisation 
 
 Such test should be done also when intergrating DDV into a host system. All the stest could be done with same tools introduced in Unit Test section (e.g. Selenium).
 
+### Usage in the dataspace
+
+![Screenshot 2024-05-22 at 15.53.01](https://hackmd.io/_uploads/Hk9ghwoQC.png)
+
+#### Data Route
+
+1 : Data from the Learning Management System (LMS) is tracked in the Learning Record Store (LRS)
+
+2 : The LRS transmits data to the Learning Record Converter (LRC) in a format other than xAPI
+
+3 : The LRC converts the data into xAPI format and sends it to the Prometheus-X Dataspace Connector (PDC)
+
+4 : The PDC requests validation for transferring data to individual X, which includes their identity, catalogue, contract, and consent
+
+5 : The data intermediary sends the terms of the contract, identity, catalogue, and consent of individual X
+
+6 : The PDC of organization A sends a data set in xAPI format to the PDC of individual X
+
+7 : The PDC of individual X transfers data in xAPI format to its Personal Learning Record Store (PLRS)
+
+4 : The PDC requests validation to transfer data to organization B. This involves confirming the organization's identity, catalogue, contract, and consent
+
+5 : The data intermediary sends the terms of the contract, identity, catalogue, and consent of organization B
+
+8 : PDC of organization A sends a data set in xAPI format to the PDC of organization B
+
+9 : The PDC of individual X requests validation to send data to organization B, which involves identity, catalogue, contract, and consent
+
+10 : The data intermediary sends the terms of the contract, identity, catalogue, and consent of organization B
+
+11 : The PDC of individual X sends a data set in xAPI format to the PDC of organization B
+
+12 : The PDC sends data to the Data Value Chain Tracker (DVCT) in xAPI format and applies the commercial terms of the data-sharing contract
+
+13 : The PDC sends data to the Data Veracity Assurance (DVA) in xAPI format, ensuring the accuracy of specific data exchanges in the database
+
+14 : The PDC sends data to the Distributed Data Visualization (DDV) in xAPI format
+
+15 : The DDV visualizes the received traces from both the organization and the individual
+
 
 
 
