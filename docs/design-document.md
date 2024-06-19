@@ -19,13 +19,12 @@ Distributed data visualisation builds the story /user journey for the given goal
 **User journey case 1:**
 
 Use case description, value and goal:
-Use information from Korean users' Diploma and Transcript to match job opportunities in the EU (France). Skills data extracted from the documents will be used for service providers in the EU to recommend potential employment opportunities. 
-The use case will take as basis Pino a product from Solideos used by Korean citizens to store their diploma and learning credentials.
+The use case will take as basis Pino a product from Solideos used by Korean citizens to store their diploma and learning credentials. Use information from Korean users' Diploma and Transcript to match job opportunities in the EU (France). Skills data extracted from the documents will be used for service providers in the EU to recommend potential employment opportunities. 
 
 Use case functionalities:
-- As a Korean professional, I can digitally share my credentials, streamlining my job applications, and improving my employment prospects
-- As a Job Matching service, I can match regional jobs to an international pool of qualified applicants
-- As a EU company, I can quickly verify Korean applicants’ educational credentials for efficient hiring
+- A professional can share her/his skills data and visulise it
+- A Job Matching service can visualize the match between job to be filled and candidate's skills
+- A company can quickly visualise the match and gap between diploma and their skills demand. 
 
 **User journey case 2:**
 
