@@ -577,14 +577,14 @@ Such test should be done also when intergrating DDV into a host system. All the 
 #### EDUNAO
 - Domain-specific insights to end user
 - LMS integration, including connector work, user management and possible data conversions
-- LMS integration for external Building Blocks
+- Building and documenting and exaple integration case to be published
 - UX Testing and reporting the findings in details
 - Host system operator (See dynamic sequence diagram)
 
 #### IMT
 - Domain-specific insights to end user
 - LMS integration, including connector work, user management and possible data conversions
-- LMS integration for external Building Blocks
+- Building and documenting and exaple integration case to be published
 - UX Testing and reporting the findings in details
 - Host system operator (See dynamic sequence diagram)
   
