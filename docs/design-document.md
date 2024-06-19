@@ -563,19 +563,31 @@ Such test should be done also when intergrating DDV into a host system. All the 
 
 ### Partnerships & Roles
 
+#### Headai
+- Data flows, data formats, security and privacy 
+- Visulizer implementation (programming)
+- Source code documentation and example case building
+- Preparing the distributed data visualizer to be Creative Commons / Open Source BB
+- Dissemnination and PR
+
 #### Visions
-- Connector-specific work and expertise, including consent, contract and catalogue
+- Connector-specific work (programming) and expertise, including consent, contract and catalogue and documentation support 
 - Data space building blocks architecture
 
 #### EDUNAO
 - Domain-specific insights to end user
-- LMS integration
+- LMS integration, including connector work, user management and possible data conversions
+- LMS integration for external Building Blocks
+- UX Testing and reporting the findings in details
 - Host system operator (See dynamic sequence diagram)
 
 #### IMT
 - Domain-specific insights to end user
-- LMS integration
+- LMS integration, including connector work, user management and possible data conversions
+- LMS integration for external Building Blocks
+- UX Testing and reporting the findings in details
 - Host system operator (See dynamic sequence diagram)
+  
 
 ### Usage in the dataspace
 
