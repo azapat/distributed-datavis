@@ -549,7 +549,7 @@ A comprehensive evaluation of the Distributed Data Visualization's functionality
 - The rendered must gracefully handle errors (TC007), providing clear and actionable error messages.
 
 
-### Integration tests 
+### Component-level testing
 
 Al the Unit Tests are done in order to make sure Distributed Data visualisation is integrateable via HTTPS requests and via REST-API requests. 
 
