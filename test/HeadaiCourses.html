@@ -1,0 +1,91 @@
+<script src="http://localhost:8080/ptx-ddv.js"></script>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src='https://d3js.org/d3-hexbin.v0.2.min.js'></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<div id="courses"></div>
+
+<script>
+
+const course1 = {
+            "code": "",
+            "url": "https://www.ua.pt/en/uc/15302",
+            "title": "Course 1",
+            "short_description": "Sample Description of Course 1",
+            "new_skills": [
+                "seminars",
+                "engineering",
+            ],
+            "existing_skills": [
+                "python",
+                "programming"
+            ],
+            "interests": [
+                "python",
+                "programming"
+            ],
+            "quality_index": 4,
+            "scoring_index": 10
+};
+
+const course2 = {
+            "code": "",
+            "url": "https://www.ua.pt/en/uc/15302",
+            "title": "Course 2",
+            "short_description": "Sample Description of Course 2",
+            "new_skills": [
+                "python",
+                "programming", 
+                "seminars"
+            ],
+            "existing_skills": [
+
+            ],
+            "interests": [
+                "java",
+            ],
+            "quality_index": 4,
+            "scoring_index": 10
+}
+
+const course3 = {
+            "code": "",
+            "url": "https://www.ua.pt/en/uc/15302",
+            "title": "Course 3",
+            "short_description": "Sample Description of Course 3",
+            "new_skills": [
+
+            ],
+            "existing_skills": [
+                
+            ],
+            "interests": [
+                "java",
+            ],
+            "quality_index": 4,
+            "scoring_index": 10
+}
+
+
+const response = {
+    "recommendations_based_on_extensive_skills": [
+        course1, course2, course3
+    ],
+    "recommendations_based_on_match": [],
+    "recommendations_based_on_learning_paths": [],
+    "recommendations_based_on_skills_demand": []
+}
+
+const provider = 'headai';
+const data = ddv.data.courses.process(response, provider);
+const visualization = new ddv.visualizers.list.CourseVisualizer();
+visualization.draw(data);
+visualization.attachOn('div#courses');
+
+</script>

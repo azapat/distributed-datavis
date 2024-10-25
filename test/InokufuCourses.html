@@ -1,0 +1,71 @@
+<script src="http://localhost:8080/ptx-ddv.js"></script>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src='https://d3js.org/d3-hexbin.v0.2.min.js'></script>
+
+<!-- Encoding configurations -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<!-- Div that will contain the recommendations -->
+<div id="courses"></div>
+
+<script>
+
+// Sample of a real Inokufu response
+const response = [
+    {
+        "id": "32000025401",
+        "title": "Financial Management",
+        "url": "https://www.udemy.com/course/financial-management-l",
+        "score": 50.24,
+        "description": "Aim:To develop the knowledge and skills expected of a finance manager, in relation to investment, financing, and dividend policy decisions.Main capabilities:On successful completion of this course, you should be able to:A Discuss the role and purpose of the financial management function.B Assess and discuss the impact of the economic environment on financial management.C Discuss and apply working capital management techniques.D Carry out effective investment appraisal.E Identify and evaluate alternative sources of business finance.F Discuss and apply principles of business and asset valuations.G Explain and apply risk management techniques in business.",
+        "lang": "en",
+        "note": 53.73,
+        "provider": "Udemy",
+        "type": [
+            "MOOC"
+        ],
+        "bloom": [
+            "Comprendre"
+        ],
+        "picture": {
+            "full_width": "https://img-b.udemycdn.com/course/750x422/1755978_983d.jpg",
+            "square": "https://img-b.udemycdn.com/course/750x422/1755978_983d.jpg"
+        },
+        "duration": {
+            "index": 1.3008603997396964,
+            "minute": 110.0,
+            "value": 110.0,
+            "unit": "min"
+        },
+        "address": null,
+        "price": {
+            "value": 99.99,
+            "currency": "€",
+            "free": false,
+            "@context": "https://schema.org/",
+            "@type": "PriceSpecification"
+        },
+        "author": [
+            {
+                "name": "Rowan Malherbe"
+            }
+        ],
+        "publisher": [],
+        "license": null,
+        "date": null
+    }
+];
+
+const provider = 'inokufu';
+const data = ddv.data.courses.process(response, provider);
+const visualization = new ddv.visualizers.list.CourseVisualizer();
+visualization.draw(data);
+visualization.attachOn('div#courses');
+
+</script>

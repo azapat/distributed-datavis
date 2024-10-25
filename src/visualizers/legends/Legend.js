@@ -1,0 +1,3 @@
+class Legend extends SvgVisualization {
+    
+}
