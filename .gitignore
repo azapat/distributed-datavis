@@ -1,0 +1,4 @@
+dist/
+*~
+test*.html
+node_modules/

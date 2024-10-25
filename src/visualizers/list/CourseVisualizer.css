@@ -1,0 +1,72 @@
+/** Item Title */
+h5.header.listElementTitle {
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+/** Item Description */
+p.listElementDescription {
+    margin-bottom: 10px;
+}
+
+/** Labels of new and existing skills */
+div.listElementNumberLine line {
+    margin-left: 5px;
+    color: rgba(0,0,0,.6);
+}
+
+/** New Skills Icon */
+div.listElementNumberLine i.fa-bookmark.newSkills {
+    color: #2185d0;
+}
+
+/** Existing Skills Icon */
+div.listElementNumberLine i.fa-bookmark.existingSkills {
+    color: #f2711c;
+}
+
+/** Spans of new and existing skills */
+div.listElementNumberLine span {
+    margin: 10px;
+}
+
+div.sectionDivider {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
+    border-top: 1px solid rgba(34,36,38,.15);
+}
+
+div.sectionTitle {
+    font-size: 1.28em;
+    color:black;
+    font-weight: 700;
+    line-height: 1.28em;
+    font-family: sans-serif;
+    padding-bottom: 20px;
+}
+
+button.newSkill {
+    color: #2185d0;
+    border-color: #2185d0;
+    margin: 3px;
+}
+
+button.newSkill:hover {
+    background-color: white;
+    color: #2185d0;
+    border-color: #2185d0;
+}
+
+button.existingSkill {
+    color: #f2711c;
+    border-color: #f2711c;
+    margin: 3px;
+}
+
+button.existingSkill:hover {
+    background-color: white;
+    color: #f2711c;
+    border-color: #f2711c;
+}
