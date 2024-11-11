@@ -10,8 +10,6 @@ Distributed data visualization is a sophisticated framework designed to seamless
 
 ## Technical usage scenarios & Features
 
-Distributed data visualisation builds the story /user journey for the given goal and given data sets, it applies other building blocks to modify/anonymize/analyse the data. It enables to run analysis by applying other building blocks and Data Space Services from Catalog (under contract).
-
 ### Features/main functionalities
 
 **User journey case 1:**
@@ -44,9 +42,9 @@ Use case functionalities:
 
 ### Technical usage scenarios
 
-Distributed Data Visualisation is a on-device building block meant to ease up building end-user UIs for showing data in informative way with a relevant story/journey. Visualiser requires a host system that runs the UI and that host system must configure it's components (consent, contract) that are needed to operate this building block.
+Distributed Data Visualisation is a on-device building block meant to ease up building end-user UIs for showing data in informative way with a relevant story/journey. Visualiser requires a host system that runs the UI and that host system must configure its components (consent, contract) that are needed to operate this building block.
 
-Because of the nature of this building block being slightly different than others, the reader of this document can not assume all server-side-building-blocks behaviors to exist in this BB.
+Because of the nature of this building block being slightly different than others, the reader of this document cannot assume all server-side-building-blocks behaviors to exist in this BB.
 
 **Technical usage scenario 1:**
 
@@ -54,24 +52,20 @@ User would gives her/his consent, it triggers "API consumption" by sending the d
 
 **Technical usage scenario 2:**
 
-User gives her/his consent to datasets, data provider(s) gives contracts to datasets that are not personal data. All consents/contracts are sent to Visualiser with additional metadata (data endpoint definitions). Visualizer fetches all the data based on this data. The Case 2 would ease up the Visualiser configuration.
+User gives her/his consent to datasets, data provider(s) gives contracts to datasets that are not personal data. The Host System is the main responsible of triggering the required exchanges. Once Host System fetches the final results of the exchanges, it can load the data into the DDV, specifying custom parameters if required.
 
 Tech usage scenario in short
 
 - Host system that runs UI calls the BB07 with 'rules.json' that contains
-  - connector params
-  - services in use
+  - source urls where final results can be fetched
   - visualisation types
+  - visualization parameters (customization)
 - Host system loads the Visualiser
-- Consent and data retrieved
-- All Data fetched
-- Journey and visualisations related to journey determined
-- Recommendations loaded
-- Journey visualized
+- User Journey is visualized
 
-With Distributed data visualisation, Data providers and Data consumers can easily bring their services to end users without developing all the middleware components on their own.
+With Distributed Data Visualisation, Data providers and Data consumers can easily bring the results from their services to end users without developing all the visualization components on their own.
 
-For exapmle, a LMS company using Moodle, can integrate the Distributed data visualisation directly to Moodle and so focus on their LMS provider role, while this building block do all the Data Space technical operations.
+For exapmle, a LMS company using Moodle, can integrate the Distributed Data Visualisation directly to Moodle and so focus on their LMS provider role, while this building block encapsulates all the logic behind the visualization of the results.
 
 ## Requirements
 
@@ -82,7 +76,7 @@ For exapmle, a LMS company using Moodle, can integrate the Distributed data visu
 - Organization must sign a contract to transfer the data
 - Distributed data visualizer is not responsible of the data, data quality and data validity. Other building blocks ensure data veracity.
 - Building block visualizes the given data without manipulations or modifications.
-- rules.json must contain all the necessary information (consents, contracts, needed services) in order for building block to be able to perform its task
+- rules.json must contain all the necessary information (final results or location where they can be fetched) to visualize the user journey.
 - Further development:
   - BB07 must be able to include new data models by simple conversion table / mapping
   - BB07 must be able to include new visualisation scripts
@@ -185,82 +179,30 @@ See full [DSSC](https://dssc.eu/space/DDP/117211137/DSSC+Delivery+Plan+-+Summary
 
 ## Input / Output Data
 
+You can find detailed explanation about the formats that are supported by the building block in the section [Data Formats](./DataFormats.md).
+
+**Important Clarification:** Third Parties and Members of the Data Space must ensure that results are being fetched exchanging data through the Data Space Connectors. Contracts and Consents ensures important quality aspects such as transparency, security and veracity during the data exchange.
+
 **Input data format:**
 
-Host system sends the building block the following information in rules.json:
-
-```json
-{
-	"contract": "CONTRACT_ID",
-	"consent": "CONSENT_ID",
-	"services": [
-		"service 1 - consent 1 definition",
-		"service 2 - consent 1 definition",
-		"service 1 - contract 1 definition"
-	],
-	"visualisation_types": [
-		"consent 1:hexagon (see OpenAPI section)",
-		"contract 1: barchart - consent 1 definition",
-		"service 1: list"
-	],
-	"visualizer_params": [
-		"colors=C5192D,CCCCCC,F6E8C3",
-		"iframe=true",
-		"color_scale=log",
-		"show_number=value"
-	]
-}
-```
+Host system can configure the DDV defining a JSON Object called [rules.json](./DataFormats.md/#configuration-file-for-the-ddv-rulesjson). This Object defines the data that will be displayed in the Host System, the order in which each visualization will be displayed, and custom visual properties.
 
 **Output data format:**
 
-By including the contract (& consent when personal data is involved), the BB will have the ability to fetch the detailed contract & consent information in order to provide its connector with the details of where to fetch the data from.
-
-Depending on the rules.json, the BB appplies the appropriate endpoints to retrieve training or job recommendations. In addition to displaying recommendations, it can also display analytics or metadata of different datasets.
+DDV will render the different visualizations in a centralized component. The content will be rendered using enriched HTML and SVG.
 
 **Use case 1 (Job recommendations)**
 
-BB displays the following json in an interactive and user friendly frame, through the JavaScript web component:
+BB displays a list of Job Recommendations in an interactive and user friendly frame, through the JavaScript web component.
 
-```json
-{
-	"url": "Link to the job post.",
-	"author": "Name of the job portal the job is posted to.",
-	"language": "Language of the job post.",
-	"title": "Title of the job post.",
-	"description": "Full description of the job post.",
-	"city": "City of job post.",
-	"time": "Date and time the job is posted.",
-	"score": "Scoring index of the job recommendation.",
-	"reasoning": ["Matching skill 1", "Matching skill 2", "Matching skill 3"],
-	"missing_skills": ["Missing skill 1", "Missing skill 2", "Missing skill 3"]
-}
-```
-
-Above example is of one recommendation. Component displays several recommendations of such, depending on the configurations set by the host system or end user.
+[Data Formats / Standard Data Format for Job Recommendations](./DataFormats.md/#standard-data-format-for-job-recommendations)
 
 **Use case 2 (Training recommendations)**
 
-BB displays the following json in an interactive and user friendly frame, through the JavaScript web component:
+BB displays a list of Training recommendations in an interactive and user friendly frame, through the JavaScript web component.
 
-```json
-{
-	"code": "Course code.",
-	"url": "Link to the course.",
-	"title": "Course title.",
-	"short_description": "Short description of the course.",
-	"explanation": "Skills you have: x,y,z. Skills you will get: w, z, t.",
-	"new_skills": ["New skill 1", "New skill 2", "New skill 3"],
-	"existing_skills": [
-		"Existing skill 1",
-		"Exsiting skill 2",
-		"Existing skill 3"
-	],
-	"interests": ["Interest 1", "Interest 2"],
-	"quality_index": "Quality index of the training recommendation.",
-	"scoring_index": "Scoring index of the tarining recommendation."
-}
-```
+[Data Formats / Standard Data Format for Course Recommendations](./DataFormats.md/#standard-data-format-for-courses)
+
 
 ## Architecture
 
@@ -278,19 +220,18 @@ classDiagram
     Api2 --|> Visualisation
     Data : +Consent
     Data : +Contract
-    Data : +Snowlflake, Data Excahnge()
+    Data : +Snowflake, Data Excahnge()
     Data : +National data sources like Sisu, Peppi, etc.()
     Data : +Free text()
     Data : +Consent services like Visions, Vastuu, Koski()
     Api1 : +Data normalisers like Build Knowlegde Graph
     Api1 : +Data structure builders like Text To Knowledge Graph
     Api1 : +Personal Data Storages like Inokufu, Cozy Cloud, Digital Twin Storage, etc()
-    Visualisation: +Bar chart
-    Visualisation: +Line chart
     Visualisation: +Hexagon
-    Visualisation: +Square
-    Visualisation: +Table
-    Visualisation: +List
+    Visualisation: +CourseList
+    Visualisation: +JobList
+    Visualisation: +VisualizationGroup (development)
+    Visualisation: +Linechart (development)
     Api2 : +Recommendation services like Headai Compass or MindMatcher recommendation
     Api2 : +Gap analysys services like Headai Score
 
@@ -310,33 +251,35 @@ title: Distributed Visualisation Sequence Diagram (Non Personal Data)
 ---
 
 sequenceDiagram
-    participant host as Host System (UI Provider)
     participant ddv as DDV
-    participant ddvcon as DDV Connector
+    participant host as Host System (UI Provider)
+    participant dc as Data Consumer
+    participant dccon as Data Consumer Connector
     participant con as Contract Service
     participant dpcon as Data Provider Connector
-    participant dp as Participant (Data Provider)
-    participant dc as Participant (Data Consumer)
+    participant dp as Data Provider
+    
+    host -) dccon: Get Contract Information (provide contract ID)
+    con --) dc: Verified Contract
 
-    dc -) host: visualization request (incl. contract) <br> https://example.com?contract=CONTRACT_ID
-    host -) ddv: HTTP request (incl. contract)
-    Note over ddv: rules.json
-    ddv -) con: Get Contract Information (provide contract ID)
-    con --) ddv: Contract
-    ddv -) ddvcon: Trigger data exchange<br>BY USING CONTRACT
-    ddvcon -) con: Verify contract & policies
-    con --) ddvcon: Verified contract
 
-    loop For n amount of Providers that are in the contract
-    ddvcon -) dpcon: Data request + contract
+    loop For n amount of Services that are in the contract
+    dc -) dccon: Trigger data exchange<br>BY USING CONTRACT
+    dccon -) con: Verify Resources involved <br> in the exchange  (w/ contract & policies)
+    con -) dccon : Contract validated
+    dccon -) dpcon: Data request + contract
     dpcon -) dp: GET data
-    dp --) dpcon: Data
-    dpcon --) ddvcon: Data
-    ddvcon --) ddv: Data
+    dp --) dpcon: Data Resource <br> Fetched
+    dpcon --) dccon: Data Exchange
+    dccon --) dc: Data sent to payload <br> representation URL
+
     end
 
+    host -) dc: Collect results <br> sent by the connector
+    dc -) host: Results from each service
+    host -) ddv: HTTP request (incl. contract) <br> or direct usage of the JS Library
+    Note over ddv: rules.json
     ddv -)  host: JavaScript Component
-    host -)  dc: Visualization
 ```
 
 ### Personal Data
@@ -349,46 +292,52 @@ title: Distributed Visualisation Sequence Diagram (With Personal Data)
 ---
 
 sequenceDiagram
-    participant host as Host System (UI Provider)
     participant ddv as DDV
-    participant ddvcon as DDV Connector
+    participant host as Host System (UI Provider)
+    participant dc as Data Consumer
+    participant dccon as Data Consumer Connector
     participant con as Contract Service
     participant cons as Consent Service
     participant dpcon as Data Provider Connector
-    participant dp as Participant (Data Provider)
-    participant dc as Participant (Data Consumer)
+    participant dp as Data Provider
+    
+    host -) dccon: Get Personal information under Consent
+    con --) dc: Verified Contract
 
-    dc -) host: visualization request (incl. Contract & Consent) <br>https://example.com?contract=CONTRACT_ID&consent=CONSENT_ID
-    host -) ddv: HTTP request
-    Note over ddv: rules.json (incl. Contract & Consent)
-    ddv -) ddvcon: Trigger consent-driven data exchange<br>BY USING CONSENT
-    ddvcon -) cons: Verify consent validity
-    cons -) con: Verify contract signature & status
-    con --) cons: Contract verified
-    cons -) ddvcon: Consent verified
-    ddvcon -) con: Verify contract & policies
-    con --) ddvcon: Verified contract
+    dc -) dccon: Verify Consent Validity
+    dccon -) con: Verify Consent Validity
+    con -) dccon : Consent validated
 
-    loop For n amount of Providers that are in the consent
-    ddvcon -) dpcon: Data request + contract + consent
-    dpcon -) dp: GET data
-    dp --) dpcon: Data
-    dpcon --) ddvcon: Data
-    ddvcon --) ddv: Data
+    host -) dccon: Get Contract Information (provide contract ID)
+    con --) dc: Verified Contract
+
+    loop For n amount of Services that are in the contract
+    dc -) dccon: Trigger data exchange <br>  with CONTRACT & CONSENT
+    dccon -) con: Verify Resources involved <br> in the exchange  (w/ contract & policies)
+    con -) dccon : Contract validated
+    dccon -) dpcon: Data request + contract
+    dpcon -) dp: GET Personal data
+    dp --) dpcon: Personal Data
+    dpcon --) dccon: Data Exchange of Personal Data
+    dccon --) dc: Results from Service sent to <br> payload representation URL
     end
 
+    host -) dc: Collect results <br> sent by the connector
+    dc -) host: Results from each service
+    host -) ddv: HTTP request (incl. contract) <br> or direct usage of the JS Library
+    Note over ddv: rules.json
     ddv -)  host: JavaScript Component
-    host -)  dc: Visualization
 ```
 
 ## Configuration and deployment settings
 
-Configuration of the BB07 can be done in two places
+Configuration of the BB07 can be done in three places
 
-- rules.json (see section Input / Output Data)
-- parameters given in visualizer HTTP-GET (see section OpenAPI Specifications)
+- rules.json (see section [Input / Output Data](#input--output-data))
+- parameters given in visualizer HTTP-GET (see section [OpenAPI Specifications](#openapi-specification))
+- parameters passed to the Visualization constructors or builders in case that Host Provider is using the JS Library directly (see section [Input / Output Data](#input--output-data)).
 
-The given parameters follows REST-API type of GET parameters, so only values that could be publicly seen or strongly encrypted values are allowed.
+The given parameters follow REST-API type of GET parameters, so only values that could be publicly seen or strongly encrypted values are allowed.
 
 ## Third Party Components & Licenses
 
@@ -408,39 +357,15 @@ In order to maximise cyber security we have isolated d3.js online-dependencies i
 
 ### Full URL Example, development version
 
-- https://megatron.headai.com/HeadaiVisualizer.html?&color_scale=log&word_type=&hide_nodes=&json_url=https://megatron.headai.com/analysis/BuildSignals/BuildSignals_xwiaHk1n3p1672366166478.json&word_type=only_compounds
-
-Data behind encrypted contract 'xwiaHk1n3p1672366166478'
+- https://megatron.headai.com/HeadaiVisualizer.html?&color_scale=log&json_url=https://megatron.headai.com/analysis/BuildSignals/BuildSignals_xwiaHk1n3p1672366166478.json
 
 ### URL Parameters
 
-| **Name** | **Description** | **Accepted Values or Example Value (Default)** |
-| --- | --- | --- |
-| Fundamental Parameters |  |  |
-| json_url<br><br>(**mandatory**) | URL with the JSON Data. If mode=customize or mode=clean, this parameter can be empty. | **Example:** <https://test.headai.com/a.json> |
-| plot_type | Type of Visualization to show from the given URL.<br><br>If **Empty**, the Visualizer will try to detect automatically the structure of the JSON. | top20 , linechart,<br><br>horizontalbarchart, verticalbarchart,<br><br>hexagon , square, barchart |
-| --- | --- | --- |
-| mode | **Customize:** Shows a Form to fill all the editable parameters (plus export mode)<br><br>**Clean:** Enables interaction to remove clicked concepts. Shows buttons to store modified data, and to get generated URL in the clipboard. **Export:** Shows Buttons to store the visualization as SVG, PNG, or JSON. **NOTE:** This parameter is ignored If iframe mode is enabled | customize<br><br>clean<br><br>export<br><br>**&lt;empty&gt;** |
-| Visual Customization |  |  |
-| iframe | Enable or Disable Full-Screen Mode for IFrame Embedding. If mode=customize, the value of this parameter is ignored. | true, **false** |
-| width | Width of the Component. If IFrame mode is enabled, this value will be used to preserve the aspect ratio in bigger or smaller windows. | Any positive integer **(1400)** |
-| height | Height of the Component. If IFrame mode is enabled, this value will be used to preserve the aspect ratio in bigger or smaller windows. | Any positive integer **(800)** |
-| font_family | FontFamily of all the text labels in the visualization. | serif , **sans-serif** , cursive , monospace |
-| font_size | Font Size of all the text labels in the visualization. | Any positive integer **(14)** |
-| hide_legend | Boolean that enables hiding the legend of certain visualization. | true, **false** |
-| background_color | Hexadecimal color | **(#F9F9F9)** |
-| Parameters under Development |  |  |
-| legends | List of comma-separated strings with the customized legends | “Demand, Offer, Intersection” |
-
-### URL Parameters when plot_type is hexagon or square
-
-<table><thead><tr><td>Name</td><td>Description</td><td>Accepted Values or Example Value (Default)</td></tr><tr><td colspan="3">Visual Customization</td></tr><tr><td>fig_size</td><td>Size of the Figures in the MindMap. This is equivalent to HexagonRadius or SquareSize in wordplot library.</td><td>Any positive integer (70)</td></tr><tr><td>center_node</td><td>Label of the concept that will be in the center. This means that all the concepts will be reorganized around the specified term. If empty, the central concept will be the one with the largest value.</td><td>Example: artificial intelligenceartificial_intelligence (space or underscore work)</td></tr><tr><td>center_camera_around</td><td>Centers the initial position of the visualization focusing on a specific concept (this only affects the position of the camera, not the content of the map). If empty, the camera will focus on the center_node. This parameter won’t work if you don’t specify a valid value for initial_zoom.</td><td>Example: climate_change</td></tr><tr><td>initial_zoom</td><td>Defines the initial zoom of the camera. If empty, the camera will try to show all the concepts of the visualization on the screen, automatically calculating the optimal position. If this parameter is empty or incorrect, center_camera_around will be ignored.</td><td>Example: 0.8</td></tr><tr><td>click_action</td><td>remove: Deletes clicked conceptsshowValues: Shows historical data as line chart (only for signals maps)showDetails: Shows the attributes of the clickedhighlight: shows the neighborhood of the clicked conceptsource: Shows the list of sources if info is availablerecenter: Reorganizes the map around the clicked concept</td><td>Values (Case Insensitive):remove (default when mode=clean)showValues (for signals)showDetailshighlightsourcerecenter</td></tr><tr><td>colors</td><td>Hexadecimal code of the colors, separated by a comma and without the numeral character '#'.</td><td>Example: "A0A000,F000F0"</td></tr><tr><td>color_scale</td><td></td><td>sqrt , log , linear , pow , flat</td></tr><tr><td>stroke_color</td><td></td><td></td></tr><tr><td>show_number</td><td>Defines which numerical value of the nodes will be displayed inside the hexagon along with the label of the concepts.</td><td>Example: value, normalized_value, id, weight, group</td></tr><tr><td>show_action_buttons</td><td></td><td>true, false</td></tr><tr><td colspan="3">Special Modes</td></tr><tr><td>sdg_map</td><td>Json must have a specific format, containing scores and indicators</td><td>true, false</td></tr><tr><td>relevancy_mode</td><td>Boolean that defines if the visualization will display the 5 weights (how meaningful is each concept).This mode shows the 5 different weights with different colors and enables the Legend for them.</td><td>true, false</td></tr><tr><td>only_nearest_neighbours</td><td>This mode places nodes in a way that a hexagon is next to another ONLY if it’s related. This generates a map without any strokes.</td><td>true, false</td></tr><tr><td colspan="3">Data Manipulation</td></tr><tr><td>max_nodes</td><td>Desired number of nodes for the map reduction. The internal algorithm will pick the set of values for MinWeight and MinValue that reduces the map as close to that number as possible. This feature only works if nodes have weights, otherwise it will be ignored.</td><td></td></tr><tr><td>filter_min_weight</td><td></td><td>1,2,3,4,5</td></tr><tr><td>filter_min_value</td><td></td><td>Any positive integer</td></tr><tr><td>word_type</td><td></td><td>only_compounds, &lt;empty&gt;</td></tr><tr><td>hide_nodes</td><td>List of labels separated by comma. These labels represent the nodes you want to hide from the MindMap in the visualization.For compound words you can use underscores or spaces</td><td>Ej:<ul><li>data_science, data_analytics</li><li>data science , data analytics</li></ul></td></tr></thead></table>
-
-Click to view latest version -> [Visualiser Document](https://docs.google.com/document/d/1D2J4LmzRFRGb52NkJqp4uFK8soHuRQRq12vHUeYhlps/edit#heading=h.omblmp6i4rwg)
+All the parameters that can be passed via URL to the component are described in the document called [Properties Documentation](./framework/PropertiesDocumentation.md).
 
 ## Test specification
 
-This document outlines the test plan for the DistriButed data Visualization, subject to the specific attributes as follows:
+This document outlines the test plan for the Distributed data Visualization, subject to the specific attributes as follows:
 
 1. **No any part of the Headai's existing testing system shall be released or transferred as a part of this building block.**
 2. **All implementation work of the Headai's existing testing system is the intellectual property of Headai and is proprietary.**
@@ -448,7 +373,7 @@ This document outlines the test plan for the DistriButed data Visualization, sub
 
 ### Test plan
 
-The objective of testing the “Distributed Data Visualization” function is two-fold:
+The objective of testing the "Distributed Data Visualization" function is two-fold:
 
 1. To verify that it accurately builds a knowledge graph based on the given parameters, ensuring that the output is correct, reliable, and efficient over varying conditions.
 
@@ -596,7 +521,7 @@ A comprehensive evaluation of the Distributed Data Visualization's functionality
 ### Component-level testing
 
 Al the Unit Tests are done in order to make sure Distributed Data visualisation is integrateable via HTTPS requests and via REST-API requests.
-
+ from both the organization and the individual
 Such test should be done also when intergrating DDV into a host system. All the stest could be done with same tools introduced in Unit Test section (e.g. Postman).
 
 ### UI test
@@ -610,7 +535,7 @@ Such test should be done also when intergrating DDV into a host system. All the 
 #### Headai
 
 - Data flows, data formats, security and privacy
-- Visulizer implementation (programming)
+- Visualizer implementation (programming)
 - Source code documentation and example case building
 - Preparing the distributed data visualizer to be Creative Commons / Open Source BB
 - Dissemnination and PR
@@ -672,6 +597,6 @@ Such test should be done also when intergrating DDV into a host system. All the 
 
 13 : The PDC sends data to the Data Veracity Assurance (DVA) in xAPI format, ensuring the accuracy of specific data exchanges in the database
 
-14 : The PDC sends data to the Distributed Data Visualization (DDV) in xAPI format
+14 : Organization B sends the data received from the data exchanges of the PDC to the Distributed Data Visualization (DDV) in xAPI format.
 
-15 : The DDV visualizes the received traces from both the organization and the individual
+15 : The DDV visualizes the received traces, following the custom structure defined in the configuration file *rules.json*

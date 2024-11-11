@@ -33,13 +33,14 @@ class GraphToMap extends ObjectWithProperties {
         this.mapType = mapType;
 
         var { centerNode, nameField } = this.properties;
+
         if (!this.digitalTwin.hasLabel(centerNode)) {
             this.properties.centerNode = null;
             const centerNodeInfo = getCenterNode(nodes);
             if (centerNodeInfo == null && nodes.length > 0){
                 this.properties.centerNode = nodes[0][nameField];
             } else {
-                this.properties.centerNode = centerNodeInfo[nameField];
+                this.properties.centerNode = centerNodeInfo && centerNodeInfo[nameField];
             }
         }
         

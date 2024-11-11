@@ -21,6 +21,7 @@ class WordMap extends SvgVisualization {
         valueFieldToShow: 'value',
         timeSeriesField: 'values',
         centerCameraAround: null,
+        centerNode: null,
     }
 
     // Initialize Attributes
@@ -30,6 +31,9 @@ class WordMap extends SvgVisualization {
     defineSetters(){
         super.defineSetters();
         this.afterSetters.showActionButtons = (v)=>this.showActionButtons.call(this,v);
+        this.customSetters.centerNode = (v)=>this.setCenterNode.call(this,v);
+        this.customSetters.colors = (v)=>this.setColors.call(this,v);
+        this.customSetters.actionOnClick = (action) => interaction.changeOnClickAction(this, action);
     }
 
     constructor(mapType, plotId, props) {
@@ -42,7 +46,6 @@ class WordMap extends SvgVisualization {
         this.mapType = mapType;
         this._obtainTooltipData = null;
         this._groupToColorIndex = {};
-        this._colors = [];
     }
 
     /******************** Action Buttons ********************/
@@ -82,7 +85,6 @@ class WordMap extends SvgVisualization {
         this._initColorIndices();
         
         if (props.hasOwnProperty('colors')) this._initColorIndices();
-        if (props.hasOwnProperty('centerNode')) this.setCenterNode(props['centerNode']);
 
         if (this.digitalTwin != null) {
             const { reprocess, changes } = this.digitalTwin.setProperties(props);
@@ -113,6 +115,7 @@ class WordMap extends SvgVisualization {
      */
     #initColorIndicesAux(groups) {
         if (!Array.isArray(groups)) return;
+        const { colors } = this.properties;
         const groupsInt = [];
         // Sometimes, when JSON is loaded, some groups are parsed by javascript as Strings, for that reason it's
         // necessary to convert them always
@@ -122,10 +125,10 @@ class WordMap extends SvgVisualization {
             const group = sortedGroups[i];
             this._groupToColorIndex[group] = i;
             // If index is greater than existing colors, Generates new Random color
-            if (i >= this._colors.length) {
+            if (i >= colors.length) {
                 var color = Math.floor(Math.random() * 16777216).toString(16);
                 var color = '#000000'.slice(0, - color.length) + color;
-                this._colors.push(color);
+                colors.push(color);
             }
         }
     }
@@ -143,36 +146,40 @@ class WordMap extends SvgVisualization {
     }
 
     getColor(group) {
+        const { colors } = this.properties;
         const groupAlreadyRegistered = this._groupToColorIndex.hasOwnProperty(group);
         const index = Object.keys(this._groupToColorIndex).length;
-        const needsMoreColors = index > this._colors.length;
+        const needsMoreColors = index > colors.length;
         if (needsMoreColors || !groupAlreadyRegistered) {
             // Generate Random color
             var color = Math.floor(Math.random() * 16777216).toString(16);
             var color = '#000000'.slice(0, - color.length) + color;
-            this._colors.push(color);
+            colors.push(color);
         } if (!groupAlreadyRegistered) {
             this._groupToColorIndex[group] = index;
         }
         const colorIndex = this._groupToColorIndex[group];
-        return this._colors[colorIndex];
+        return colors[colorIndex];
+    }
+
+    setColors(colors){
+        this.properties.initializeProperty('colors',colors);
     }
 
     setCenterNode(centerLabel) {
-        if (typeof (centerLabel) != 'string') return;
-
-        this.properties.centerNodeLabel = centerLabel;
-
+        if (typeof (centerLabel) !== 'string') return;
+        this.properties.initializeProperty('centerNode', null);
         if (this.digitalTwin == null) return;
 
         const centerInfo = this.digitalTwin.getNodeInfoByLabel(centerLabel);
+        if (centerInfo == null){
+            this.properties.initializeProperty('centerNode', null);
+            this.properties.initializeProperty('centerNodeId', null);
+            return;
+        }
         const centerId = centerInfo['id'];
-        this.properties.centerNodeId = centerId;
-    }
-
-    defineSetters(){
-        super.defineSetters();
-        this.customSetters.actionOnClick = (action) => interaction.changeOnClickAction(this, action);
+        this.properties.initializeProperty('centerNode', centerLabel);
+        this.properties.initializeProperty('centerNodeId', centerId);
     }
 
     // This function is used to perform validations before executing plot()
@@ -191,6 +198,10 @@ class WordMap extends SvgVisualization {
 
         this.graphToMap = graphToMap;
         this.digitalTwin = graphToMap.digitalTwin;
+
+        // Refresh Parameters
+        this.setCenterNode(this.properties.centerLabel);
+
         this._initColorIndices();
     }
 

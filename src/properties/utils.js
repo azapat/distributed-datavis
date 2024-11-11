@@ -61,6 +61,15 @@ function validateType(type, value){
     }
 }
 
+function validateArraySubType(subtype, array){
+    for (let i = 0; i < array.length; i++) {
+        const newValue = array[i];
+        if (newValue == null) return false;
+        if (!PropertiesUtils.validateType(subtype,newValue)) return false;
+    }
+    return true;
+}
+
 function normalizeValue(type, value){
     const isString = typeof(value) === 'string';
     const isBoolean = typeof(value) === 'boolean';
@@ -95,6 +104,7 @@ const PropertiesUtils = {
     mergeProperties,
     dictionaryChanged,
     validateType,
+    validateArraySubType,
     normalizeValue,
 }
 

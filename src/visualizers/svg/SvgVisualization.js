@@ -28,6 +28,10 @@ class SvgVisualization extends SvgComponent {
         hideLegend: false,
     }
 
+    static rulesProperties = {
+        colors: {type:'array',subtype:'string'},
+    }
+
     defineSetters(){
         super.defineSetters();
         this.afterSetters.hideLegend = (v) => this.hideLegend.call(this,v);
@@ -78,14 +82,15 @@ class SvgVisualization extends SvgComponent {
     }
 
     getColor(group) {
-        if (group >= this._colors.length) {
-            while (this._colors.length <= group) {
+        const { colors } = this.properties;
+        if (group >= colors.length) {
+            while (colors.length <= group) {
                 var color = Math.floor(Math.random() * 16777216).toString(16);
                 color = '#000000'.slice(0, - color.length) + color;
-                this._colors.push(color);
+                colors.push(color);
             }
         }
-        return this._colors[group];
+        return colors[group];
     }
 
     // TODO : Restructure
@@ -131,14 +136,6 @@ class SvgVisualization extends SvgComponent {
             default:
                 console.log('Invalid Color scale -> ', colorScale);
                 return value;
-        }
-    }
-
-    setColors(colors) {
-        if (Array.isArray(colors)) {
-            this._colors = colors;
-        } else {
-            console.log('Error executing setColors(colors), colors must be an Array of strings')
         }
     }
 

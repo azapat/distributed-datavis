@@ -20,7 +20,7 @@ class Properties {
             set: (target, key, value)=>{
                 if (skipFields.includes(key)) return true;
                 value = this.#normalizeValue(key,value);
-                if (!target.#ruleIsValid(key,value)) return false;
+                if (!target.ruleIsValid(key,value)) return false;
                 // Prevents executing custom setter if value ha not been modified
                 if (target[key] === value) return true;
                 
@@ -33,6 +33,8 @@ class Properties {
                     success = (customSetter(value) == true);
                 }  else if (this.rules[key]?.type == 'dictionary'){
                     this.#setterDictionary(key, value);
+                } else if (this.rules[key]?.type == 'array'){
+                    this.#setterArray(key, value);
                 } else {
                     target[key] = value;
                 }
@@ -75,10 +77,10 @@ class Properties {
         });
     }
 
-    #ruleIsValid(key, value){
+    ruleIsValid(key, value){
         if (this.rules.hasOwnProperty(key)){
-            const typeIsValid = this.#validateRuleType(key,value);
-            return typeIsValid;
+            const typeIsValid = this._validateRuleType(key,value);
+            return typeIsValid === true;
         }
         return true;
     }
@@ -91,7 +93,7 @@ class Properties {
         return PropertiesUtils.normalizeValue(ruleType, value)
     }
 
-    #validateRuleType(key,value){
+    _validateRuleType(key,value){
         if (value === null || value === undefined) return false;
         const rule = this.rules[key];
         if (rule == null) return true;
@@ -173,6 +175,15 @@ class Properties {
             if (PropertiesUtils.VALID_TYPES.includes(subtype) && !PropertiesUtils.validateType(subtype,newValue)) continue;
             dict[key] = newValue;
         }
+    }
+
+    #setterArray(key,newArray){
+        const subtype = this.rules[key]?.subtype;
+        if (!PropertiesUtils.VALID_TYPES.includes(subtype)) return true;
+        const isValid = PropertiesUtils.validateArraySubType(subtype, newArray);
+        if (!isValid) return true;
+        this.initializeProperty(key,newArray);
+        return true;
     }
 }
 
