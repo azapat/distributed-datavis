@@ -22,9 +22,8 @@ d3.json(url).then((json)=>{
     const plotType = 'hexagon';
     const props = {width:1200,height:800,margin:{top:20,bottom:20,left:20,right:20}};
     plot = ddv.visualizers.wordmap.buildWordMap(json, plotType, props);
-    ddv.data.digitalTwin.colors.setColorsToMindMap(plot);
     plot.attachOn('div#mindmap')
-    plot.refresh();
+    ddv.visualizers.responsive.enableResponsiveness(plot);
 });
 
 </script>

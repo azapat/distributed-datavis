@@ -1,0 +1,39 @@
+/** New Skills Icon */
+div.listElementNumberLine i.fa-check.matchingSkills {
+    color: #21ba45;
+}
+
+/** Existing Skills Icon */
+div.listElementNumberLine i.fa-times.missingSkills {
+    color: #db2828;
+}
+
+button.missingSkill {
+    color: #db2828;
+    border-color: #db2828;
+    margin: 3px;
+    --bs-btn-active-bg: #db2828;
+    --bs-btn-active-color: white;
+    --bs-btn-active-border: white;
+}
+
+button.missingSkill:hover {
+    background-color: white;
+    color: #db2828;
+    border-color: #db2828;
+}
+
+button.matchingSkill {
+    color: #21ba45;
+    border-color: #21ba45;
+    margin: 3px;
+    --bs-btn-active-bg: #21ba45;
+    --bs-btn-active-color: white;
+    --bs-btn-active-border: white;
+}
+
+button.matchingSkill:hover {
+    background-color: white;
+    color: #21ba45;
+    border-color: #21ba45;
+}

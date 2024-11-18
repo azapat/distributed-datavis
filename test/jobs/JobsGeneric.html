@@ -1,0 +1,40 @@
+
+<script src="http://localhost:8080/ptx-ddv.js"></script>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src='https://d3js.org/d3-hexbin.v0.2.min.js'></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<div id="jobs"></div>
+
+<script>
+
+const jobs = [
+    {
+        "url": "https://www.google.com/",
+        "author": "Sample Company",
+        "language": "English",
+        "title": "Senior Data Scientist - Expert in Language Models",
+        "description": "We require a Senior Data Scientist that has experience working with multiple language models",
+        "location": "Helsinki, Finland",
+        "time": "08/11/2024",
+        "score": 10.4,
+        "normalized_score": 0.8,
+        "matching_skills": ["language_models", "natural_language_processing", "python"],
+        "missing_skills": ["graph_neural_networks", "reinforcement_learning"]
+    },{
+        "title": "Job with minimal information",
+        "description": "Sample minimal Description",
+    }
+];
+
+const visualization = new ddv.visualizers.list.JobVisualizer();
+visualization.draw(jobs);
+visualization.attachOn('div#jobs');
+ddv.visualizers.responsive.enableResponsiveness(visualization);
+</script>

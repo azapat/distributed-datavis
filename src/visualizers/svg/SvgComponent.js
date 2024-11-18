@@ -1,9 +1,15 @@
-const Component = require('../Component');
+const Component = require("../Component");
 
 class SvgComponent extends Component {
     static defaultProperties = {
         containerTag: 'svg',
-    }
+        innerMargin: {top:0, right:0, bottom:0, left:0},
+    };
+
+    static rulesProperties = {
+        innerMargin: { type: 'dictionary' , subtype: 'number' },
+    };
+
 
     initComponents(){
         super.initComponents();
@@ -55,10 +61,11 @@ class SvgComponent extends Component {
         this.components = { ...this.components , titleSVG, expansorSVG, outerSVG, innerSVG, background, container };
     }
 
-    draw(data){
-        super.draw(data);
-
-        const { } = this.getComponents();
+    calculateInnerSize() {
+        var { innerMargin, width, height } = this.getProperties();
+        const innerWidth = width - innerMargin.left - innerMargin.right;
+        const innerHeight = height - innerMargin.top - innerMargin.bottom;
+        return { innerWidth , innerHeight };
     }
 }
 

@@ -61,6 +61,15 @@ function validateType(type, value){
     }
 }
 
+function validateArraySubType(subtype, array){
+    for (let i = 0; i < array.length; i++) {
+        const newValue = array[i];
+        if (newValue == null) return false;
+        if (!PropertiesUtils.validateType(subtype,newValue)) return false;
+    }
+    return true;
+}
+
 function normalizeValue(type, value){
     const isString = typeof(value) === 'string';
     const isBoolean = typeof(value) === 'boolean';
@@ -88,6 +97,54 @@ function normalizeValue(type, value){
     }
 }
 
+function normalizeProperties(props){
+    if (props == null) return null;
+    
+    const keys = Object.keys(props);
+
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        const value = props[key];
+        const newKey = normalizePropertyName(key);
+        if (key == newKey) continue;
+
+        delete props[key];
+        props[newKey] = value;
+    }
+
+    return props;
+}
+
+function propertyNameToTitle(name){
+    return name.replace(/([A-Z])/g, ' $1')
+        .replace(/^./, str => str.toUpperCase()).trim();
+}
+
+function normalizePropertyName(name){
+    if (typeof(name) !== "string") return name;
+    return toCamelCase(name);
+}
+
+function toCamelCase(str) {
+    return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
+function normalizePropertyValue(type,value){
+    const isValid = validateType(type,value);
+    if (isValid) return value;
+
+    switch (type) {
+        case "array":
+            return [];
+        case "string":
+            return "";
+        case "dictionary":
+            return {};
+        default:
+            return null;
+    }
+}
+
 const PropertiesUtils = {
     VALID_TYPES,
     removeDictionaryKeys,
@@ -95,7 +152,11 @@ const PropertiesUtils = {
     mergeProperties,
     dictionaryChanged,
     validateType,
+    validateArraySubType,
     normalizeValue,
+    normalizeProperties,
+    propertyNameToTitle,
+    normalizePropertyValue,
 }
 
 module.exports = PropertiesUtils;

@@ -28,6 +28,10 @@ class SvgVisualization extends SvgComponent {
         hideLegend: false,
     }
 
+    static rulesProperties = {
+        colors: {type:'array',subtype:'string'},
+    }
+
     defineSetters(){
         super.defineSetters();
         this.afterSetters.hideLegend = (v) => this.hideLegend.call(this,v);
@@ -78,14 +82,15 @@ class SvgVisualization extends SvgComponent {
     }
 
     getColor(group) {
-        if (group >= this._colors.length) {
-            while (this._colors.length <= group) {
+        const { colors } = this.properties;
+        if (group >= colors.length) {
+            while (colors.length <= group) {
                 var color = Math.floor(Math.random() * 16777216).toString(16);
                 color = '#000000'.slice(0, - color.length) + color;
-                this._colors.push(color);
+                colors.push(color);
             }
         }
-        return this._colors[group];
+        return colors[group];
     }
 
     // TODO : Restructure
@@ -134,14 +139,6 @@ class SvgVisualization extends SvgComponent {
         }
     }
 
-    setColors(colors) {
-        if (Array.isArray(colors)) {
-            this._colors = colors;
-        } else {
-            console.log('Error executing setColors(colors), colors must be an Array of strings')
-        }
-    }
-
     cleanSVG() {
         const { outerSVG } = this.getComponents();
         outerSVG.remove();
@@ -153,13 +150,6 @@ class SvgVisualization extends SvgComponent {
         this.reattach();
     }
 
-    calculateInnerSize() {
-        var { margin, width, height } = this.getProperties();
-        const innerWidth = width - margin.left - margin.right;
-        const innerHeight = height - margin.top - margin.bottom;
-        return { innerWidth , innerHeight };
-    }
-
     _setTextProperties(text) {
         var { fontSize, fontFamily } = this.getProperties();
         text
@@ -168,21 +158,21 @@ class SvgVisualization extends SvgComponent {
     }
 
     _refreshComponents() {
+        super._refreshComponents();
+
         const { mainContainer, outerSVG, innerSVG, container, background } = this.components;
         const {
-            width, height, margin, backgroundColor,
+            width, height, backgroundColor,
             maxWidth, minWidth, autoResize,enableZoom,
         } = this.properties;
-
-        const {innerWidth,innerHeight} = this.calculateInnerSize();
 
         outerSVG.attr('viewBox', `0 0 ${width} ${height}`);
 
         background.attr('fill', backgroundColor);
 
         innerSVG
-            .attr('width', innerWidth)
-            .attr('height', innerHeight);
+            .attr('width', width)
+            .attr('height', height);
 
         const minZoom = 0.03;
         const maxZoom = 2;
@@ -198,15 +188,14 @@ class SvgVisualization extends SvgComponent {
             innerSVG.call(zoom.on('zoom', null));
         }
 
-        mainContainer.style('height', height + 'px')
-            .style('width', width + 'px');
-
+        /**
         if (autoResize === true) {
             mainContainer.style('max-width', maxWidth)
                 .style('min-width', minWidth)
                 .style('height', 'unset')
                 .style('width', '100%')
         }
+        */
 
         legendUtils.initLegend(this);
         logo.refreshLogo(this);

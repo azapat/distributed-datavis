@@ -252,7 +252,7 @@ function _initializeButton(plot, buttonInfo){
     }
 
     const xButton = xPadding + (x-1)*(buttonWidth + xPadding) ;
-    const yButton = plotHeight - y*(buttonHeight + yPadding) - margin.bottom - margin.top;
+    const yButton = plotHeight - y*(buttonHeight + yPadding);
 
     const button = svg.selectAll('svg#' + id).data([null]).enter()
     .append('svg').attr('id',id)

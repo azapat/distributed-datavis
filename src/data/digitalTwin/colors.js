@@ -1,21 +1,3 @@
-  
-function enableRelevancyMode(plot){
-    const DEFAULT_RELEVANCY_COLORS = ['#cc3232','#db7b2b','#e7b416','#99c140','#2dc937'];
-  
-    const props = {
-      'scale':'flat',
-      'categoryField':'weight',
-      'colors': DEFAULT_RELEVANCY_COLORS
-    }
-    plot.setProperties(props);
-  
-    var groupToColorIndex = { "1":0, "2":1, "3":2, "4":3, "5":4}
-    plot._groupToColorIndex = groupToColorIndex;
-  
-    const legend = {'1':'Weight 1','2':'Weight 2','3':'Weight 3','4':'Weight 4','5':'Weight 5'};
-    plot.setLegend(legend);
-}
-  
 const DEFAULT_COLORS_1_CATEGORY = ['#08233B'];
 const DEFAULT_COLORS_2_CATEGORIES = [];
 const DEFAULT_COLORS_3_CATEGORIES = ["#58C69A","#E59476","#4DC3F9"];
@@ -28,7 +10,7 @@ function setColorsToMindMap(plot){
 
 function generateColorsForPlot(plot){
     if (plot == null) return [];
-    const colors = plot._colors;
+    const colors = plot.properties.colors;
     const groupField = plot.properties.categoryField;
     const categoryCount = {};
     var newColors = [];
@@ -159,7 +141,6 @@ function configureMapWithTimeSeries(plot) {
 
 const colors = {
     setSDGColorsInMap,
-    enableRelevancyMode,
     setColorsToMindMap,
     generateColorsForPlot,
     configureMapWithTimeSeries,

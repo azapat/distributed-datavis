@@ -269,7 +269,7 @@ getNodeInfoByLabel(label)
             if (groupFilterIsActive && !groups.has(group)) continue;
             if (valueFilterIsActive && value < filterMinValue) continue;
             if (weightFilterIsActive && weight < filterMinWeight) continue;
-            if (onlyCompounds && !this._isCompound(label)) continue;
+            if (onlyCompounds && !DigitalTwinProcessing.isCompound(label)) continue;
             if (hideNodesIsActive && hideNodes.includes(label)) continue;
             
             filteredNodes.push(node);

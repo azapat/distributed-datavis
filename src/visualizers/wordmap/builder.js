@@ -4,6 +4,8 @@ const WideGraphToMap = require("../../data/digitalTwin/WideGraphToMap");
 const HexagonMap = require("./HexagonMap");
 const DigitalTwinProcessing = require("../../data/digitalTwin/DigitalTwinProcessing");
 const { HexagonMapWithTimeSeries } = require("./HexagonMapWithTimeSeries");
+const colors = require("../../data/digitalTwin/colors");
+const WordMapUtils = require("./utils");
 
 function buildWordMap(json, plotType = 'hexagon', props = {}) {
     var plotType = plotType.toLowerCase();
@@ -12,14 +14,15 @@ function buildWordMap(json, plotType = 'hexagon', props = {}) {
         props = {}
     }
 
+    json = DigitalTwinProcessing.normalizeMindMapJson(json);
+    preprocessProperties(json, props);
+
     if (!['hexagon', 'square'].includes(plotType)) {
         console.log('Error at BuildWordMap() invalid plotType ' + plotType)
         return null
     }
 
-    const isWideMap = (props.hasOwnProperty('onlyNearestNeighbours') && props['onlyNearestNeighbours'] === true)
-
-    json = DigitalTwinProcessing.normalizeMindMapJson(json);
+    const isWideMap = (props.hasOwnProperty('onlyNearestNeighbours') && props['onlyNearestNeighbours'] === true)    
 
     // Build MindMap
     const digitalTwin = new DigitalTwin(json, props);
@@ -53,8 +56,30 @@ function buildWordMap(json, plotType = 'hexagon', props = {}) {
     plot.setGraphToMap(processor);
     plot.data = locatedNodes;
     plot.setLegend(json.legends);
+
+    postProcessProperties(plot,props);
+
+    // If custom colors are not assigned, uses default ones
+    if (!Array.isArray(props.colors)) colors.setColorsToMindMap(plot);
     
     return plot;
+}
+
+function preprocessProperties(data, props){
+    if (props.relevancyMode === true){
+        props.colorScale = 'flat';
+        props.categoryField = 'weight';
+        props.colors = ['#cc3232','#db7b2b','#e7b416','#99c140','#2dc937'];
+        const legends = {'1':'Weight 1','2':'Weight 2','3':'Weight 3','4':'Weight 4','5':'Weight 5'};
+        data.legends = legends;
+    }
+}
+
+function postProcessProperties(plot, props){
+    if (props.relevancyMode === true){
+        var groupToColorIndex = { "1":0, "2":1, "3":2, "4":3, "5":4}
+        plot._groupToColorIndex = groupToColorIndex;
+    }
 }
 
 
