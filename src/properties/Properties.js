@@ -20,7 +20,7 @@ class Properties {
             set: (target, key, value)=>{
                 if (skipFields.includes(key)) return true;
                 value = this.#normalizeValue(key,value);
-                if (!target.ruleIsValid(key,value)) return false;
+                if (!target.ruleIsValid(key,value)) return true;
                 // Prevents executing custom setter if value ha not been modified
                 if (target[key] === value) return true;
                 

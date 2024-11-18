@@ -125,22 +125,24 @@ Example:
 
 ## Standard Data Format for Courses
 
+The attribute names for courses can be defined using two different standard cases: underscore_case and camelCase.
+
 ```json
 {
 	"code": "Course code.",
 	"url": "Link to the course.",
 	"title": "Course title.",
-	"short_description": "Short description of the course.",
+	"description": "Description of the course.",
 	"explanation": "Skills you have: x,y,z. Skills you will get: w, z, t.",
-	"new_skills": ["New skill 1", "New skill 2", "New skill 3"],
-	"existing_skills": [
-		"Existing skill 1",
-		"Exsiting skill 2",
-		"Existing skill 3"
-	],
+	"new_skills": ["New skill 1", "New skill 2"],
+	"existing_skills": ["Existing skill 1","Exsiting skill 2"],
 	"interests": ["Interest 1", "Interest 2"],
-	"quality_index": "Quality index of the training recommendation.",
-	"scoring_index": "Scoring index of the tarining recommendation."
+	"score": "Scoring index of the training recommendation.",
+    "normalized_score": "Normalized Scoring Index of the training recommendation.",
+    "language": "String in Free Format",
+    "organization": "Organization that Provides the Training",
+    "duration": "Duration of the Course. String in Free Format.",
+    "price": "Price of the Course. String in Free Format."
 }
 ```
 
@@ -153,10 +155,11 @@ Example:
 	"language": "Language of the job post.",
 	"title": "Title of the job post.",
 	"description": "Full description of the job post.",
-	"city": "City of job post.",
+	"location": "Location of the vacant (city / country). String in Free format",
 	"time": "Date and time the job is posted.",
 	"score": "Scoring index of the job recommendation.",
-	"reasoning": ["Matching skill 1", "Matching skill 2", "Matching skill 3"],
+    "normalized_score": "Normalized Scoring Index of the training recommendation.",
+	"matching_skills": ["Matching skill 1", "Matching skill 2", "Matching skill 3"],
 	"missing_skills": ["Missing skill 1", "Missing skill 2", "Missing skill 3"]
 }
 ```

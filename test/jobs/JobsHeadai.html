@@ -1,0 +1,69 @@
+
+<script src="http://localhost:8080/ptx-ddv.js"></script>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src='https://d3js.org/d3-hexbin.v0.2.min.js'></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<div id="jobs"></div>
+
+<script>
+
+const job1 = {
+            "code": "",
+            "url": "https://www.ua.pt/en/uc/15302",
+            "title": "Job 1",
+            "short_description": "Sample Description of Job 1",
+            "new_skills": ["seminars","engineering"],
+            "existing_skills": ["python","programming"],
+            "interests": ["python","programming"],
+            "quality_index": 4,
+            "scoring_index": 10
+};
+
+const job2 = {
+            "code": "",
+            "url": "https://www.ua.pt/en/uc/15302",
+            "title": "Job 2",
+            "short_description": "Sample Description of Job 2",
+            "new_skills": ["python","programming","seminars"],
+            "existing_skills": [],
+            "interests": ["java"],
+            "quality_index": 4,
+            "scoring_index": 10
+}
+
+const job3 = {
+            "code": "",
+            "url": "https://www.ua.pt/en/uc/15302",
+            "title": "Job 3",
+            "short_description": "Sample Description of Job 3",
+            "new_skills": [],
+            "existing_skills": [],
+            "interests": ["java"],
+            "quality_index": 4,
+            "scoring_index": 10
+}
+
+
+const response = {
+    "recommendations_based_on_extensive_skills": [
+        job1, job2, job3
+    ],
+    "recommendations_based_on_match": [],
+    "recommendations_based_on_learning_paths": [],
+    "recommendations_based_on_skills_demand": []
+}
+
+const provider = 'headai';
+const data = ddv.data.jobs.process(response, provider);
+const visualization = new ddv.visualizers.list.JobVisualizer();
+visualization.draw(data);
+visualization.attachOn('div#jobs');
+ddv.visualizers.responsive.enableResponsiveness(visualization);
+</script>

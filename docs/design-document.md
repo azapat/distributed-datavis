@@ -105,23 +105,7 @@ In case of incomplete rules.json or data the DDV closes the process and returns 
 
 ### Direct Integrations with Other BBs
 
-There is no direct integrations with other BBs except Connector. All the following integrations are optional.
-
-### Integrations via Connector
-
-- Edge translators (BB03)
-  - Translate ontologies in-between visualisation steps if needed
-- Consent/Contracts negotation agent (BB05)
-  - Permits to use personal data
-  - Permits to use nonpersonal data
-- Data value chain tracker (BB06)
-  - Track business value
-  - Trace direct and indirect data usage
-- Data veracity assurance (BB08)
-  - Evaluate data quality characteristics
-  - Ensure that data is consistent
-- Distributed learning analytics management services (BB09)
-  - One possible data provider for DDV
+There is no direct integrations with other BBs.
 
 ## Relevant Standards
 
@@ -277,7 +261,7 @@ sequenceDiagram
 
     host -) dc: Collect results <br> sent by the connector
     dc -) host: Results from each service
-    host -) ddv: HTTP request (incl. contract) <br> or direct usage of the JS Library
+    host -) ddv: HTTP request or <br> direct usage of the JS Library
     Note over ddv: rules.json
     ddv -)  host: JavaScript Component
 ```
@@ -324,7 +308,7 @@ sequenceDiagram
 
     host -) dc: Collect results <br> sent by the connector
     dc -) host: Results from each service
-    host -) ddv: HTTP request (incl. contract) <br> or direct usage of the JS Library
+    host -) ddv: HTTP request or <br> direct usage of the JS Library
     Note over ddv: rules.json
     ddv -)  host: JavaScript Component
 ```
@@ -599,4 +583,4 @@ Such test should be done also when intergrating DDV into a host system. All the 
 
 14 : Organization B sends the data received from the data exchanges of the PDC to the Distributed Data Visualization (DDV) in xAPI format.
 
-15 : The DDV visualizes the received traces, following the custom structure defined in the configuration file *rules.json*
+15 : The DDV visualizes the received traces, following the custom structure defined in the configuration file *rules.json

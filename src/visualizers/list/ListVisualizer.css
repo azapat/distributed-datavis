@@ -1,0 +1,39 @@
+/** Item Title */
+h5.header.listElementTitle {
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+/** Item Description */
+p.listElementDescription {
+    margin-bottom: 10px;
+}
+
+/** Labels of new and existing skills */
+div.listElementNumberLine line {
+    margin-left: 5px;
+    color: rgba(0,0,0,.6);
+}
+
+
+/** Spans of new and existing skills */
+div.listElementNumberLine span {
+    margin: 10px;
+}
+
+div.sectionDivider {
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    border-bottom: 1px solid hsla(0,0%,100%,.1);
+    border-top: 1px solid rgba(34,36,38,.15);
+}
+
+div.sectionTitle {
+    font-size: 1.28em;
+    color:black;
+    font-weight: 700;
+    line-height: 1.28em;
+    font-family: sans-serif;
+    padding-bottom: 20px;
+}

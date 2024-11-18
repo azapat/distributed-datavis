@@ -1,11 +1,11 @@
 const ObjectWithProperties = require("./ObjectWithProperties");
 const Properties = require("./Properties");
-const utils = require('./utils');
+const PropertiesUtils = require('./utils');
 
 const properties = {
     ObjectWithProperties,
     Properties,
-    ...utils,
+    utils : PropertiesUtils,
 }
 
 module.exports = properties;

@@ -65,7 +65,7 @@ class Component extends ObjectWithProperties {
         this.components.mainContainer = mainContainer;
     }
 
-    draw(data){
+    _refreshComponents(){
         const { width , height , margin } = this.properties;
         const { mainContainer } = this.components;
 
@@ -76,6 +76,10 @@ class Component extends ObjectWithProperties {
             .style('padding','0px')
             .style('width',`${width}px`)
             .style('height',`${height}px`);
+    }
+
+    draw(data){
+        this._refreshComponents();
     }
 
     refresh(){

@@ -150,13 +150,6 @@ class SvgVisualization extends SvgComponent {
         this.reattach();
     }
 
-    calculateInnerSize() {
-        var { margin, width, height } = this.getProperties();
-        const innerWidth = width - margin.left - margin.right;
-        const innerHeight = height - margin.top - margin.bottom;
-        return { innerWidth , innerHeight };
-    }
-
     _setTextProperties(text) {
         var { fontSize, fontFamily } = this.getProperties();
         text
@@ -165,21 +158,21 @@ class SvgVisualization extends SvgComponent {
     }
 
     _refreshComponents() {
+        super._refreshComponents();
+
         const { mainContainer, outerSVG, innerSVG, container, background } = this.components;
         const {
-            width, height, margin, backgroundColor,
+            width, height, backgroundColor,
             maxWidth, minWidth, autoResize,enableZoom,
         } = this.properties;
-
-        const {innerWidth,innerHeight} = this.calculateInnerSize();
 
         outerSVG.attr('viewBox', `0 0 ${width} ${height}`);
 
         background.attr('fill', backgroundColor);
 
         innerSVG
-            .attr('width', innerWidth)
-            .attr('height', innerHeight);
+            .attr('width', width)
+            .attr('height', height);
 
         const minZoom = 0.03;
         const maxZoom = 2;
@@ -195,15 +188,14 @@ class SvgVisualization extends SvgComponent {
             innerSVG.call(zoom.on('zoom', null));
         }
 
-        mainContainer.style('height', height + 'px')
-            .style('width', width + 'px');
-
+        /**
         if (autoResize === true) {
             mainContainer.style('max-width', maxWidth)
                 .style('min-width', minWidth)
                 .style('height', 'unset')
                 .style('width', '100%')
         }
+        */
 
         legendUtils.initLegend(this);
         logo.refreshLogo(this);

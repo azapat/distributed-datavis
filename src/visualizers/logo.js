@@ -65,10 +65,10 @@ function initLogo(plot, imageUrl, subtitle){
 function refreshLogo(plot){
     const { outerSVG } = plot.components;
     const logoContainer =  outerSVG.selectAll('svg.logo');
-    const { width , height, margin } = plot.properties;
+    const { width , height } = plot.properties;
     const sizeImage = 80;
-    const xImage = width - margin.right - margin.left - sizeImage;
-    const yImage = height - margin.bottom - margin.top - sizeImage;
+    const xImage = width - sizeImage;
+    const yImage = height - sizeImage;
     logoContainer.attr('x', xImage).attr('y', yImage);
 }
 

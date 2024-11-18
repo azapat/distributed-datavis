@@ -2,9 +2,17 @@
 
 # Release Notes
 
-v0.1.2 (Next Release)
-* Complete Integration of Graph Series Visualizer and VisualizationGroup.
+v0.2.1 (Next Release)
+* Complete Integration of Graph Series Visualizer.
 * More detailed guides and documentation of each class
+* Linechart Visualizer implemented
+
+v0.2.0 (18/11/2024)
+* DDV supports responsive visualizations
+* Job Visualizer implemented
+* Improvements on Course Visualizer
+* Transformation functions for Jobs and Trainings follow standard formats defined in the design documents
+* Redefinition of internal sizes for SvgVisualizers
 
 v0.1.1 (10/11/2024)
 * Redefinition of the Design Document

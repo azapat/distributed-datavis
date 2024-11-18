@@ -1,8 +1,9 @@
-const SvgButton = require("../svg/SvgButton");
-const WordMapSeries = require("./WordMapSeries");
+const NavigationButtons = require("./NavigationButtons");
+const VisualizationSeries = require("./VisualizationSeries");
 
 const groups = {
-    WordMapSeries,
+    VisualizationSeries,
+    NavigationButtons,
 }
 
 module.exports = groups;

@@ -87,5 +87,5 @@ const data = ddv.data.courses.process(response, provider);
 const visualization = new ddv.visualizers.list.CourseVisualizer();
 visualization.draw(data);
 visualization.attachOn('div#courses');
-
+ddv.visualizers.responsive.enableResponsiveness(visualization);
 </script>

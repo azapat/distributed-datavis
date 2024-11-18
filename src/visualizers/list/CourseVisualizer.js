@@ -1,23 +1,18 @@
 const { ListVisualizer } = require("./ListVisualizer");
 
 import './CourseVisualizer.css';
+import './ListVisualizer.css';
 
-import * as $ from 'jquery';
 import * as bootstrap from 'bootstrap';
 import SkillsUtils from '../../data/skills.utils';
+import courses from '../../data/Courses';
+import PropertiesUtils from '../../properties/utils';
 //import * as d3 from 'd3';
 
 export class CourseVisualizer extends ListVisualizer {
     static defaultProperties = {
         width: 1000,
         lengthShortDescription: 450,
-        fields: {
-            description: 'description',
-            title: 'title',
-            newSkills: 'new_skills',
-            existingSkills: 'existing_skills',
-            url: 'url',
-        },
     }
 
     static rulesProperties = {
@@ -59,6 +54,7 @@ export class CourseVisualizer extends ListVisualizer {
         .style('padding','1.5rem');
 
         const modalDescription = modalContent.append('div').attr('class','modalDescription');
+        const modalDetails = modalContent.append('div').attr('class','modalDetails');
 
         // New Skills
         const modalNewSkillsContainer = modalContent.append('div').attr('class','modalNewSkillsContainer');
@@ -83,17 +79,17 @@ export class CourseVisualizer extends ListVisualizer {
         this.components = {
             ...this.components,
             modalDiv, modalContainer, modalTitle, modalFooter, modalDescription, modalNewSkills, modalExistingSkills, readMoreButton,
+            modalDetails,
         }
     }
 
     showModal(data){
-        const { fields } = this.properties;
+        var {
+            url, title, description, newSkills, existingSkills,
+        } = data;
 
-        const description = data[fields.description];
-        const title = data[fields.title];
-        const newSkills = data[fields.newSkills] || [];
-        const existingSkills = data[fields.existingSkills] || [];
-        const url = data[fields.url];
+        existingSkills = PropertiesUtils.normalizePropertyValue('array', existingSkills);
+        newSkills = PropertiesUtils.normalizePropertyValue('array', newSkills);
 
         const {
             modalDiv,
@@ -104,10 +100,31 @@ export class CourseVisualizer extends ListVisualizer {
             modalNewSkills,
             modalExistingSkills,
             readMoreButton,
+            modalDetails,
         } = this.getComponents();
 
         modalTitle.text(title);
         modalDescription.text(description);
+
+        /////// See list of key-values
+        const detailFields = ['code','score','normalizedScore','language','organization','duration','price'];
+        const details = [];
+        for (let i = 0; i < detailFields.length; i++) {
+            const field = detailFields[i];
+            const value = data[field];
+            if (value == null) continue;
+            if (typeof(value) === 'string' && value.trim() == '') continue;
+            const title = PropertiesUtils.propertyNameToTitle(field);
+            details.push({key:title, value: value})
+        }
+
+        // Details
+        modalDetails.selectAll('*').remove();
+        modalDetails.append('br');
+        modalDetails.selectAll('p').data(details).enter().append('p').html(
+            d => `<strong>${d.key}:</strong> ${d.value}`
+        );
+        //////////////////////////////////
 
         modalNewSkills.selectAll('button.newSkill').remove();
         modalExistingSkills.selectAll('button.existingSkill').remove();
@@ -134,6 +151,7 @@ export class CourseVisualizer extends ListVisualizer {
         readMoreButton.attr('href', url);
 
         var myModal = new bootstrap.Modal(modalDiv.node());
+
         myModal.show();
     }
 
@@ -149,6 +167,8 @@ export class CourseVisualizer extends ListVisualizer {
     }
 
     draw(data){
+        // Normalizes attribute names to camelCase
+        courses.normalize(data);
         super.draw(data);
         
         const {
@@ -194,17 +214,17 @@ export class CourseVisualizer extends ListVisualizer {
 
     drawCourses(selection){
         const {
-            fontFamily, fields, lengthShortDescription
+            fontFamily, lengthShortDescription
         } = this.getProperties();
 
         selection.on('click', (event,data)=> this.showModal(data));
 
         const title = selection.select('h5.header.listElementTitle');
-        title.text( d => d[fields.title]);
+        title.text( d => d.title);
 
         const description = selection.select('p.listElementDescription');
         description.text(d => {
-            var desc = d[fields.description] || '';
+            var desc = d.description || '';
             var shortText = desc.substring(0,lengthShortDescription);
             if (shortText.length == lengthShortDescription) shortText += '...';
             return shortText;
@@ -213,8 +233,8 @@ export class CourseVisualizer extends ListVisualizer {
         const lineStats = selection.select('div.meta.listElementNumberLine');
 
         const showSkillBookmark = (d) => (
-            (Array.isArray(d[fields.newSkills]) && d[fields.newSkills].length > 0) ||
-            (Array.isArray(d[fields.existingSkills]) && d[fields.existingSkills].length > 0)
+            (Array.isArray(d.newSkills) && d.newSkills.length > 0) ||
+            (Array.isArray(d.existingSkills) && d.existingSkills.length > 0)
         )
 
         // New Skills - Label and Icon
@@ -228,7 +248,7 @@ export class CourseVisualizer extends ListVisualizer {
 
         // Refresh Content
         lineStats.select('span.newSkills i line').text(
-            d => d[fields.newSkills].length + ' new Skills'
+            d => d.newSkills.length + ' new Skills'
         ).style('font-family',fontFamily);
 
         // Remove if refreshed data doesn't skills information
@@ -245,7 +265,7 @@ export class CourseVisualizer extends ListVisualizer {
 
         // Refresh Content
         lineStats.select('span.existingSkills i line').text(
-            d => d[fields.existingSkills].length + ' enhanced Skills'
+            d => d.existingSkills.length + ' enhanced Skills'
         ).style('font-family',fontFamily);
 
         // Remove if refreshed data doesn't skills information

@@ -1,53 +1,83 @@
 <script src="http://localhost:8080/ptx-ddv.js"></script>
-
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src='https://d3js.org/d3-hexbin.v0.2.min.js'></script>
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
-<div id="mindmap"></div>
+<div id="ddv"></div>
 
 <script>
 
 var plot = null;
 
-// Sources (Sample CV File)
-var url = 'https://megatron.headai.com/analysis/TextToGraph/TextToGraph_10wpxMCmDE1715179575391.json'
+const jobs = [
+    {
+        "url": "https://www.google.com/",
+        "author": "Sample Company",
+        "language": "English",
+        "title": "Senior Data Scientist - Expert in Language Models",
+        "description": "We require a Senior Data Scientist that has experience working with multiple language models",
+        "location": "Helsinki, Finland",
+        "time": "08/11/2024",
+        "score": 10.4,
+        "normalized_score": 0.8,
+        "matching_skills": ["language_models", "natural_language_processing", "python"],
+        "missing_skills": ["graph_neural_networks", "reinforcement_learning"]
+    }
+];
 
-const props = {
-    width: 1200,
-    height: 800,
-    fontFamily: 'arial',
-    fontSize: 20,
-    hideLegend: false,
-    backgroundColor: '#00A0A0',
-    figSize: 100,
-    centerNode: 'containers',
-    centerCameraAround: 'cuda',
-    initialZoom: 0.8,
-    actionOnClick: 'highlight',
-    colors: ['#A0A000'],
-    colorScale: 'log',
-    strokeColor: 'red',
-    showActionButtons: true,
-    relevancyMode: false,
-    onlyNearestNeighbours: false,
-    maxNodes: 20,
-    filterMinWeight: 3,
-    filterMinValue: 4,
-    onlyCompounds: true,
-    hideNodes: ['data'],
+const courses = [
+    {
+        "code": "1047-942",
+        "url": "https://www.google.com/",
+        "title": "AI for All",
+        "description": "Acquire a set of skills that will open the world of AI for your professional and personal areas.",
+        "explanation": "Skills you have: x,y,z. Skills you will get: w, z, t.",
+        "new_skills": ["model_evaluation", "ideation"],
+        "existing_skills": ["language_models","neural_networks"],
+        "interests": ["data_science", "natural_language_processing"],
+        "score": 10.4,
+        "normalized_score": 0.8,
+        "language": "English",
+        "organization": "Sample University",
+        "duration": "8 hours",
+        "price": "€ 10"
+    }
+];
+
+const rules = {
+    "visuals": [
+        {
+            "type": "Courses",
+            data: courses,
+            "title": "Course Recommendations",
+            "buttonTitle": "Courses",
+        },{
+            type: "HexagonMap",
+            url: "https://megatron.headai.com/analysis/TextToGraph/TextToGraph_10wpxMCmDE1715179575391.json",
+            properties: {"figSize":60,'backgroundColor':'gray'},
+            title: "Skills Profile",
+            buttonTitle: "Skills",
+        },{
+            "type": "Jobs",
+            data: jobs,
+            "title": "Job Recommendations",
+            "buttonTitle": "Jobs",
+        }
+    ],
+
+    "properties" : {
+        "fontSize": 14,
+        "fontFamily": "Arial",
+        'backgroundColor':'gray',
+    },
 }
 
-d3.json(url).then((json)=>{
-    const plotType = 'hexagon';
-    plot = ddv.visualizers.wordmap.buildWordMap(json, plotType, props);
-    plot.attachOn('div#mindmap')
-    plot.refresh();
-});
+visualization = new ddv.visualizers.VisualizationSeries(rules);
+visualization.attachOn('div#ddv');
+ddv.visualizers.responsive.enableResponsivenessToSeries(visualization);
+visualization.refresh();
 
 </script>

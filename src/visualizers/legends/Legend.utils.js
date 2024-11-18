@@ -128,8 +128,7 @@ function initLegend(plot) {
         .append('g')
         .attr('class', 'legend-background');
 
-    const { innerWidth } = plot.calculateInnerSize();
-    const xLegend = innerWidth;
+    const xLegend = width;
 
     var legend = function (svg) {
         const g = svg
