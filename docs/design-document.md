@@ -12,6 +12,28 @@ Distributed data visualization is a sophisticated framework designed to seamless
 
 ### Features/main functionalities
 
+* A General Framework was developed to standardize the supported data formats, the general structure of the visualizers, and the simplification of repetitive tasks during the development of new visualizers (margin / padding management, visual customization, type validation)
+
+* Implements a Properties handler that is able to normalize, transform and manage the definition of properties in the internal components (type validation / value normalization / prevent bad prop configuration / )
+
+* Provides transformation function that can normalize data formats from different providers / partners. These transformation functions can be expanded eventually if needed.
+
+* Visualize Course / Training recommendations
+
+* Visualize Job Recommendations
+
+* Visualize Graph Data as a Hexagonal Map, where user can explore the relationships between the different concepts / skills.
+
+* Build Customized Stories that integrate multiple visualizations (built from the results of 1 or more different service offerings). Story structure is defined in the configuration called *rules.json*
+
+* Easy mechanisms to customize the visual aspect of each component.
+
+* Supports Responsiveness to easily adapt each visual component to different devices and different screen sizes.
+
+* Basic Linechart implemented.
+
+* Supports the visualization of Graph Series. This visualization will be expanded and improved eventually.
+
 **User journey case 1:**
 
 Use case description, value and goal: The use case will take as basis Pino a product from Solideos used by Korean citizens to store their diploma and learning credentials. Use information from Korean users' Diploma and Transcript to match job opportunities in the EU (France). Skills data extracted from the documents will be used for service providers in the EU to recommend potential employment opportunities.
@@ -71,41 +93,47 @@ For exapmle, a LMS company using Moodle, can integrate the Distributed Data Visu
 
 **Functional requirements:**
 
-- All datasets must be ready before launching the visualizer
-- Individuals must consent to the use of their data
-- Organization must sign a contract to transfer the data
-- Distributed data visualizer is not responsible of the data, data quality and data validity. Other building blocks ensure data veracity.
-- Building block visualizes the given data without manipulations or modifications.
-- rules.json must contain all the necessary information (final results or location where they can be fetched) to visualize the user journey.
-- Further development:
-  - BB07 must be able to include new data models by simple conversion table / mapping
-  - BB07 must be able to include new visualisation scripts
+- **FR01:** All datasets must be ready before launching the visualizer
+- **FR02:** Individuals must consent to the use of their data
+- **FR03:** Organization must sign a contract to transfer the data
+- **FR04:** Distributed data visualizer is not responsible of the data, data quality and data validity. Other building blocks ensure data veracity.
+- **FR05:** Building block visualizes the given data without manipulations or modifications.
+- **FR06:** rules.json must contain all the necessary information (final results or location where they can be fetched) to visualize the user journey. Exact structure of rules.json is found at [Data Formats / rules.json](./DataFormats.md/#configuration-file-for-the-ddv-rulesjson)
+- **FR07:** Further development:
+  - **FR08:** BB07 must be able to include new data models by simple conversion table / mapping
+  - **FR09:** BB07 must be able to include new visualisation scripts
 
 **Performance requirements:**
 
-- Response time for a big visualization; 60 seconds
-- Response time for an average individual skills profile visualization; less than 1 second
+- **PR01:** Response time for a big visualization; 60 seconds
+- **PR02:** Response time for an average individual skills profile visualization; less than 1 second
 
 **Security requirements:**
 
-- DDV is not allowed to send or share data without specific consent and specific service decribed in rules.json
-- DDV is not allowed to use software libraries that may share the data
-- DDV is not allowed to store the data or collect logs about data or user identity
+- **SR01:** DDV is not allowed to send or share data without specific consent and specific service decribed in rules.json
+- **SR02:** DDV is not allowed to use software libraries that may share the data
+- **SR03:** DDV is not allowed to store the data or collect logs about data or user identity
 
 **Dependability requirements:**
 
-In case of incomplete rules.json or data the DDV closes the process and returns error message.
+**DR01:** In case of incomplete rules.json or data the DDV closes the process and returns error message.
 
 **Operational requirements:**
 
-- DDV requires minimum memory and minimum CPU time, which will be defined later.
-- Host system must support JavaScript.
+- **OR01:** DDV requires a minimum memory of 30MB and a mimimum CPU time of 0.1 seconds. The exact consumptions will vary depending on the number of visualizations of each story and the size of the data in each moment of the story.
+- **OR02:** Host system must support JavaScript.
 
 ## Integrations
 
 ### Direct Integrations with Other BBs
 
 There is no direct integrations with other BBs.
+
+### Integration with the Data Space Connector
+
+DDV does not have a direct integration with the Data Space Connector.
+
+DDV Building Block provides mechanisms to ease up the process of data visualization. It is designed as an independent component that can be imported and used in multiple platforms. Each Service Consumers must perform their respective data exchanges. Once data is acquired by the service consumer, Distributed Data Visualizer can be used to build a story integrating data from multiple exchanges.
 
 ## Relevant Standards
 
@@ -322,6 +350,21 @@ Configuration of the BB07 can be done in three places
 - parameters passed to the Visualization constructors or builders in case that Host Provider is using the JS Library directly (see section [Input / Output Data](#input--output-data)).
 
 The given parameters follow REST-API type of GET parameters, so only values that could be publicly seen or strongly encrypted values are allowed.
+
+### Error Scenarios
+
+#### Incorrect data format
+
+The configuration file called[rules.json](./DataFormats.md/#configuration-file-for-the-ddv-rulesjson) follows a specific format. The absence of a mandatory field aborts the process of visualization and displays a warning message in the screen.
+
+#### Invalid or Unaccesible Data URL
+
+DDV consumer may define URLs that are not accesible without Authentication methods (E.j HTTP 404 / HTTP 403 Errors) or URLs with incorrect formatting. In these cases, DDV will show a warning message specifying that resources could not be fetched.
+
+#### Size of the input data incompatible with available computational resources
+
+Complexity to process and render Graphs (Digital Twins) will depend on the number of nodes, and the level of interconectivity between them (edges). Maps with more than 5000 nodes and huge level of interconnectivity may start being difficult to be processed in conventional computers.
+
 
 ## Third Party Components & Licenses
 
