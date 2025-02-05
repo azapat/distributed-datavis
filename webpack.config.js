@@ -4,9 +4,17 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
+
+  performance: {
+    hints: false
+  },
   
   devServer: {
-    allowedHosts: "all"
+    allowedHosts: "all",
+    static: { 
+      directory: path.resolve(__dirname, './test'), 
+      publicPath: '/test'
+    }
   },
   
   mode: 'production',

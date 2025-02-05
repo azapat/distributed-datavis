@@ -39,8 +39,9 @@ function normalizeData(data, visualType, provider){
 }
 
 function buildVisualization(visualInfo){
-    var { type, provider, props, data } = visualInfo;
+    var { type, provider, properties, data } = visualInfo;
     type = normalizeType(type);
+    var props = properties;
     data = normalizeData(data, type, provider);
 
     var visual = null;
