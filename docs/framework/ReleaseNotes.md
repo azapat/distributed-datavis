@@ -2,10 +2,15 @@
 
 # Release Notes
 
-v0.2.1 (Next Release)
+v0.3.0 (Next Release)
 * Complete Integration of Graph Series Visualizer.
 * More detailed guides and documentation of each class
 * Linechart Visualizer implemented
+
+v0.2.1 (05/02/2024)
+* HotFix: Bug with custom properties in rules.json
+* Improved main mardown file
+* Serve test files automatically in dev environment
 
 v0.2.0 (18/11/2024)
 * DDV supports responsive visualizations
