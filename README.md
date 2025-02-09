@@ -15,6 +15,10 @@ To compress all the source files (.js and .css) into one single .js file, you mu
     npm install
     npx webpack-cli
 
+The previous command will compile a JS file that can be imported and processed by the browser. If you want to create a JS file that can be imported in an existing NodeJS project, you can execute:
+
+    npx webpack-cli --mode production --target node
+
 ## Running instructions
 
 You can serve the library for testing and development executing the following commands:
@@ -36,3 +40,11 @@ Send the following requests to the designated endpoints:
 | /test/DDV.html        |               | Sample visualization with Course Recommendations, 1 Digital Twin and Job Recommendations                 |
 
 Any HTML file that is present in the /test folder will be automatically served by webpack.
+
+## Automated Tests
+
+You can execute the unitary tests and the functional tests of the project with the following command:
+
+```
+npm test
+```
