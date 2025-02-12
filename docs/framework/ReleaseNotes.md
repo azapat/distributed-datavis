@@ -7,6 +7,9 @@ v0.3.0 (Next Release)
 * More detailed guides and documentation of each class
 * Linechart Visualizer implemented.
 
+v0.2.3 (12/02/2025)
+* Application was containerized to guarantee reproducibility
+
 v0.2.2 (09/02/2025)
 * Added automated Tests using Jest.
 * Defined file structure and dependencies for unitary and functional tests.
