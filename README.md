@@ -63,3 +63,12 @@ You can access the components directly by accessing the following routes:
 
 Any HTML file that is present in the /test folder will be automatically served by webpack.
 
+## Unit testing
+### Setup test environment
+### Run tests
+### Expected results
+
+## Component-level testing
+### Setup test environment
+### Run tests
+### Expected results
