@@ -29,7 +29,17 @@ class SvgVisualization extends SvgComponent {
     }
 
     static rulesProperties = {
+        disableSaveButtons: {type:'boolean'},
+        enableAutoResize: {type:'boolean'},
+        enableZoom: {type:'boolean'},
+        valueField: {type:'string'},
+        initialZoom: {type:'number'},
+        parentHtmlTag: {type:'string'},
+
         colors: {type:'array',subtype:'string'},
+        colorScale: {type:'string'},
+        actionOnClick: {type:'string'},
+        hideLegend: {type:'boolean'},
     }
 
     defineSetters(){

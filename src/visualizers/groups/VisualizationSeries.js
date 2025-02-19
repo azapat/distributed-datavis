@@ -42,11 +42,12 @@ class VisualizationSeries extends Component {
 
     _calculateButtonProperties(){
         const { buttonsHeight } = this.calculateHeight();
-        const { width } = this.properties;
+        const { width , activeColor, inactiveColor } = this.properties;
         const props = {
             height: buttonsHeight,
             width: width,
             activeIndex: this.data,
+            activeColor, inactiveColor,
         }
         return props;
     }

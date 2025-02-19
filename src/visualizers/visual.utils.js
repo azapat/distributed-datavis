@@ -11,14 +11,14 @@ function getSplittedText(text, width, textObject) {
     while (word = words.pop()) {
         line.push(word);
         tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
+        if (getComputedTextLength(tspan) > width) {
             if (line.length > 1) {
                 line.pop();
                 splittedText.push(line.join(' '));
                 line = [word];
                 tspan.text('');
             }
-            if (tspan.node().getComputedTextLength() > width && line.length === 1) {   // Only one word
+            if (getComputedTextLength(tspan) > width && line.length === 1) {   // Only one word
                 var length = word.length;
                 var i = length - 1;
                 line.pop();
@@ -27,7 +27,7 @@ function getSplittedText(text, width, textObject) {
                     var remain = word.substring(i, length);
                     tspan.text(subWord);
                     i--;
-                } while (tspan.node().getComputedTextLength() > width && i > 0);
+                } while (getComputedTextLength(tspan) > width && i > 0);
                 words.push(remain);
                 splittedText.push(subWord);
                 line = [];
@@ -40,6 +40,12 @@ function getSplittedText(text, width, textObject) {
     }
     textObject.select('tspan#_TEMPORAL').remove();
     return splittedText;
+}
+
+function getComputedTextLength(selection){
+    const text = selection.node().textContent;
+    const charWidth = 7;
+    return (text || "").length * charWidth;
 }
 
 function wrapLines(text, width) {
@@ -61,7 +67,7 @@ function wrapLines(text, width) {
         while (word = words.pop()) {
             line.push(word);
             tspan.text(line.join(" "));
-            if (tspan.node().getComputedTextLength() > width) {
+            if (getComputedTextLength(tspan) > width) {
                 if (line.length > 1) {
                     line.pop();
                     tspan.text(line.join(" "));
@@ -71,7 +77,7 @@ function wrapLines(text, width) {
                         //.attr("y", y)
                         .attr("dy", lineHeight + "em").text(word);
                 }
-                if (tspan.node().getComputedTextLength() > width && line.length === 1) {   // Only one word
+                if (getComputedTextLength(tspan) > width && line.length === 1) {   // Only one word
                     var length = word.length;
                     var i = length - 1;
                     line.pop();
@@ -80,7 +86,7 @@ function wrapLines(text, width) {
                         var remain = word.substring(i, length);
                         tspan.text(subWord);
                         i--;
-                    } while (tspan.node().getComputedTextLength() > width && i > 0);
+                    } while (getComputedTextLength(tspan) > width && i > 0);
                     words.push(remain);
                     line = [];
                     tspan = text.append("tspan")

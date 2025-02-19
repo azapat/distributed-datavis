@@ -21,8 +21,16 @@ function removeDictionaryKeys(dict, keys){
     }
 }
 
+function cleanDictionary(dict){
+    return Object.fromEntries(
+        Object.entries(dict).filter(([_, v]) => v != null)
+    );
+}
+
 function mergeDictionaries(dict1, dict2){
     const merge = {};
+    dict1 = cleanDictionary(dict1);
+    dict2 = cleanDictionary(dict2);
     Object.assign(merge, dict1);
     Object.assign(merge, dict2);
     return merge;
@@ -148,6 +156,7 @@ function normalizePropertyValue(type,value){
 const PropertiesUtils = {
     VALID_TYPES,
     removeDictionaryKeys,
+    cleanDictionary,
     mergeDictionaries,
     mergeProperties,
     dictionaryChanged,

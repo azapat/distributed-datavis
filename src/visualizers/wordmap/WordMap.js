@@ -16,12 +16,32 @@ class WordMap extends SvgVisualization {
         defaultCamera: true,
         showActionButtons: true,
 
+        nameField: 'label',
         categoryField: 'group',
         sourceField: 'sources',
         valueFieldToShow: 'value',
         timeSeriesField: 'values',
         centerCameraAround: null,
         centerNode: null,
+        strokeWidth: 3,
+        strokeColor: '#000000',
+    }
+
+    static rulesProperties = {
+        hideNumber: {type:'boolean'},
+        figSize: {type:'number'},
+        showZoomButtons: {type:'boolean'},
+        mouseOver: {type:'boolean'},
+        defaultCamera: {type:'boolean'},
+        showActionButtons: {type:'boolean'},
+
+        nameField: {type:'string'},
+        categoryField: {type:'string'},
+        sourceField: {type:'string'},
+        valueFieldToShow: {type:'string'},
+        timeSeriesField: {type:'string'},
+        strokeWidth: {type:'number'},
+        strokeColor: {type:'string'},
     }
 
     // Initialize Attributes
@@ -32,7 +52,7 @@ class WordMap extends SvgVisualization {
         super.defineSetters();
         this.afterSetters.showActionButtons = (v)=>this.showActionButtons.call(this,v);
         this.customSetters.centerNode = (v)=>this.setCenterNode.call(this,v);
-        this.customSetters.colors = (v)=>this.setColors.call(this,v);
+        //this.customSetters.colors = (v)=>this.setColors.call(this,v);
         this.customSetters.actionOnClick = (action) => interaction.changeOnClickAction(this, action);
     }
 

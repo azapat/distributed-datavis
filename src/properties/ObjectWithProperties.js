@@ -1,5 +1,5 @@
 const Properties = require('./Properties');
-const { mergeDictionaries, removeDictionaryKeys } = require('./utils');
+const { mergeDictionaries, removeDictionaryKeys, cleanDictionary } = require('./utils');
 
 class ObjectWithProperties {
     #properties = null;
@@ -53,6 +53,7 @@ class ObjectWithProperties {
      * @param {*} customProps 
      */
     #initProperties(customProps){
+        customProps = cleanDictionary(customProps);
         var defaultProperties = this.constructor.getDefaultProperties() || {};
         // defaultProperties should stay inmutable
         defaultProperties = { ...defaultProperties };
