@@ -18,5 +18,7 @@ COPY webpack.config.js jest.config.js /app/
 # Expose the port Webpack will serve on
 EXPOSE 8080
 
+RUN npm run build
+
 # Run Webpack Dev Server
 CMD ["npx", "webpack-cli", "serve", "--mode", "production"]

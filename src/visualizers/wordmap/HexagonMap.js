@@ -6,14 +6,15 @@ const logo = require("../logo");
 
 class HexagonMap extends WordMap {
     static defaultProperties = {
-        strokeWidth: 3,
-        strokeColor: '#000000',
         figSize: 70,
         spaceBetweenFigures: 0.5,
         width: 800,
         height: 600,
         enableZoom: true,
-        nameField: 'label',
+    }
+
+    static rulesProperties = {
+        spaceBetweenFigures: {type:'number'},
     }
 
     constructor(plotId, props) {

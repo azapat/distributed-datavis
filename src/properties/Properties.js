@@ -26,14 +26,15 @@ class Properties {
                 
                 const customSetter = this.customSetters[key];
                 const afterSetter = this.afterSetters[key];
+                const ruleType = this.rules[key]?.type;
 
                 var success = true;
 
                 if (typeof(customSetter) == "function"){
                     success = (customSetter(value) == true);
-                }  else if (this.rules[key]?.type == 'dictionary'){
+                }  else if (ruleType == 'dictionary'){
                     this.#setterDictionary(key, value);
-                } else if (this.rules[key]?.type == 'array'){
+                } else if (ruleType == 'array'){
                     this.#setterArray(key, value);
                 } else {
                     target[key] = value;
@@ -78,11 +79,10 @@ class Properties {
     }
 
     ruleIsValid(key, value){
-        if (this.rules.hasOwnProperty(key)){
-            const typeIsValid = this._validateRuleType(key,value);
-            return typeIsValid === true;
-        }
-        return true;
+        if (!this.rules.hasOwnProperty(key)) return true;
+        const typeIsValid = this._validateRuleType(key,value);
+        return typeIsValid === true;
+        
     }
 
     #normalizeValue(key,value){
@@ -125,6 +125,7 @@ class Properties {
 
     setProperties(newProps){
         const changes = {};
+        newProps = PropertiesUtils.cleanDictionary(newProps);
         const propNames = Object.keys(newProps);
     
         for (let i = 0; i < propNames.length; i++) {
@@ -145,6 +146,8 @@ class Properties {
         delete properties.afterSetters;
         delete properties.customSetters;
         delete properties.This;
+        delete properties.rules;
+        return properties;
     }
 
     valueChanged(key, oldValue, newValue){

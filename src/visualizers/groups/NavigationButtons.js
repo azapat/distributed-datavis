@@ -14,6 +14,8 @@ class NavigationButtons extends SvgComponent{
 
     static rulesProperties = {
         activeIndex: { type : 'number' },
+        activeColor: {type:'string'},
+        inactiveColor: {type:'string'},
     }
 
     constructor(data,props){

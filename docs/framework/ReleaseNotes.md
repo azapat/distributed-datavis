@@ -7,6 +7,12 @@ v0.3.0 (Next Release)
 * More detailed guides and documentation of each class
 * Linechart Visualizer implemented.
 
+v0.2.4 (18/02/2025)
+* Defined basic structure for automatized tests.
+* BugFix: Error when initial properties had invalid values.
+* BugFix: Prevents invalid values to override initial values during dictionary merging.
+* Defined type rules for many visual properties.
+
 v0.2.3 (12/02/2025)
 * Application was containerized to guarantee reproducibility
 

@@ -8,6 +8,7 @@ class SvgComponent extends Component {
 
     static rulesProperties = {
         innerMargin: { type: 'dictionary' , subtype: 'number' },
+        containerTag: {type: 'string'},
     };
 
 
