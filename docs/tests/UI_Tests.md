@@ -29,11 +29,13 @@ These files are served in the development environment via Webpack. You can acces
 | Test Case ID | TC003 |
 | --- | --- |
 | Description | Validate group selection |
-| Expected Action | Click on the button for group selection, which is represented by the button with the folder (🗂️). After that, you must click in the legend section, removing the |
-| Expected Result | The concepts present in the Hexagon Map should reorganize around the "Human" concept. The background of the "Human" hexagon should blink, oscilating between black, orange and white. The only two concepts that should have a direct connection with Human are "Monkey" and "Mammal". There must be a black division that separates "Human" from "Whale" and "Horse". |
+| Expected Action | Click on the button for group selection, which is represented by the button with the folder (🗂️). After that, you must click in the legend section, removing the groups 2 and 3- |
+| Expected Result | The HexagonMap refreshes showing exclusivelly 7 green concepts: Bear, Panda, Monkey, Mammal, Horse, Dolphin and Whale. |
 | Actual Outcome |  |
-| Status | THIS FUNCTIONALITY REQUIRES A FIX IN THE NEXT RELEASE. |
+| Status |  |
 | Comments |  |
+
+![](./UI_TC_002_MinimalWordMap.png)
 
 | Test Case ID | TC004 |
 | --- | --- |
