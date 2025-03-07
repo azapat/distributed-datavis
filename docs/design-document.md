@@ -429,14 +429,6 @@ Black Box Testing: This approach focuses on testing software functionality witho
 
 Automated Testing Routines: Automating the execution of repetitive but essential test cases ensures comprehensive coverage, consistency in test execution, and efficient use of resources.
 
-**Introduction of the tools used**
-
-Headai Quality Assurance Framework for AI: 100% proprietary testing infrastructure for Natural Language Processing development. This framework facilitates the creation of repeatable automated tests in the Java environment. In particular, the attention is on backend testing, service-level testing, and integration testing, offering features for assertions, test grouping, and test lifecycle management. This framework has dashboards and reporting tools integrated with the testing tool to monitor test executions, outcomes, and performance trends over time.
-
-Selenium: For web-based applications, Selenium automates browsers, enabling the testing of web applications across various browsers and platforms. It's instrumental in performing end-to-end functional testing and verifying the correctness of web elements and response times.
-
-Postman: For RESTful APIs, Postman allows the execution of API requests to validate responses, status codes, and response times. It supports automated testing through scripting and collection runners, making it ideal for testing API endpoints.
-
 By combining black box testing with automated routines, this test plan will fully meet the requirements of the Distributed Data Visualization (“DDV”) block including but not restricted to its:
 
 - Functional requirements
