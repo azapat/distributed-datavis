@@ -1,4 +1,5 @@
 const ObjectWithProperties = require("../../properties/ObjectWithProperties");
+const SkillsUtils = require("../skills.utils");
 const DigitalTwinProcessing = require("./DigitalTwinProcessing");
 const shrink = require("./shrink");
 
@@ -26,6 +27,7 @@ getNodeInfoByLabel(label)
         maxNodes: null,
         valueField: 'value',
         hideNodes: [],
+        subgraph: null,
     }
 
     static rulesProperties = {
@@ -36,6 +38,12 @@ getNodeInfoByLabel(label)
         maxNodes: {type:'number'},
         valueField: {type:'string'},
         hideNodes: {type:'array', subtype:'string'},
+        subgraph: {type:'string'},
+    }
+
+    defineSetters(){
+        super.defineSetters();
+        this.customSetters.subgraph = (v)=>this.setSubgraph.call(this,v);
     }
 
     constructor(json, props){
@@ -248,7 +256,7 @@ getNodeInfoByLabel(label)
 
     #filterData(){
         const {
-            filterMinValue , filterMinWeight , filterGroups, onlyCompounds, hideNodes,
+            filterMinValue , filterMinWeight , filterGroups, onlyCompounds, hideNodes, subgraph
         } = this.getProperties();
 
         var { nodes , edges } = this.getOriginalData();
@@ -257,6 +265,10 @@ getNodeInfoByLabel(label)
         const weightFilterIsActive = (filterMinWeight > 0);
         const groupFilterIsActive = (filterGroups.length > 0);
         const hideNodesIsActive = (hideNodes.length > 0);
+        const subgraphId = nodes.find((d)=>d.label == subgraph)?.id;
+        const subgraphIsActive = (subgraphId != null);
+        console.log({subgraphId,subgraphIsActive});
+        const subgraphIds = this.#getRelatedIds(subgraphId, edges);
 
         const filteredNodes = [];
         const filteredEdges = [];
@@ -281,6 +293,9 @@ getNodeInfoByLabel(label)
             if (weightFilterIsActive && weight < filterMinWeight) continue;
             if (onlyCompounds && !DigitalTwinProcessing.isCompound(label)) continue;
             if (hideNodesIsActive && hideNodes.includes(label)) continue;
+            if (subgraphIsActive && !subgraphIds.includes(id)) continue; // Id belongs to the subgraph filter
+
+            // Filter if subgraph is active
             
             filteredNodes.push(node);
             filteredIds.add(id)
@@ -296,6 +311,19 @@ getNodeInfoByLabel(label)
         return filteredData;
     }
 
+    #getRelatedIds(id, edges){
+        var ids = new Set();
+        for (let i = 0; i < edges.length; i++) {
+            const edge = edges[i];
+            const from = edge['from'];
+            const to = edge['to'];
+            if (from == id) ids.add(to);
+            if (to == id) ids.add(from);
+        }
+        ids = Array.from(ids);
+        return ids;
+    }
+
     #processNeighbors(){
         const { edges , idToIndex } = this.getData();
 
@@ -307,6 +335,11 @@ getNodeInfoByLabel(label)
             idToIndex[from].add(to);
             idToIndex[to].add(from);
         }
+    }
+
+    setSubgraph(subgraph){
+        subgraph = SkillsUtils.normalizeSkill(subgraph);
+        this.properties.initializeProperty('subgraph',subgraph);
     }
 }
 

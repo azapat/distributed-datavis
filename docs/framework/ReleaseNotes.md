@@ -7,10 +7,15 @@ v0.3.0 (Next Release)
 * More detailed guides and documentation of each class.
 * Linechart Visualizer implemented.
 
+v0.2.7
+* Added new Property for the Graph Management: Subgraph, which reduces the graph to the neighbourhood of the given concept.
+* Added normalizeSkill function under SkillsUtils.
+
 v0.2.6
 * Implemented automated parsing for URL parameters
 * Added a rules.json automatic builder for Single Maps
 * BugFix: Merge dictionaries when adding custom rules to Properties
+* BugFix: Multiple type validations and type normalizations in Visual Properties
 * URL Parameter Processing implemented as reusable Utils
 
 v0.2.5
