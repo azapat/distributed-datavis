@@ -1,7 +1,6 @@
 const LegendUtils = require("../legends/Legend.utils");
 const legendUtils = require("../legends/Legend.utils");
 const logo = require("../logo");
-const ButtonsUtils = require("./buttons.utils");
 const SvgComponent = require("./SvgComponent");
 
 class SvgVisualization extends SvgComponent {
@@ -26,6 +25,7 @@ class SvgVisualization extends SvgComponent {
         uniqueName: null,
         initialPosition: [0, 0],
         hideLegend: false,
+        legends: [],
     }
 
     static rulesProperties = {
@@ -40,11 +40,13 @@ class SvgVisualization extends SvgComponent {
         colorScale: {type:'string'},
         actionOnClick: {type:'string'},
         hideLegend: {type:'boolean'},
+        legends: {type:'dictionary', subtype:'string'},
     }
 
     defineSetters(){
         super.defineSetters();
         this.afterSetters.hideLegend = (v) => this.hideLegend.call(this,v);
+        this.customSetters.legends = (v) => this.setLegend.call(this,v);
     }
 
     constructor(props) {
@@ -243,7 +245,7 @@ class SvgVisualization extends SvgComponent {
     }
 
     setLegend(legends){
-        this._legends = legends;
+        this.properties.initializeProperty('legends', legends);
         legendUtils.initLegend(this);
     }
 

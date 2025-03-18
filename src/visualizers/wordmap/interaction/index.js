@@ -25,6 +25,7 @@ function removeDictFromList(list, key, value){
 
 function getButtonDetails(plot){
     var details = [];
+    const { legends } = plot.properties;
 
     var detailsMainButtons = [
         {
@@ -69,7 +70,7 @@ function getButtonDetails(plot){
             char: '🗂️',
             hover: 'Choose which groups do you want to visualizer',
             action: ()=>{
-                if (plot._legends.length == 0) return;
+                if (legends.length == 0) return;
                 hideButtons(plot,MAIN_MENU_BUTTONS,0);
                 showButtons(plot,['exitSelectGroupsButton'],500);
                 LegendUtils.showButtonsLegend(plot);
@@ -95,10 +96,10 @@ function getButtonDetails(plot){
         }
     ];
 
-    const {sourceField,timeSeriesField} = plot.getProperties();
+    const { sourceField , timeSeriesField } = plot.getProperties();
     const sourcesFirstElement = plot.getData()?.at(0)[sourceField];
     const valuesFirstElement = plot.getData()?.at(0)[timeSeriesField];
-    const hasOneCategory = (Object.keys(plot._legends).length < 2) || (Object.keys(plot._groupToColorIndex).length < 2);
+    const hasOneCategory = (Object.keys(legends).length < 2) || (Object.keys(plot._groupToColorIndex).length < 2);
     const hasSources = Array.isArray(sourcesFirstElement);
     const hasTimeSeries = Array.isArray(valuesFirstElement);
     const hasRelations = plot.digitalTwin.nodesHaveRelations == true;

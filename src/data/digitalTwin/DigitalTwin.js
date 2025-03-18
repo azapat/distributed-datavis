@@ -28,6 +28,16 @@ getNodeInfoByLabel(label)
         hideNodes: [],
     }
 
+    static rulesProperties = {
+        onlyCompounds: {type:'boolean'},
+        filterMinWeight: {type:'number'},
+        filterMinValue: {type:'number'},
+        filterGroups: {type:'array', subtype:'number'},
+        maxNodes: {type:'number'},
+        valueField: {type:'string'},
+        hideNodes: {type:'array', subtype:'string'},
+    }
+
     constructor(json, props){
         super(props);
         this.originalData = JSON.parse(JSON.stringify(json));

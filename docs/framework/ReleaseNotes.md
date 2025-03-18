@@ -4,8 +4,14 @@
 
 v0.3.0 (Next Release)
 * Complete Integration of Graph Series Visualizer.
-* More detailed guides and documentation of each class
+* More detailed guides and documentation of each class.
 * Linechart Visualizer implemented.
+
+v0.2.6
+* Implemented automated parsing for URL parameters
+* Added a rules.json automatic builder for Single Maps
+* BugFix: Merge dictionaries when adding custom rules to Properties
+* URL Parameter Processing implemented as reusable Utils
 
 v0.2.5
 * BugFix: Action buttons were not visible during group selection.

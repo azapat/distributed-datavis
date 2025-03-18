@@ -1,3 +1,5 @@
+const { validateType, normalizePropertyValue } = require("../../properties/utils");
+
 function getSelectedGroups(plot) {
     const { legendContainer } = plot.components;
     const legends = legendContainer.selectAll('g.legendSelectButton');
@@ -36,14 +38,12 @@ function showButtonsLegend(plot) {
 }
 
 function initButtonsLegend(plot) {
-    const legends = plot._legends;
-
     const {
-        width, fontSize
+        width, fontSize, legends
     } = plot.getProperties();
 
     if (legends == null || Array.isArray(legends)) return;
-    const groups = Object.keys(plot._legends);
+    const groups = Object.keys(legends);
 
     const { innerSVG, legendContainer } = plot.components;
     var legendFontSize = fontSize + 2;
@@ -100,15 +100,14 @@ function initButtonsLegend(plot) {
    */
 function initLegend(plot) {
     const {
-        width, fontFamily, fontSize
+        width, fontFamily, fontSize, legends,
     } = plot.getProperties();
     const { outerSVG } = plot.components;
 
     if (outerSVG == null) return;
 
-    const legends = plot._legends;
     if (legends == null || Array.isArray(legends)) return;
-    const groups = Object.keys(plot._legends);
+    const groups = Object.keys(legends);
 
     var legendFontSize = fontSize + 2;
 
@@ -196,6 +195,39 @@ function showLegend(plot){
     legendContainer.style('display', 'unset');
 }
 
+function preprocessLegend(props, json){
+    var { legends } = props;
+    const nodes = json.nodes;
+    const isDictionary = validateType('dictionary', legends);
+    if (isDictionary) return;
+
+    const newLegends = {};
+    legends = normalizePropertyValue('array',legends);
+    if (legends.length == 0) return;
+    console.log({legends, g2m:this.graphToMap}, this);
+    const groupIds = getGroups(nodes);
+    for (let i = 0; i < groupIds.length; i++) {
+        const key = groupIds[i];
+        const value = legends.at(i) || '';
+        newLegends[key] = value
+    }
+    
+    json['legends'] = newLegends;
+}
+
+function getGroups(nodes, categoryField){
+    categoryField = categoryField || 'group';
+    var groups = [];
+
+    for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        const group = node[categoryField];
+        if (!groups.includes(group)) groups.push(group)
+    }
+    groups = groups.sort();
+    return groups;
+}
+
 const LegendUtils = {
     initLegend,
     initButtonsLegend,
@@ -204,6 +236,8 @@ const LegendUtils = {
     getSelectedGroups,
     hideLegend,
     showLegend,
+    preprocessLegend,
+    getGroups,
 }
 
 module.exports = LegendUtils;

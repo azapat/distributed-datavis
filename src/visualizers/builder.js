@@ -63,8 +63,27 @@ function buildVisualization(visualInfo){
     return visual;
 }
 
+function buildRulesForSingleMap(params){
+    const jsonUrl = params['jsonUrl'];
+
+    const rules = {
+        visuals: [
+            {
+                type: 'HexagonMap',
+                url: jsonUrl,
+                properties: params,
+            }
+        ],
+    
+        'properties' : {showTitle:false, showButtons:false},
+    }
+
+    return rules;
+}
+
 const builder = {
     buildVisualization,
+    buildRulesForSingleMap,
 }
 
 module.exports = builder;

@@ -1,5 +1,4 @@
 const PropertiesUtils = require("./utils");
-const { mergeDictionaries } = require("./utils");
 
 const skipFields = ['rules','This','customSetters','afterSetters'];
 
@@ -19,7 +18,7 @@ class Properties {
             },
             set: (target, key, value)=>{
                 if (skipFields.includes(key)) return true;
-                value = this.#normalizeValue(key,value);
+                value = this.normalizeValue(key,value);
                 if (!target.ruleIsValid(key,value)) return true;
                 // Prevents executing custom setter if value ha not been modified
                 if (target[key] === value) return true;
@@ -85,7 +84,7 @@ class Properties {
         
     }
 
-    #normalizeValue(key,value){
+    normalizeValue(key,value){
         if (value === null || value === undefined) return null;
         const rule = this.rules[key];
         if (rule == null) return value;
@@ -104,7 +103,7 @@ class Properties {
     addRules(rules){
         if (Array.isArray(rules)) return;
         if (typeof(rules) !== "object") return;
-        this.rules = mergeDictionaries(this.rules, rules);
+        this.rules = PropertiesUtils.mergeDictionaries(this.rules, rules);
         // Initialize certain values
         Object.keys(rules).forEach((prop)=>{
             const type = rules[prop].type;
