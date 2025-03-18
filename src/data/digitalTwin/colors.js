@@ -11,6 +11,8 @@ function setColorsToMindMap(plot){
 function generateColorsForPlot(plot){
     if (plot == null) return [];
     const colors = plot.properties.colors;
+    const hasCustomColors = plot.properties.hasCustomColors;
+    if (hasCustomColors === true) return colors;
     const groupField = plot.properties.categoryField;
     const categoryCount = {};
     var newColors = [];

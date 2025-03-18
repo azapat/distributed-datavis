@@ -86,6 +86,15 @@ class ObjectWithProperties {
         rulesProperties = mergeDictionaries(defaultParent, rulesProperties);
         return rulesProperties;
     }
+
+    static normalizeDictionary(props, propNames){
+        const rules = this.getRulesProperties();
+        var tmpProps = new Properties(rules);
+        propNames.forEach((propName)=>{
+            const value = tmpProps.normalizeValue(props[propName]);
+            props[propName] = value;
+        });
+    }
 }
 
 module.exports = ObjectWithProperties;

@@ -56,7 +56,7 @@ function validateType(type, value){
     switch (type) {
         case 'dictionary':
             const isArray = Array.isArray(value);
-            const isObject = value.constructor === Object;
+            const isObject = value?.constructor === Object;
             return !isArray && isObject;
         case 'array':
             return Array.isArray(value);
@@ -94,12 +94,14 @@ function normalizeValue(type, value){
         case 'boolean':
             if (isBoolean) return value;
             if (isString){
-                value = value.toLowerCase()
+                value = value.toLowerCase();
                 if (value === 'true') return true;
                 if (value === 'false') return false;
                 return null;
             }
             return null;
+        case 'array':
+            return normalizeToArray(value);
         default:
             return value;
     }
@@ -143,13 +145,27 @@ function normalizePropertyValue(type,value){
 
     switch (type) {
         case "array":
-            return [];
+            return normalizeToArray(value);
         case "string":
             return "";
         case "dictionary":
             return {};
         default:
             return null;
+    }
+}
+
+function normalizeToArray(value){
+    const defaultValue = [];
+    if (Array.isArray(value)){
+        return value;
+    } else if (typeof(value) == "string") {
+        if (value.trim().length == 0) return defaultValue;
+        var values = value.split(',');
+        values = values.map(str => str.trim());
+        return values;
+    } else {
+        return defaultValue;
     }
 }
 

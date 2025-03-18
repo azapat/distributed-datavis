@@ -2,6 +2,7 @@ const interaction = require("./interaction");
 const SvgVisualization = require("../svg/SvgVisualization");
 const VisualUtils = require("../visual.utils");
 const ButtonsUtils = require("../svg/buttons.utils");
+const { getGroups } = require("../legends/Legend.utils");
 
 /**
  * @abstract class
@@ -25,6 +26,7 @@ class WordMap extends SvgVisualization {
         centerNode: null,
         strokeWidth: 3,
         strokeColor: '#000000',
+        hasCustomColors: false,
     }
 
     static rulesProperties = {
@@ -42,6 +44,7 @@ class WordMap extends SvgVisualization {
         timeSeriesField: {type:'string'},
         strokeWidth: {type:'number'},
         strokeColor: {type:'string'},
+        hasCustomColors: {type:'boolean'},
     }
 
     // Initialize Attributes
@@ -52,7 +55,7 @@ class WordMap extends SvgVisualization {
         super.defineSetters();
         this.afterSetters.showActionButtons = (v)=>this.showActionButtons.call(this,v);
         this.customSetters.centerNode = (v)=>this.setCenterNode.call(this,v);
-        //this.customSetters.colors = (v)=>this.setColors.call(this,v);
+        this.customSetters.colors = (v)=>this.setColors.call(this,v);
         this.customSetters.actionOnClick = (action) => interaction.changeOnClickAction(this, action);
     }
 
@@ -156,12 +159,7 @@ class WordMap extends SvgVisualization {
     _initColorIndices() {
         if (this.graphToMap == null) return;
         this._groupToColorIndex = {};
-        const { categoryField } = this.getProperties();
-        const groups = [];
-        this.graphToMap.getLocatedNodes().forEach(function (d) {
-            const group = d[categoryField];
-            if (!groups.includes(group)) groups.push(group)
-        });
+        const groups = getGroups(this.graphToMap.getLocatedNodes(), this.properties.categoryField);
         this.#initColorIndicesAux(groups);
     }
 
@@ -183,7 +181,15 @@ class WordMap extends SvgVisualization {
     }
 
     setColors(colors){
+        for (let i = 0; i < colors.length; i++) {
+            var color = colors[i];
+            const colorNeedsHashtag = /^[A-Fa-f0-9]{6}$/.test(color);
+            if (colorNeedsHashtag){
+                colors[i] = '#' + color;
+            }
+        }
         this.properties.initializeProperty('colors',colors);
+        this.properties.initializeProperty('hasCustomColors',true);
     }
 
     setCenterNode(centerLabel) {

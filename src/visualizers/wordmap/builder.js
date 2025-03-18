@@ -5,7 +5,8 @@ const HexagonMap = require("./HexagonMap");
 const DigitalTwinProcessing = require("../../data/digitalTwin/DigitalTwinProcessing");
 const { HexagonMapWithTimeSeries } = require("./HexagonMapWithTimeSeries");
 const colors = require("../../data/digitalTwin/colors");
-const WordMapUtils = require("./utils");
+const { normalizeValue } = require("../../properties/utils");
+const { preprocessLegend } = require("../legends/Legend.utils");
 
 function buildWordMap(json, plotType = 'hexagon', props = {}) {
     var plotType = plotType.toLowerCase();
@@ -13,6 +14,9 @@ function buildWordMap(json, plotType = 'hexagon', props = {}) {
     if (props == null || props.constructor.name != 'Object') {
         props = {}
     }
+
+    props['onlyNearestNeighbours'] = normalizeValue('boolean',props['onlyNearestNeighbours']);
+    props['relevancyMode'] = normalizeValue('boolean', props['relevancyMode']);
 
     json = DigitalTwinProcessing.normalizeMindMapJson(json);
     preprocessProperties(json, props);
@@ -22,7 +26,7 @@ function buildWordMap(json, plotType = 'hexagon', props = {}) {
         return null
     }
 
-    const isWideMap = (props.hasOwnProperty('onlyNearestNeighbours') && props['onlyNearestNeighbours'] === true)    
+    const isWideMap = props['onlyNearestNeighbours'];
 
     // Build MindMap
     const digitalTwin = new DigitalTwin(json, props);
@@ -66,6 +70,8 @@ function buildWordMap(json, plotType = 'hexagon', props = {}) {
 }
 
 function preprocessProperties(data, props){
+    preprocessLegend(props, data);
+
     if (props.relevancyMode === true){
         props.colorScale = 'flat';
         props.categoryField = 'weight';
@@ -73,6 +79,12 @@ function preprocessProperties(data, props){
         const legends = {'1':'Weight 1','2':'Weight 2','3':'Weight 3','4':'Weight 4','5':'Weight 5'};
         data.legends = legends;
     }
+
+    if (typeof(props.showNumber) == "string"){
+        props.valueFieldToShow = props.showNumber;
+        props.hideNumber = false;
+        delete props.showNumber;
+    }  
 }
 
 function postProcessProperties(plot, props){
