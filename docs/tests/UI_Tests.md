@@ -6,6 +6,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC001 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate successful visualization rendering from a valid JSON URL. |
 | Expected Result | Mammal must be the concept with darkest color, and must be directly connected with Horse, Whale, Bear, Zebra, Dolphin and Monkey, each one located in one of the six sides of the hexagon. These are located next to Mammal because they are the most relevant skills related to Mammal. There must be a black line that separates Horse with Whale, human and monkey. This occurs because in the graph, those terms are not directly connected (there is not an edge that connects those terms with Horse). Although Wolf and Dog are related with Mammal, they are out of the main group because they are only connected with the term Mammal, but the six spaces around it have already been filled by other concepts with greater values. There are three orange concepts (Human, Zebra, Dog) and 1 blue concept (Bambu), the other hexagons must belong to the green category. |
 | Actual Outcome |  |
@@ -16,6 +17,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC002 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate recenter action |
 | Pre-requisite | Make sure that the recenter action, represented by the button with the bullseye icon (🎯) is active. By default it should be active. |
 | Expected Action | Click on the Hexagon that represents the keyword "Human" |
@@ -28,6 +30,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC003 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate group selection |
 | Expected Action | Click on the button for group selection, which is represented by the button with the folder (🗂️). After that, you must click in the legend section, removing the groups 2 and 3- |
 | Expected Result | The HexagonMap refreshes showing exclusivelly 7 green concepts: Bear, Panda, Monkey, Mammal, Horse, Dolphin and Whale. |
@@ -39,6 +42,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC004 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate the action that displays details about the nodes. |
 | Pre-requisite | Make sure that the action represented by the button with the memo icon (📝) is active.|
 | Expected Action | Click on the hexagon of "Mammal" concept. |
@@ -52,6 +56,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC005 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate text on hover. |
 | Expected Action | Put your mouse without clicking over each of the buttons present in the bottom left-hand corner. |
 | Expected Result | A short text should be displayed on hover, describing each action. |
@@ -64,6 +69,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC006 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate highlight action. |
 | Pre-requisite | Make sure that the action represented by the light bulb icon (💡) is active.|
 | Expected Action | Click on the hexagon of "Panda" concept |
@@ -76,6 +82,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC007 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate remove action. |
 | Pre-requisite | Make sure that the action represented by the wastebasket icon (🗑️) is active.|
 | Expected Action | Click on the hexagon of "Panda" concept |
@@ -88,6 +95,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC008 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate search action. |
 | Expected Action | Click on the icon that has a magnifying glass on it (🔍). This will display a textbox next to the button. After that, click inside the textbox, type "a" and press enter.  |
 | Expected Result | The visualization should highlight all the hexagons of the concepts that contains "a" in their labels. Concepts like Horse, Monkey or Dolphin should have reduced their intensity in the visual. |
@@ -99,6 +107,7 @@ These files are served in the development environment via Webpack. You can acces
 
 | Test Case ID | TC009 |
 | --- | --- |
+| Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Exit the search mode |
 | Pre-requisite | Search action must be activated. Follow the instructions of TC008. |
 | Expected Action | You can exit the search mode by clicking on the textbox and pressing the key "Esc" in your keyboard. An alternative way is by clicking again the button that has the magnifying glass (🔍). |
