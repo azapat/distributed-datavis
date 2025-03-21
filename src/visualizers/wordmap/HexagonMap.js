@@ -178,7 +178,7 @@ class HexagonMap extends WordMap {
         this.#drawBorders(svg, hexaRadius);
 
         if (enableTooltip) {
-            this.tooltip.getComponents().div.raise();
+            this.tooltip.getComponents()?.div?.raise();
         }
 
         this._boldNode(centerNodeId);

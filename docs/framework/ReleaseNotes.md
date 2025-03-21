@@ -2,9 +2,12 @@
 
 # Release Notes
 
-v0.3.1 (Next Release)
+v0.3.X (Next Release)
 * Complete Integration of Graph Series Visualizer.
 * More detailed guides and documentation of each class.
+
+v0.3.1
+* HotFix: Handling event targets in multiple ways to have multi-browser support.
 
 v0.3.0
 * Linechart Visualizer implemented.
