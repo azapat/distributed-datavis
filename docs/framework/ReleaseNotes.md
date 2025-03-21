@@ -2,10 +2,15 @@
 
 # Release Notes
 
-v0.3.0 (Next Release)
+v0.3.1 (Next Release)
 * Complete Integration of Graph Series Visualizer.
 * More detailed guides and documentation of each class.
+
+v0.3.0
 * Linechart Visualizer implemented.
+* HexagonMap with embedded Time Series (values parameter inside node information).
+* Added showValues to the available actions on click in the Hexagon Map.
+* Integrated Tooltip into HexagonMaps to show timeSeries as Linecharts
 
 v0.2.7
 * Added new Property for the Graph Management: Subgraph, which reduces the graph to the neighbourhood of the given concept.

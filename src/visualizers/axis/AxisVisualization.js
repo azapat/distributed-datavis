@@ -8,7 +8,7 @@ class AxisVisualization extends SvgVisualization {
     }
 
     static rulesProperties = {
-        axisMargin : { type : 'Dictionary' , subtype : 'number' }
+        axisMargin : { type : 'dictionary' , subtype : 'number' }
     }
 
     constructor(props = {}) {

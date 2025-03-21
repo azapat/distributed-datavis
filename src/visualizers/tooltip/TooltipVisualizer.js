@@ -54,7 +54,7 @@ export class TooltipVisualizer extends SvgVisualization {
         switch (plotType) {
             case 'linechart':
                 var subPlot = LineChart(plotId, props);
-                subPlot.plot(json);
+                subPlot.draw(json);
                 break;
             case 'hexagon':
             case 'square':

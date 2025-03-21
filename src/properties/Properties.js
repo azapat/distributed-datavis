@@ -134,7 +134,7 @@ class Properties {
             var newValue = newProps[prop];
             this[prop] = newValue;
             const changed = this.valueChanged(prop, oldValue, this[prop]);
-            if (changed) changes[prop] = newValue;   
+            if (changed) changes[prop] = newValue;
         }
     
         return changes;
