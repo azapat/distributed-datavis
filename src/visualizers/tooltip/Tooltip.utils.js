@@ -35,7 +35,7 @@ function createTooltip(plot) {
     }
 
     if (plot.tooltip == null) {
-        plot.tooltip = new Tooltip(tooltipId, tooltipProps);
+        plot.tooltip = new Tooltip(tooltipProps);
         container.append(()=>plot.tooltip.components.mainContainer.node());
     } else {
         plot.tooltip.restartSVG();

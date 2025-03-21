@@ -32,19 +32,14 @@ function reduceMap(json, idsToPreserve){
 }
 
 function normalizeMindMapJson(json){
-    const originalJson = json;
-    var nodes = []
-    var edges = []
-    var legends = []
+    const normalized = {
+        info: json.info,
+    }
+
     if (json.hasOwnProperty('data')) json = json.data;
-
-    if (json.hasOwnProperty('nodes')) nodes = json.nodes;
-    if (json.hasOwnProperty('edges')) edges = json.edges;
-    if (json.hasOwnProperty('legends')) legends = json.legends;
-
-    const normalized = {nodes, edges, legends}
-
-    if (originalJson.hasOwnProperty('info')) normalized['info'] = originalJson.info;
+    normalized.nodes = json.nodes || [];
+    normalized.edges = json.edges || [];
+    normalized.legends = json.legends || [];
 
     return normalized;
 }

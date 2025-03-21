@@ -2,14 +2,14 @@ const SvgVisualization = require("../svg/SvgVisualization");
 const VisualUtils = require("../visual.utils");
 
 class Tooltip extends SvgVisualization {
-    constructor(plotId, props) {
+    constructor(props) {
         props.enableZoom = false;
         if (!props.hasOwnProperty('parentHtmlTag')){
             props['parentHtmlTag'] = 'svg';
         }
         props.initialHeight = props.height;
         props.initialWidth = props.width;
-        super(plotId, props);
+        super(props);
         this._nLines = 0;
     }
 

@@ -207,14 +207,20 @@ getNodeInfoByLabel(label)
 
         /**/
         var {nodes} = originalData;
-        const {maxNodes} = this.getProperties();
-        if (typeof(maxNodes) == 'number' && Array.isArray(nodes) && nodes.length > 0){
+        const { maxNodes , subgraph } = this.getProperties();
+
+        const subgraphId = nodes.find((d)=>d.label == subgraph)?.id;
+        const subgraphIsActive = (subgraphId != null);
+
+        const willCalculateFilters = typeof(maxNodes) == 'number' && Array.isArray(nodes) && nodes.length > 0 && !subgraphIsActive;
+
+        if (willCalculateFilters){
             const {minWeight, minValue, count} = shrink.findOptimalFilters(nodes, maxNodes);
             if (count != null) console.log(`Map Shrink: Nodes:'${count}', MinWeight:'${minWeight}', MinValue:'${minValue}'`);
             this.properties.filterMinWeight = minWeight;
             this.properties.filterMinValue = minValue;
         }
-            /**/
+        /**/
 
         var {nodes,edges} = this.#filterData();
 
@@ -267,8 +273,8 @@ getNodeInfoByLabel(label)
         const hideNodesIsActive = (hideNodes.length > 0);
         const subgraphId = nodes.find((d)=>d.label == subgraph)?.id;
         const subgraphIsActive = (subgraphId != null);
-        console.log({subgraphId,subgraphIsActive});
         const subgraphIds = this.#getRelatedIds(subgraphId, edges);
+        subgraphIds.push(subgraphId);
 
         const filteredNodes = [];
         const filteredEdges = [];

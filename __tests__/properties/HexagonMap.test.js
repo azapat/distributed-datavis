@@ -7,6 +7,7 @@ const ddv = require('../../dist/ptx-ddv');
 
 // Jest Dependencies - Configuration JSDOM
 const { TextEncoder, TextDecoder } = require('util');
+const { normalizeValue } = require('../../src/properties/utils');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
@@ -36,7 +37,6 @@ function main(){
         valueField: ['Abc'],
         initialZoom: '1.5px',
         parentHtmlTag: ['Abc'],
-        colors: [1,2,3],
         colorScale: ['Linear'],
         actionOnClick: ['Abc'],
         hideLegend: 'TrueA',
@@ -59,7 +59,7 @@ function main(){
 
     // Properties that are modified dinamically by other processes
     const exceptions = [
-        'defaultCamera',
+        'defaultCamera','hasCustomColors',
     ];
 
     const defaultProps = ddv.visualizers.wordmap.HexagonMap.getDefaultProperties();
