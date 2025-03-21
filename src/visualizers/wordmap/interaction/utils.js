@@ -1,5 +1,7 @@
 function getNodeIdFromEvent(event){
-    var nodeId = event.target.nearestViewportElement.getAttribute('nodeId');
+    var nodeSvg = event.target.nearestViewportElement;
+    if (nodeSvg == null) nodeSvg = event.target.parentNode;
+    var nodeId = nodeSvg.getAttribute('nodeId');
     nodeId = parseInt(nodeId);
     return nodeId;
 }
