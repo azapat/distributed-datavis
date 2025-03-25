@@ -33,12 +33,14 @@ These files are served in the development environment via Webpack. You can acces
 | Test File | /test/wordmap/MinimalWordMap.html |
 | Description | Validate group selection |
 | Expected Action | Click on the button for group selection, which is represented by the button with the folder (🗂️). After that, you must click in the legend section, removing the groups 2 and 3- |
-| Expected Result | The HexagonMap refreshes showing exclusivelly 7 green concepts: Bear, Panda, Monkey, Mammal, Horse, Dolphin and Whale. |
+| Expected Result | The HexagonMap refreshes showing exclusivelly green concepts: Bear, Panda, Monkey, Mammal, Horse, Dolphin, Wolf and Whale. |
 | Actual Outcome |  |
 | Status |  |
 | Comments |  |
 
-![](./UI_TC_002_MinimalWordMap.png)
+![](./UI_TC_003_MinimalWordMap.png)
+
+![](./UI_TC_003B_MinimalWordMap.png)
 
 | Test Case ID | TC004 |
 | --- | --- |
