@@ -6,6 +6,10 @@ v0.3.X (Next Release)
 * Complete Integration of Graph Series Visualizer.
 * More detailed guides and documentation of each class.
 
+v0.3.2
+* HotFix: Bad references to the current Visualization
+* Added SkillsUtils for label normalization to underscore case and camel case.
+
 v0.3.1
 * HotFix: Handling event targets in multiple ways to have multi-browser support.
 

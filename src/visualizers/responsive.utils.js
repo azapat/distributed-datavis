@@ -6,7 +6,7 @@ function debounce(func, wait) {
     };
 }
 
-function resizeObserverAux (entries){
+function resizeObserverAux (visualization,entries){
     for (let entry of entries) {
         const width = entry.contentRect.width;
         const height = entry.contentRect.height;
@@ -48,7 +48,7 @@ function enableResponsivenessToSeries(visualization){
     activeVisual.style('overflow','auto');
 
     const timeout_ms = 10;
-    var resizeObserver = debounce((entries)=>{resizeObserverAux(entries)},timeout_ms);
+    var resizeObserver = debounce((entries)=>{resizeObserverAux(visualization,entries)},timeout_ms);
     const observer = new ResizeObserver(resizeObserver);
     observer.observe(visualization.parent.node());
 }

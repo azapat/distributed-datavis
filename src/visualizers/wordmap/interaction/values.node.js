@@ -12,7 +12,7 @@ function showValuesOnClick(event,plot){
 
     if (!nodeInfo.hasOwnProperty(valuesField)) return;
 
-    const timeLabels = visualization.getActiveVisualization().digitalTwin?.originalData?.info?.timeLabels || [];
+    const timeLabels = plot.digitalTwin?.originalData?.info?.timeLabels || [];
     const json = nodeInfo[valuesField];
     const title = nodeInfo[nameField];
     plot.tooltipSubPlot.draw(json, timeLabels);
