@@ -260,7 +260,7 @@ function sortArrayOfObjects(array, field){
 }
 
 function normalizeNodeInfo(node){
-    node.group = Number.parseInt(node.group);
+    if (typeof(node.group) == 'string') node.group = Number.parseInt(node.group);
 }
 
 const DigitalTwinProcessing = {

@@ -130,7 +130,6 @@ function getButtonDetails(plot){
             action: ()=>{
                 LegendUtils.hideButtonsLegend(plot);
                 const groups = LegendUtils.getSelectedGroups(plot);
-                console.log({groups});
                 plot.setProperties({'filterGroups':groups});
                 plot.graphToMap.setProperties({'filterGroups':groups});
                 exitLegendSelection(plot);

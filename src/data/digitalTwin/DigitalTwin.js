@@ -260,6 +260,18 @@ getNodeInfoByLabel(label)
         });
     }
 
+    belongsToActiveGroup(nodeGroups, filterGroups){
+        if (!Array.isArray(nodeGroups)) return filterGroups.has(nodeGroups);
+
+        for (let i = 0; i < nodeGroups.length; i++) {
+            const group = nodeGroups[i];
+            const belongs = filterGroups.has(group);
+            if (belongs) return true;
+        }
+
+        return false;
+    }
+
     #filterData(){
         const {
             filterMinValue , filterMinWeight , filterGroups, onlyCompounds, hideNodes, subgraph
@@ -294,7 +306,8 @@ getNodeInfoByLabel(label)
             DigitalTwinProcessing.normalizeNodeInfo(node);
             const {group,id,value,label,weight} = node;
     
-            if (groupFilterIsActive && !groups.has(group)) continue;
+            //if (groupFilterIsActive && !groups.has(group)) continue;
+            if (groupFilterIsActive && !this.belongsToActiveGroup(group, groups)) continue;
             if (valueFilterIsActive && value < filterMinValue) continue;
             if (weightFilterIsActive && weight < filterMinWeight) continue;
             if (onlyCompounds && !DigitalTwinProcessing.isCompound(label)) continue;

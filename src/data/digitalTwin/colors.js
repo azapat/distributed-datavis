@@ -23,9 +23,13 @@ function generateColorsForPlot(plot){
     });
 
     plot.getData().forEach(node => {
-        const group = node[groupField];
-        if (!categoryCount.hasOwnProperty(group)){console.log(`Warning at SetColors() : Group '${group}' was not correctly identified`); return;}
-        categoryCount[group] += 1;
+        var groups = node[groupField];
+        if (!Array.isArray(groups)) groups = [groups];
+        for (let i = 0; i < groups.length; i++) {
+            const group = groups[i];
+            if (!categoryCount.hasOwnProperty(group)){console.log(`Warning at SetColors() : Group '${group}' was not correctly identified`); continue;}
+            categoryCount[group] += 1;    
+        }
     });
 
     const nCategories = categories.length;

@@ -165,6 +165,7 @@ class WordMap extends SvgVisualization {
 
     getColor(group) {
         const { colors } = this.properties;
+        if (Array.isArray(group) && group.length > 0) group = group[0];
         const groupAlreadyRegistered = this._groupToColorIndex.hasOwnProperty(group);
         const index = Object.keys(this._groupToColorIndex).length;
         const needsMoreColors = index > colors.length;

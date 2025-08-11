@@ -23,7 +23,7 @@ We have defined a Standard Data Format to represent Graphs, defining some genera
 * **id:** Unique numerical value that identifies each Node
 * **value:** Numerical value that can describe a particular aspect of the node, such as importance, intensity or frequecy.
 * **label:** Textual value that describes a particula aspect of the node, such as its name.
-* **group:** This attribute can be used to clasify nodes into different groups.
+* **group:** This attribute can be used to clasify nodes into different groups. It can be a simple string with the group identifier, or a list of group identifiers.
 * **weight:** How descriptive the word / topic is. Small number means generic / fuzzy topic, bigger number means a descriptive topic.
 * **sources:** List of References to the sources of a node.
 
@@ -34,7 +34,7 @@ Node = {
     "id"(*) : Number,
     "value"(*) : Number,
     "label"(*) : String,
-    "group"(*) : String,
+    "group"(*) : String | Array<String>,
     "weight" : Number,
     "sources" : Array<Source>,
 }
