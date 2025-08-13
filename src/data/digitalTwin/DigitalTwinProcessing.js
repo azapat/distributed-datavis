@@ -128,7 +128,7 @@ function plotTypeIsCompatibleWithData(plotType, json){
       }
   
       return dataType;
-  }
+}
 
 function getCenterNode(nodes){
     const centerField = "search_center";

@@ -6,6 +6,11 @@ v0.3.X (Next Release)
 * Complete Integration of Graph Series Visualizer.
 * More detailed guides and documentation of each class.
 
+v0.3.4
+* BuildRules from different JSON formats
+* Improved HexagonMapWithTimeSeries
+* Automated coloring for Series with signals
+
 v0.3.3
 * Supports graphs where nodes can belong to more than 1 group.
 

@@ -117,7 +117,7 @@ function setSDGColorsInMap(plot){
     plot.setLegend(legend);
 }
 
-function configureMapWithTimeSeries(plot) {
+function configureMapWithSignals(plot) {
     var colors = [
         "#001773", // (1) Emerging
         "#6987ff", // (2) Constantly Increasing
@@ -149,7 +149,7 @@ const colors = {
     setSDGColorsInMap,
     setColorsToMindMap,
     generateColorsForPlot,
-    configureMapWithTimeSeries,
+    configureMapWithSignals,
 }
 
 module.exports = colors;

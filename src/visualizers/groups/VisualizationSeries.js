@@ -8,8 +8,9 @@ const DEFAULT_RULES = { visuals : [] , properties : {} };
 
 function validateRules(rules){
     if (rules == null) return false;
-    if (!Array.isArray(rules.visuals)) return false;
-    if (rules.properties == null) return false;
+    if (!Array.isArray(rules?.visuals)) return false;
+    // Else
+    if (rules.properties == null) rules.properties = {};
     return true;
 }
 
