@@ -65,13 +65,19 @@ function buildVisualization(visualInfo){
 }
 
 function buildRulesForSingleMap(params){
-    const { jsonUrl , data } = params;
+    const { jsonUrl , data , title, subtitle } = params;
     delete params.jsonUrl;
     delete params.data;
+    delete params.title;
+    delete params.subtitle;
+
+    const showTitle = typeof(title) == 'string';
 
     const rules = {
         visuals: [
             {
+                title: title,
+                subtitle: subtitle,
                 type: 'HexagonMap',
                 url: jsonUrl,
                 data: data,
@@ -79,7 +85,7 @@ function buildRulesForSingleMap(params){
             }
         ],
     
-        'properties' : {showTitle:false, showButtons:false},
+        'properties' : {showTitle, showButtons:false},
     }
 
     return rules;

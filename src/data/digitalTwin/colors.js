@@ -4,6 +4,10 @@ const DEFAULT_COLORS_3_CATEGORIES = ["#58C69A","#E59476","#4DC3F9"];
 
 function setColorsToMindMap(plot){
     if (plot == null) return;
+
+    const customColors = Object.keys(plot.digitalTwin.properties.extraColorMaping);
+    if (customColors.length > 0) return;
+
     const colors = generateColorsForPlot(plot);
     plot.setColors(colors);
 }
@@ -26,7 +30,7 @@ function generateColorsForPlot(plot){
         var groups = node[groupField];
         if (!Array.isArray(groups)) groups = [groups];
         for (let i = 0; i < groups.length; i++) {
-            const group = groups[i];
+            const group = Number.parseFloat(groups[i]);
             if (!categoryCount.hasOwnProperty(group)){console.log(`Warning at SetColors() : Group '${group}' was not correctly identified`); continue;}
             categoryCount[group] += 1;    
         }
@@ -150,6 +154,7 @@ const colors = {
     setColorsToMindMap,
     generateColorsForPlot,
     configureMapWithSignals,
+    DEFAULT_COLORS_1_CATEGORY,
 }
 
 module.exports = colors;

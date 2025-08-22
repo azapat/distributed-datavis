@@ -1,5 +1,6 @@
 const ObjectWithProperties = require("../../properties/ObjectWithProperties");
 const SkillsUtils = require("../skills.utils");
+const { DEFAULT_COLORS_1_CATEGORY } = require("./colors");
 const DigitalTwinProcessing = require("./DigitalTwinProcessing");
 const shrink = require("./shrink");
 
@@ -28,6 +29,8 @@ getNodeInfoByLabel(label)
         valueField: 'value',
         hideNodes: [],
         subgraph: null,
+        extraColorMaping: {},
+        newGroups: [],
     }
 
     static rulesProperties = {
@@ -39,6 +42,8 @@ getNodeInfoByLabel(label)
         valueField: {type:'string'},
         hideNodes: {type:'array', subtype:'string'},
         subgraph: {type:'string'},
+        extraColorMaping: {type:'dictionary', subtype:'string'},
+        newGroups: {type:'array', subtype:'number'},
     }
 
     defineSetters(){
@@ -56,7 +61,7 @@ getNodeInfoByLabel(label)
         this._idToIndex = {};
         this._labelToIndex = {};
 
-        const { valueField } = this.properties;
+        const { valueField, colorNodes } = this.properties;
 
         const { nodes , edges } = this.getOriginalData();
         const sortedNodes = DigitalTwinProcessing.sortArrayOfObjects(nodes,valueField);
@@ -66,7 +71,12 @@ getNodeInfoByLabel(label)
             edges: sortedEdges,
         });
 
+        this._nodes = nodes;
+        this._processNodes(nodes);
+        this._colorNodes(colorNodes);
+
         this._processData();
+
         this.nodesHaveRelations = DigitalTwinProcessing.doNodesHaveRelations(sortedNodes);
     }
 
@@ -197,38 +207,55 @@ getNodeInfoByLabel(label)
         this._processData();
     }
 
-    _processData(){
-        this._neighbors = {};
+    // Get Maximum group
+    getMaxGroup(){
+        const originalData = this.getOriginalData();
+        if (originalData == null) return;
+        var {nodes} = originalData;
+        if (nodes.length == 0) return;
+        const maxGroup = Number.parseFloat(nodes[0]['group'])
+
+        for (let i = 0; i < nodes.length; i++) {
+            var group = nodes[i]['group'];
+            group = Number.parseFloat(group);
+            if (group > maxGroup) maxGroup = group;
+        }
+        return maxGroup;
+    }
+
+    // Clasifies certain nodes in the map under a new group
+    _colorNodes(coloringRule){
+        if (typeof(coloringRule) != 'string') return;
+        const pieces = coloringRule.split(',');
+        if (pieces.length == 0) return;
+
+        var currentColor = DEFAULT_COLORS_1_CATEGORY[0];
+        var currentGroup = this.getMaxGroup();
+
+        this.properties.extraColorMaping[currentGroup] = currentColor;
+
+        for (let i = 0; i < pieces.length; i++) {
+            var piece = pieces[i].trim();
+            if (piece == '#000000') piece = DEFAULT_COLORS_1_CATEGORY[0];
+            if (piece.startsWith('#')){
+                currentGroup += 1;
+                currentColor = piece;
+                this.properties.extraColorMaping[currentGroup] = currentColor;
+                this.properties.newGroups.push(currentGroup);
+                continue;
+            }
+            
+            const label = SkillsUtils.normalizeSkill(piece);
+            const node = this.getNodeInfoByLabel(label);
+            if (node == null) continue;
+            node['group'] = currentGroup;
+        }
+    }
+
+    _processNodes(nodes){
         this._idToIndex = {};
         this._labelToIndex = {};
 
-        const originalData = this.getOriginalData();
-        if (originalData == null) return;
-
-        /**/
-        var {nodes} = originalData;
-        const { maxNodes , subgraph } = this.getProperties();
-
-        const subgraphId = nodes.find((d)=>d.label == subgraph)?.id;
-        const subgraphIsActive = (subgraphId != null);
-
-        const willCalculateFilters = typeof(maxNodes) == 'number' && Array.isArray(nodes) && nodes.length > 0 && !subgraphIsActive;
-
-        if (willCalculateFilters){
-            const {minWeight, minValue, count} = shrink.findOptimalFilters(nodes, maxNodes);
-            if (count != null) console.log(`Map Shrink: Nodes:'${count}', MinWeight:'${minWeight}', MinValue:'${minValue}'`);
-            this.properties.filterMinWeight = minWeight;
-            this.properties.filterMinValue = minValue;
-        }
-        /**/
-
-        var {nodes,edges} = this.#filterData();
-
-        this._nodes = nodes;
-        this._edges = edges;
-
-        this.#processNeighbors();
-        
         // IdToIndex and LabelToIndex
         for (let i = 0; i < nodes.length; i++) {
             const id = nodes[i].id;
@@ -238,6 +265,43 @@ getNodeInfoByLabel(label)
             if (this.hasLabel(label)) continue;
             this._labelToIndex[label] = i;
         }
+    }
+
+    _processData(){
+        this._neighbors = {};
+        this._idToIndex = {};
+        this._idToIndex = {};
+        this._labelToIndex = {};
+
+        const originalData = this.getOriginalData();
+        if (originalData == null) return;
+
+        /**/
+        var {nodes,edges} = originalData;
+        const { maxNodes , subgraph, colorNodes } = this.getProperties();
+
+        const subgraphId = nodes.find((d)=>d.label == subgraph)?.id;
+        const subgraphIsActive = (subgraphId != null);
+
+        var {nodes,edges} = this.#filterData();
+
+        const willCalculateFilters = typeof(maxNodes) == 'number' && Array.isArray(nodes) && nodes.length > 0;
+
+        if (willCalculateFilters){
+            const filteredNodes = nodes;
+            const {minWeight, minValue, count} = shrink.findOptimalFilters(filteredNodes, maxNodes, this.getProperties());
+            if (count != null) console.log(`Map Shrink: Nodes:'${count}', MinWeight:'${minWeight}', MinValue:'${minValue}'`);
+            this.properties.filterMinWeight = minWeight;
+            this.properties.filterMinValue = minValue;
+            var {nodes,edges} = this.#filterData();
+        }
+
+        this._nodes = nodes;
+        this._edges = edges;
+
+        this.#processNeighbors();
+        
+        this._processNodes(nodes);
 
         // Neighbors List
         const neighbors = this._neighbors;

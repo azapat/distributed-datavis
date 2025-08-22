@@ -3,8 +3,13 @@
 # Release Notes
 
 v0.3.X (Next Release)
-* Complete Integration of Graph Series Visualizer.
 * More detailed guides and documentation of each class.
+
+v0.3.5
+* Complete integration with Graph Series
+* New mechanism to dynamically add groups to a WordMap, defining also color
+* Added subtitle support to the visualizations
+* BugFix: error normalizing parameters based on Arrays.
 
 v0.3.4
 * BuildRules from different JSON formats
