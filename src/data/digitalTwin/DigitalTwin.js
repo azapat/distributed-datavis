@@ -61,7 +61,7 @@ getNodeInfoByLabel(label)
         this._idToIndex = {};
         this._labelToIndex = {};
 
-        const { valueField, colorNodes } = this.properties;
+        const { valueField, colorNodes, colorNeighbors } = this.properties;
 
         const { nodes , edges } = this.getOriginalData();
         const sortedNodes = DigitalTwinProcessing.sortArrayOfObjects(nodes,valueField);
@@ -74,6 +74,7 @@ getNodeInfoByLabel(label)
         this._nodes = nodes;
         this._processNodes(nodes);
         this._colorNodes(colorNodes);
+        this._colorNeighbors(colorNeighbors);
 
         this._processData();
 
@@ -221,6 +222,50 @@ getNodeInfoByLabel(label)
             if (group > maxGroup) maxGroup = group;
         }
         return maxGroup;
+    }
+
+    // Clasifies certain nodes in the map under a new group
+    _colorNeighbors(coloringRule){
+        if (typeof(coloringRule) != 'string') return;
+        const pieces = coloringRule.split(',');
+        if (pieces.length == 0) return;
+
+        var currentColor = DEFAULT_COLORS_1_CATEGORY[0];
+        var currentGroup = this.getMaxGroup();
+
+        this.properties.extraColorMaping[currentGroup] = currentColor;
+
+        for (let i = 0; i < pieces.length; i++) {
+            var piece = pieces[i].trim();
+            if (piece == '#000000') piece = DEFAULT_COLORS_1_CATEGORY[0];
+            if (piece.startsWith('#')){
+                currentGroup += 1;
+                currentColor = piece;
+                this.properties.extraColorMaping[currentGroup] = currentColor;
+                this.properties.newGroups.push(currentGroup);
+                continue;
+            }
+            
+            const label = SkillsUtils.normalizeSkill(piece);
+            const node = this.getNodeInfoByLabel(label);
+            if (node == null) continue;
+
+            const nodeId = node['id'];
+            const edges = this.getOriginalData().edges;
+            for (let i = 0; i < edges.length; i++) {
+                const edge = edges[i];
+                if (edge['from'] == nodeId){
+                    var neighbor = this.getNodeInfoById(edge['to']);
+                    if (neighbor == null) continue;
+                    neighbor['group'] = currentGroup;
+                    
+                } else if (edge['to'] == nodeId){
+                    var neighbor = this.getNodeInfoById(edge['from']);
+                    if (neighbor == null) continue;
+                    neighbor['group'] = currentGroup;
+                }
+            }
+        }
     }
 
     // Clasifies certain nodes in the map under a new group

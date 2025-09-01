@@ -29,6 +29,7 @@ class WordMap extends SvgVisualization {
         hasCustomColors: false,
         filterGroups: [],
         highlightNewGroups: false,
+        highlightNeighbors: null,
     }
 
     static rulesProperties = {
@@ -49,6 +50,7 @@ class WordMap extends SvgVisualization {
         hasCustomColors: {type:'boolean'},
         filterGroups: {type:'array',subtype:'number'},
         highlightNewGroups: {type:'boolean'},
+        highlightNeighbors: {type:'string'},
     }
 
     // Initialize Attributes
@@ -349,11 +351,15 @@ class WordMap extends SvgVisualization {
             const path = d3.select(this).datum(nodeInfo).select('path').datum((d)=>d);
 
             path.attr('fill', ()=>{
+                const nodeGroup = nodeInfo[categoryField];
                 var value = This._scaleValue(nodeInfo['value']);
                 var percentBrightness = VisualUtils.scaleBrightness(value, maxValue);
                 var percentBrightness = Math.max(percentBrightness, 0);
-                var color = This.getColor(nodeInfo[categoryField]),
-                color = VisualUtils.increaseBrightness(color, percentBrightness);
+                var color = This.getColor(nodeGroup);
+                // If groups is not in list of groups to highlight, then it fades the color based on the value
+                if (!This.digitalTwin.properties.newGroups.includes(nodeGroup)){
+                    color = VisualUtils.increaseBrightness(color, percentBrightness);
+                }
                 return color;
             });
         });
@@ -362,6 +368,7 @@ class WordMap extends SvgVisualization {
     _highlightNewGroups(){
         const nodes = this.getData();
         const newGroups = this.digitalTwin.properties.newGroups;
+        if (newGroups.length == 0) return;
         const ids = [];
         for (let i = 0; i < nodes.length; i++) {
             const id = nodes[i]['id'];
@@ -375,7 +382,18 @@ class WordMap extends SvgVisualization {
         interaction._highlightActionButton(this);
     }
 
-    _highlightNode(nodeId) {
+    _highlightNeighbors(nodeLabel){
+        const node = this.digitalTwin.getNodeInfoByLabel(nodeLabel);
+        if (node == null) return;
+
+        this._unHighlightAllNodes();
+        this._highlightNode(node['id']);
+        this.properties.mouseOver = false;
+        this.properties.actionOnClick = 'none';
+        interaction._highlightActionButton(this);
+    }
+
+    _highlightNode(nodeId){
         if (nodeId == null) return;
         if (this.graphToMap == null) return;
         const nodeInfo = this.digitalTwin.getNodeInfoById(nodeId);
@@ -401,8 +419,12 @@ class WordMap extends SvgVisualization {
 
     refresh(){
         super.refresh();
-        const { highlightNewGroups } = this.properties;
+        const { 
+            highlightNewGroups,
+            highlightNeighbors,
+        } = this.properties;
         if (highlightNewGroups) this._highlightNewGroups();
+        this._highlightNeighbors(highlightNeighbors);
     }
 
     removeListOfElementsByName(listOfElements) {

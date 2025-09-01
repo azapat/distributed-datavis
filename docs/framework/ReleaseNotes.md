@@ -5,6 +5,11 @@
 v0.3.X (Next Release)
 * More detailed guides and documentation of each class.
 
+v0.3.6
+* Highlight neighbors in a Graph.
+* Color neighbors in a Graph.
+* Added default flat color scaling for highlighted custom groups in a Graph.
+
 v0.3.5
 * Complete integration with Graph Series
 * New mechanism to dynamically add groups to a WordMap, defining also color
