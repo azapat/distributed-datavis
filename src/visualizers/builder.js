@@ -108,8 +108,13 @@ function getRulesFromSignals(json){
 }
 
 async function buildRules(params){
-    const { jsonUrl } = params;
+    var { jsonUrl , rules } = params;
     try {
+        if (typeof(rules) == 'string' && rules.trim().length > 0){
+            rules = JSON.parse(rules);
+            return rules;
+        }
+
         const json = await d3.json(jsonUrl);
         const format = detectFormat(json);
 

@@ -5,6 +5,9 @@
 v0.3.X (Next Release)
 * More detailed guides and documentation of each class.
 
+v0.3.7
+* rules.json can be injected via URL
+
 v0.3.6
 * Highlight neighbors in a Graph.
 * Color neighbors in a Graph.
