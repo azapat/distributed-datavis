@@ -2,6 +2,20 @@ const DEFAULT_COLORS_1_CATEGORY = ['#08233B'];
 const DEFAULT_COLORS_2_CATEGORIES = [];
 const DEFAULT_COLORS_3_CATEGORIES = ["#58C69A","#E59476","#4DC3F9"];
 
+function getDefaultColors(nCategories){
+    const colors = [];
+    if (typeof(nCategories) !== 'number') return [];
+
+    if (nCategories == 1) return DEFAULT_COLORS_1_CATEGORY;
+    if (nCategories == 3) return DEFAULT_COLORS_3_CATEGORIES;
+    
+    for (let i = 1; i <= nCategories; i++) {
+        colors.push('#000000');
+    }
+
+    return colors;
+}
+
 function setColorsToMindMap(plot){
     if (plot == null) return;
 
@@ -154,7 +168,7 @@ const colors = {
     setColorsToMindMap,
     generateColorsForPlot,
     configureMapWithSignals,
-    DEFAULT_COLORS_1_CATEGORY,
+    getDefaultColors,
 }
 
 module.exports = colors;

@@ -5,6 +5,10 @@
 v0.3.X (Next Release)
 * More detailed guides and documentation of each class.
 
+v0.3.8
+* HotFix: getMaxGroup()
+* HotFix: Custom colors and highlight
+
 v0.3.7
 * rules.json can be injected via URL
 

@@ -1,6 +1,6 @@
 const ObjectWithProperties = require("../../properties/ObjectWithProperties");
 const SkillsUtils = require("../skills.utils");
-const { DEFAULT_COLORS_1_CATEGORY } = require("./colors");
+const { DEFAULT_COLORS_1_CATEGORY, getDefaultColors } = require("./colors");
 const DigitalTwinProcessing = require("./DigitalTwinProcessing");
 const shrink = require("./shrink");
 
@@ -31,6 +31,7 @@ getNodeInfoByLabel(label)
         subgraph: null,
         extraColorMaping: {},
         newGroups: [],
+        colors: [],
     }
 
     static rulesProperties = {
@@ -44,6 +45,7 @@ getNodeInfoByLabel(label)
         subgraph: {type:'string'},
         extraColorMaping: {type:'dictionary', subtype:'string'},
         newGroups: {type:'array', subtype:'number'},
+        colors: {type:'array', subtype:'string'},
     }
 
     defineSetters(){
@@ -214,7 +216,7 @@ getNodeInfoByLabel(label)
         if (originalData == null) return;
         var {nodes} = originalData;
         if (nodes.length == 0) return;
-        const maxGroup = Number.parseFloat(nodes[0]['group'])
+        var maxGroup = Number.parseFloat(nodes[0]['group'])
 
         for (let i = 0; i < nodes.length; i++) {
             var group = nodes[i]['group'];
@@ -230,14 +232,24 @@ getNodeInfoByLabel(label)
         const pieces = coloringRule.split(',');
         if (pieces.length == 0) return;
 
-        var currentColor = DEFAULT_COLORS_1_CATEGORY[0];
+        var currentColor = null;
         var currentGroup = this.getMaxGroup();
+        var colors = null
+        if (this.properties.colors.length >= currentGroup){
+            colors = this.properties.colors;
+        } else {
+            colors = getDefaultColors(currentGroup);
+        }
+        
+        for (let i = 1; i <= currentGroup; i++) {
+            this.properties.extraColorMaping[i] = colors[i-1];
+        }
 
-        this.properties.extraColorMaping[currentGroup] = currentColor;
+        const defaultColor = getDefaultColors(1)[0];
 
         for (let i = 0; i < pieces.length; i++) {
             var piece = pieces[i].trim();
-            if (piece == '#000000') piece = DEFAULT_COLORS_1_CATEGORY[0];
+            if (piece == '#000000') piece = defaultColor;
             if (piece.startsWith('#')){
                 currentGroup += 1;
                 currentColor = piece;
@@ -274,14 +286,19 @@ getNodeInfoByLabel(label)
         const pieces = coloringRule.split(',');
         if (pieces.length == 0) return;
 
-        var currentColor = DEFAULT_COLORS_1_CATEGORY[0];
+        var currentColor = null;
         var currentGroup = this.getMaxGroup();
 
-        this.properties.extraColorMaping[currentGroup] = currentColor;
+        const colors = getDefaultColors(currentGroup);
+        for (let i = 1; i <= currentGroup; i++) {
+            this.properties.extraColorMaping[i] = colors[i-1];
+        }
+
+        const defaultColor = getDefaultColors(1)[0];
 
         for (let i = 0; i < pieces.length; i++) {
             var piece = pieces[i].trim();
-            if (piece == '#000000') piece = DEFAULT_COLORS_1_CATEGORY[0];
+            if (piece == '#000000') piece = defaultColor;
             if (piece.startsWith('#')){
                 currentGroup += 1;
                 currentColor = piece;
