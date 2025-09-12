@@ -2,8 +2,12 @@
 
 # Release Notes
 
-v0.3.X (Next Release)
+v0.4.X (Next Release)
 * More detailed guides and documentation of each class.
+
+v0.4.0
+* Completely new structure for sources in DigitalTwin / KnowledgeGraph content.
+* Automatic normalization mechanisms to ensure retrocompatibility.
 
 v0.3.8
 * HotFix: getMaxGroup()

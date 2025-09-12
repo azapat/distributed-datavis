@@ -1,6 +1,6 @@
 const ObjectWithProperties = require("../../properties/ObjectWithProperties");
 const SkillsUtils = require("../skills.utils");
-const { DEFAULT_COLORS_1_CATEGORY, getDefaultColors } = require("./colors");
+const { getDefaultColors } = require("./colors");
 const DigitalTwinProcessing = require("./DigitalTwinProcessing");
 const shrink = require("./shrink");
 
@@ -55,7 +55,9 @@ getNodeInfoByLabel(label)
 
     constructor(json, props){
         super(props);
-        this.originalData = JSON.parse(JSON.stringify(json));
+        const originalData = JSON.parse(JSON.stringify(json));
+        this._processSources(originalData);
+        this.originalData = originalData;
 
         this._nodes = [];
         this._edges = [];
@@ -65,7 +67,7 @@ getNodeInfoByLabel(label)
 
         const { valueField, colorNodes, colorNeighbors } = this.properties;
 
-        const { nodes , edges } = this.getOriginalData();
+        const { nodes , edges, sources } = this.getOriginalData();
         const sortedNodes = DigitalTwinProcessing.sortArrayOfObjects(nodes,valueField);
         const sortedEdges = DigitalTwinProcessing.sortArrayOfObjects(edges,valueField);
         this.#modifyOriginalData({
@@ -125,14 +127,14 @@ getNodeInfoByLabel(label)
         }
         
         const title = original.title;
-        const nodes = data.nodes;
-        const edges = data.edges;
-        const legends = data.legends;
+        const { 
+            nodes , edges , sources , legends ,
+            indicators ,
+        } = data;
         const uniqueIdentifier = data.unique_identifier;
-        const indicators = data.indicators;
 
         return {
-            title, 
+            title, sources,
             nodes, edges, legends, uniqueIdentifier, indicators,
         };
     }
@@ -157,6 +159,20 @@ getNodeInfoByLabel(label)
         const neighborList = neighbors[id];
         if (neighborList == null) return [];
         return neighborList;
+    }
+
+    getSources(id){
+        const node = this.getNodeInfoById(id);
+        if (node == null) return [];
+        const { sources } = node;
+        const expandedSources = [];
+        for (let i = 0; i < sources.length; i++) {
+            const sourceId = sources[i];
+            const source = this._sources[sourceId];
+            if (source == null) continue;
+            expandedSources.push(source);
+        }
+        return expandedSources;
     }
 
     getNeighborsByLabel(label){
@@ -326,6 +342,53 @@ getNodeInfoByLabel(label)
             
             if (this.hasLabel(label)) continue;
             this._labelToIndex[label] = i;
+        }
+    }
+
+    _processSources(originalData){
+        const sources = originalData?.data?.sources || originalData?.sources;
+        this._sources = {};
+        const allSources = this._sources;
+
+        // If has latest source format skip computation
+        if (Array.isArray(sources)){
+            for (let i = 0; i < sources.length; i++) {
+                const sourceId = sources[i]['id'];
+                allSources[sourceId] = sources[i];
+            }
+            return;
+        }
+
+        const nodes = originalData?.data?.nodes || originalData?.nodes || [];
+
+        const sourceContentToId = {};
+        var nextSourceId = 0;
+
+        for (let i = 0; i < nodes.length; i++) {
+            const { sources } = nodes[i];
+            if (typeof(sources) === 'number') continue;
+            if (!Array.isArray(sources)){  // Data validation
+                nodes[i].sources = [];
+                continue;
+            }
+
+            for (let j = 0; j < sources.length; j++) {
+                const source = sources[j];
+                
+                const sourceContent = source.title.trim() + source.url.trim();
+                var sourceId = sourceContentToId[sourceContent];
+
+                // If source has not been registered before, add it to the register and increment sourceId by 1
+                if (sourceId === undefined){
+                    sourceId = nextSourceId;
+                    sourceContentToId[sourceContent] = nextSourceId;
+                    source.id = sourceId; // Add id to source content
+                    nextSourceId += 1;
+                    allSources[sourceId] = source;
+                }
+
+                sources[j] = sourceId; // Replaces the source inside the node for its id
+            }
         }
     }
 

@@ -33,6 +33,7 @@ function reduceMap(json, idsToPreserve){
 
 function normalizeMindMapJson(json){
     const normalized = {
+        ...json.data,
         info: json.info,
     }
 
