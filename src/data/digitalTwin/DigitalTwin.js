@@ -363,6 +363,7 @@ getNodeInfoByLabel(label)
 
         // HotFix for corrupted JSONs (BuildSignals)
         // Nodes have latest structure for sources (Array of ids) but source information is missing
+        if (nodes.length > 0 && nodes[0].sources == null) return;
         if (nodes.length > 0 && nodes[0].sources.length > 0 && typeof(nodes[0].sources[0]) === "number") return;
         //
 
