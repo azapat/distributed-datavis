@@ -12,12 +12,12 @@
 
 
 <!-- Div that will contain the recommendations -->
-<div id="courses"></div>
+<div id="ddv"></div>
 
 <script>
 
 // Sample of a real Inokufu response
-const response = [
+const inokufuResponse = [
     {
         "id": "32000025401",
         "title": "Financial Management",
@@ -62,10 +62,37 @@ const response = [
     }
 ];
 
+const rules = {
+    "visuals": [
+        {
+            "type": "Courses",
+            "data": inokufuResponse,
+            "title": "Course Recommendations",
+            "buttonTitle": "Courses",
+            "provider": "inokufu" // Data Normalization
+        }
+    ],
+    "properties" : {
+        "fontSize": 14,
+        "fontFamily": "Arial",
+        'backgroundColor':'gray',
+    }
+}
+
+visualization = new ddv.visualizers.VisualizationSeries(rules);
+visualization.attachOn('div#ddv');
+ddv.visualizers.responsive.enableResponsivenessToSeries(visualization);
+visualization.refresh();
+
+// Alternative direct implementation
+/**
+
 const provider = 'inokufu';
 const data = ddv.data.courses.process(response, provider);
 const visualization = new ddv.visualizers.list.CourseVisualizer();
 visualization.draw(data);
 visualization.attachOn('div#courses');
 ddv.visualizers.responsive.enableResponsiveness(visualization);
+
+ */
 </script>
