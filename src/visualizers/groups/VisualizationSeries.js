@@ -1,8 +1,8 @@
-const builder = require("../builder");
-const Component = require("../Component");
-const NavigationButtons = require("./NavigationButtons");
+import builder from "../builder";
+import Component from "../Component";
+import NavigationButtons from "./NavigationButtons";
 
-require('./VisualizationSeries.css');
+import './VisualizationSeries.css';
 
 const DEFAULT_RULES = { visuals : [] , properties : {} };
 
@@ -265,4 +265,4 @@ class VisualizationSeries extends Component {
     }
 }
 
-module.exports = VisualizationSeries;
+export default VisualizationSeries;

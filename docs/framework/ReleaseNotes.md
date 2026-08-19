@@ -2,8 +2,11 @@
 
 # Release Notes
 
-v0.4.X (Next Release)
-* More detailed guides and documentation of each class.
+v0.5.0
+* Migration to D3 v7. This is a breaking change, as some of the APIs have changed.
+* Major breaking updates on dependencies to fix all the vulnerabilities reported by npm audit.
+* d3v7 forced a major refactoring on the code, ensuring standard ES Module syntaxis.
+* Renamed CommonJS files with .cjs extension to avoid conflicts with ES Modules (jest and webpack config files).
 
 v0.4.1
 * HotFix: Source details is optional. Initial Normalization will be skipped if these are missing.

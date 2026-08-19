@@ -47,6 +47,13 @@ module.exports = {
   module:{
     rules: [
       {
+        test: /\.js$/,
+        type: 'javascript/auto',
+        resolve: {
+          fullySpecified: false
+        }
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },

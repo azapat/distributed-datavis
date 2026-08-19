@@ -3,3 +3,4 @@ dist/
 test*.html
 node_modules/
 license-info.json
+_tmp_

@@ -1,4 +1,4 @@
-const { getNodeIdFromEvent } = require("./utils");
+import { getNodeIdFromEvent  } from "./utils";
 
 const removeOnClick = function(event, plot){ 
     var nodeId = getNodeIdFromEvent(event);
@@ -7,6 +7,6 @@ const removeOnClick = function(event, plot){
     plot.translateVisualization(x,y,scale);
 }
 
-module.exports = {
+export {
     removeOnClick,
 }

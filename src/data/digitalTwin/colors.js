@@ -1,14 +1,14 @@
 const DEFAULT_COLORS_1_CATEGORY = ['#08233B'];
 const DEFAULT_COLORS_2_CATEGORIES = [];
-const DEFAULT_COLORS_3_CATEGORIES = ["#58C69A","#E59476","#4DC3F9"];
+const DEFAULT_COLORS_3_CATEGORIES = ["#58C69A", "#E59476", "#4DC3F9"];
 
-function getDefaultColors(nCategories){
+function getDefaultColors(nCategories) {
     const colors = [];
-    if (typeof(nCategories) !== 'number') return [];
+    if (typeof (nCategories) !== 'number') return [];
 
     if (nCategories == 1) return DEFAULT_COLORS_1_CATEGORY;
     if (nCategories == 3) return DEFAULT_COLORS_3_CATEGORIES;
-    
+
     for (let i = 1; i <= nCategories; i++) {
         colors.push('#000000');
     }
@@ -16,7 +16,7 @@ function getDefaultColors(nCategories){
     return colors;
 }
 
-function setColorsToMindMap(plot){
+function setColorsToMindMap(plot) {
     if (plot == null) return;
 
     const customColors = Object.keys(plot.digitalTwin.properties.extraColorMaping);
@@ -26,7 +26,7 @@ function setColorsToMindMap(plot){
     plot.setColors(colors);
 }
 
-function generateColorsForPlot(plot){
+function generateColorsForPlot(plot) {
     if (plot == null) return [];
     const colors = plot.properties.colors;
     const hasCustomColors = plot.properties.hasCustomColors;
@@ -36,7 +36,7 @@ function generateColorsForPlot(plot){
     var newColors = [];
 
     const categories = Object.keys(plot._groupToColorIndex)
-    categories.forEach( group => {
+    categories.forEach(group => {
         categoryCount[group] = 0;
     });
 
@@ -45,36 +45,36 @@ function generateColorsForPlot(plot){
         if (!Array.isArray(groups)) groups = [groups];
         for (let i = 0; i < groups.length; i++) {
             const group = Number.parseFloat(groups[i]);
-            if (!categoryCount.hasOwnProperty(group)){console.log(`Warning at SetColors() : Group '${group}' was not correctly identified`); continue;}
-            categoryCount[group] += 1;    
+            if (!categoryCount.hasOwnProperty(group)) { console.log(`Warning at SetColors() : Group '${group}' was not correctly identified`); continue; }
+            categoryCount[group] += 1;
         }
     });
 
     const nCategories = categories.length;
-    if (nCategories == 1){
+    if (nCategories == 1) {
         newColors = DEFAULT_COLORS_1_CATEGORY;
         return newColors;
-    } else if (nCategories == 2){
+    } else if (nCategories == 2) {
         const nNodesCat1 = categoryCount[categories[0]];
         const nNodesCat2 = categoryCount[categories[1]];
         if (nNodesCat1 == 1 && nNodesCat2 >= 1 ||
-            nNodesCat1 >= 1 && nNodesCat2 == 1){
-            newColors = ['#11A1F3','#ee5e0c'];
+            nNodesCat1 >= 1 && nNodesCat2 == 1) {
+            newColors = ['#11A1F3', '#ee5e0c'];
             return newColors;
-        } else if (nNodesCat1 == 0 || nNodesCat2 == 0){
-            newColors = ['#08233B','#08233B'];
+        } else if (nNodesCat1 == 0 || nNodesCat2 == 0) {
+            newColors = ['#08233B', '#08233B'];
             return newColors
         } else {
             newColors = ['#4DC3F9', '#E59476'];
         }
-    } else if (nCategories == 3){
+    } else if (nCategories == 3) {
         newColors = DEFAULT_COLORS_3_CATEGORIES;
         return newColors;
     }
     return newColors;
 }
 
-function setSDGColorsInMap(plot){
+function setSDGColorsInMap(plot) {
     var colors = [
         "#E5243B",  // (1) No Poverty  - RED
         "#DDA63A",  // (2) Zero Hunger - MUSTARD
@@ -94,43 +94,43 @@ function setSDGColorsInMap(plot){
         "#00689D",  // (16) Peace, Justice and Strong Institutions - ROYAL BLUE
         "#19486A",  // (17) Partnerships for the goals - NAVY BLUE
     ]
-  
+
     plot.setColors(colors);
-  
+
     var groupToColorIndexAux = {
-        "1":0, "2":1, "3":2, "4":3, "5":4, "6":5, "7":6, "8":7, "9":8, "10":9,
-        "11":10, "12":11, "13":12, "14":13, "15":14, "16":15, "17":16,
+        "1": 0, "2": 1, "3": 2, "4": 3, "5": 4, "6": 5, "7": 6, "8": 7, "9": 8, "10": 9,
+        "11": 10, "12": 11, "13": 12, "14": 13, "15": 14, "16": 15, "17": 16,
     }
-  
+
     var groupToColorIndex = plot._groupToColorIndex;
-  
-    Object.keys(groupToColorIndex).forEach( group => {
-        if (!groupToColorIndexAux.hasOwnProperty(group)){
+
+    Object.keys(groupToColorIndex).forEach(group => {
+        if (!groupToColorIndexAux.hasOwnProperty(group)) {
             console.log(`ERROR at setSDGColorsInMap() : Group ${group} is not part of SDG Data`);
             return;
         }
         groupToColorIndex[group] = groupToColorIndexAux[group];
     })
-  
+
     plot._groupToColorIndex = groupToColorIndex;
     var legend = {
-        1:"No Poverty",
-        2:"Zero Hunger",
-        3:"Good Health and Well-Being",
-        4:"Quality Education",
-        5:"Gender Equality",
-        6:"Clean Water and Sanitation",
-        7:"Affordable and Clean Energy",
-        8:"Decent Work and Economic Growth",
-        9:"Industry, Innovation and Infrastructure",
-        10:"Reduced Inequalities",
-        11:"Sustainable Cities and Communities",
-        12:"Responsible consumption and Production",
-        13:"Climate Action",
-        14:"Life bellow water",
-        15:"Life on land",
-        16:"Peace, Justice and Strong Institutions",
-        17:"Partnerships for the goals",
+        1: "No Poverty",
+        2: "Zero Hunger",
+        3: "Good Health and Well-Being",
+        4: "Quality Education",
+        5: "Gender Equality",
+        6: "Clean Water and Sanitation",
+        7: "Affordable and Clean Energy",
+        8: "Decent Work and Economic Growth",
+        9: "Industry, Innovation and Infrastructure",
+        10: "Reduced Inequalities",
+        11: "Sustainable Cities and Communities",
+        12: "Responsible consumption and Production",
+        13: "Climate Action",
+        14: "Life bellow water",
+        15: "Life on land",
+        16: "Peace, Justice and Strong Institutions",
+        17: "Partnerships for the goals",
     }
     plot.setLegend(legend);
 }
@@ -171,4 +171,4 @@ const colors = {
     getDefaultColors,
 }
 
-module.exports = colors;
+export default colors;

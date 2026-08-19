@@ -1,4 +1,4 @@
-const GraphProcessor = require("./GraphProcessor");
+import GraphProcessor from "./GraphProcessor";
 
 class SquareGraphProcessor extends GraphProcessor{
     constructor(){
@@ -53,4 +53,4 @@ class SquareGraphProcessor extends GraphProcessor{
     }
 }
 
-module.exports = SquareGraphProcessor;
+export default SquareGraphProcessor;

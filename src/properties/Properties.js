@@ -1,9 +1,9 @@
-const PropertiesUtils = require("./utils");
+import PropertiesUtils from "./utils.js";
 
-const skipFields = ['rules','This','customSetters','afterSetters'];
+const skipFields = ['rules', 'This', 'customSetters', 'afterSetters'];
 
 class Properties {
-    constructor(rules){
+    constructor(rules) {
         this.This = this;
         this.rules = {};
         this.addRules(rules);
@@ -13,33 +13,33 @@ class Properties {
         this.afterSetters = {};
 
         const This = new Proxy(this, {
-            get: (target, key)=>{
+            get: (target, key) => {
                 return target[key];
             },
-            set: (target, key, value)=>{
+            set: (target, key, value) => {
                 if (skipFields.includes(key)) return true;
-                value = this.normalizeValue(key,value);
-                if (!target.ruleIsValid(key,value)) return true;
+                value = this.normalizeValue(key, value);
+                if (!target.ruleIsValid(key, value)) return true;
                 // Prevents executing custom setter if value ha not been modified
                 if (target[key] === value) return true;
-                
+
                 const customSetter = this.customSetters[key];
                 const afterSetter = this.afterSetters[key];
                 const ruleType = this.rules[key]?.type;
 
                 var success = true;
 
-                if (typeof(customSetter) == "function"){
+                if (typeof (customSetter) == "function") {
                     success = (customSetter(value) == true);
-                }  else if (ruleType == 'dictionary'){
+                } else if (ruleType == 'dictionary') {
                     this.#setterDictionary(key, value);
-                } else if (ruleType == 'array'){
+                } else if (ruleType == 'array') {
                     this.#setterArray(key, value);
                 } else {
                     target[key] = value;
                 }
 
-                if (success && typeof(afterSetter) == "function"){
+                if (success && typeof (afterSetter) == "function") {
                     afterSetter(value);
                     return true;
                 } else {
@@ -51,40 +51,40 @@ class Properties {
         return This;
     }
 
-    defineSetter(propertyName,setter){
-        if (typeof(setter) !== 'function') return;
+    defineSetter(propertyName, setter) {
+        if (typeof (setter) !== 'function') return;
         this.customSetters[propertyName] = setter;
     }
 
-    defineSetters(propToSetter){
+    defineSetters(propToSetter) {
         if (propToSetter == null) return;
         const props = Object.keys(propToSetter);
-        props.forEach((prop)=>{
+        props.forEach((prop) => {
             this.defineSetter(prop, propToSetter[prop]);
         });
     }
 
-    defineAfterSetter(propertyName,setter){
-        if (typeof(setter) !== 'function') return;
+    defineAfterSetter(propertyName, setter) {
+        if (typeof (setter) !== 'function') return;
         this.afterSetters[propertyName] = setter;
     }
 
-    defineAfterSetters(propToSetter){
+    defineAfterSetters(propToSetter) {
         if (propToSetter == null) return;
         const props = Object.keys(propToSetter);
-        props.forEach((prop)=>{
+        props.forEach((prop) => {
             this.defineAfterSetter(prop, propToSetter[prop]);
         });
     }
 
-    ruleIsValid(key, value){
+    ruleIsValid(key, value) {
         if (!this.rules.hasOwnProperty(key)) return true;
-        const typeIsValid = this._validateRuleType(key,value);
+        const typeIsValid = this._validateRuleType(key, value);
         return typeIsValid === true;
-        
+
     }
 
-    normalizeValue(key,value){
+    normalizeValue(key, value) {
         if (value === null || value === undefined) return null;
         const rule = this.rules[key];
         if (rule == null) return value;
@@ -92,20 +92,20 @@ class Properties {
         return PropertiesUtils.normalizeValue(ruleType, value);
     }
 
-    _validateRuleType(key,value){
+    _validateRuleType(key, value) {
         if (value === null || value === undefined) return false;
         const rule = this.rules[key];
         if (rule == null) return true;
         const type = rule.type;
-        return PropertiesUtils.validateType(type,value);
+        return PropertiesUtils.validateType(type, value);
     }
 
-    addRules(rules){
+    addRules(rules) {
         if (Array.isArray(rules)) return;
-        if (typeof(rules) !== "object") return;
+        if (typeof (rules) !== "object") return;
         this.rules = PropertiesUtils.mergeDictionaries(this.rules, rules);
         // Initialize certain values
-        Object.keys(rules).forEach((prop)=>{
+        Object.keys(rules).forEach((prop) => {
             const type = rules[prop].type;
             const currentValue = this[prop];
             // Initialize empty dictionaries
@@ -114,19 +114,19 @@ class Properties {
     }
 
     // This is used to bypass a custom setter function, to define an initial value without going through the setter
-    initializeProperty(property, value){
+    initializeProperty(property, value) {
         this.This[property] = value;
     }
 
-    restartRules(){
+    restartRules() {
         this.rules = {};
     }
 
-    setProperties(newProps){
+    setProperties(newProps) {
         const changes = {};
         newProps = PropertiesUtils.cleanDictionary(newProps);
         const propNames = Object.keys(newProps);
-    
+
         for (let i = 0; i < propNames.length; i++) {
             const prop = propNames[i];
             var oldValue = this[prop];
@@ -136,11 +136,11 @@ class Properties {
             const changed = this.valueChanged(prop, oldValue, this[prop]);
             if (changed) changes[prop] = newValue;
         }
-    
+
         return changes;
     }
 
-    getProperties(){
+    getProperties() {
         const properties = { ...this };
         delete properties.afterSetters;
         delete properties.customSetters;
@@ -149,15 +149,15 @@ class Properties {
         return properties;
     }
 
-    valueChanged(key, oldValue, newValue){
+    valueChanged(key, oldValue, newValue) {
         const type = this.rules[key]?.type || 'string';
-    
-        if (type == 'array'){
-            const changed = ( JSON.stringify(oldValue) !== JSON.stringify(newValue) );
+
+        if (type == 'array') {
+            const changed = (JSON.stringify(oldValue) !== JSON.stringify(newValue));
             return changed;
-        } else if (['number','boolean','string'].includes(type)){
+        } else if (['number', 'boolean', 'string'].includes(type)) {
             return (oldValue !== newValue);
-        } else if (type == 'dictionary'){
+        } else if (type == 'dictionary') {
             return PropertiesUtils.dictionaryChanged(oldValue, newValue);
         } else {
             console.log(`Error at valueChanged(${oldValue},${newValue},${type}) - Unsuported type`);
@@ -165,7 +165,7 @@ class Properties {
         }
     }
 
-    #setterDictionary(key,newDictionary){
+    #setterDictionary(key, newDictionary) {
         const dict = this[key];
         const keys = Object.keys(newDictionary);
         const subtype = this.rules[key]?.subtype;
@@ -174,22 +174,22 @@ class Properties {
             const newValue = newDictionary[key];
             if (newValue == null) continue;
             // If subtype is defined but value is not correct, skip it
-            if (PropertiesUtils.VALID_TYPES.includes(subtype) && !PropertiesUtils.validateType(subtype,newValue)) continue;
+            if (PropertiesUtils.VALID_TYPES.includes(subtype) && !PropertiesUtils.validateType(subtype, newValue)) continue;
             dict[key] = newValue;
         }
     }
 
-    #setterArray(key,newArray){
+    #setterArray(key, newArray) {
         const subtype = this.rules[key]?.subtype;
-        if (subtype != null){
+        if (subtype != null) {
             if (!PropertiesUtils.VALID_TYPES.includes(subtype)) return true;
             const isValid = PropertiesUtils.validateArraySubType(subtype, newArray);
             if (!isValid) return true;
         }
 
-        this.initializeProperty(key,newArray);
+        this.initializeProperty(key, newArray);
         return true;
     }
 }
 
-module.exports = Properties;
+export default Properties;

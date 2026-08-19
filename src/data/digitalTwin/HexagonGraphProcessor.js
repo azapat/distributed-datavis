@@ -1,4 +1,4 @@
-const GraphProcessor = require("./GraphProcessor");
+import GraphProcessor from "./GraphProcessor";
 
 class HexagonGraphProcessor extends GraphProcessor{
     constructor(){
@@ -59,4 +59,4 @@ class HexagonGraphProcessor extends GraphProcessor{
     }
 }
 
-module.exports = HexagonGraphProcessor;
+export default HexagonGraphProcessor;

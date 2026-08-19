@@ -1,5 +1,5 @@
-const { TooltipVisualizer } = require("../../tooltip/TooltipVisualizer");
-const { getNodeIdFromEvent } = require("./utils");
+import { TooltipVisualizer  } from "../../tooltip/TooltipVisualizer";
+import { getNodeIdFromEvent  } from "./utils";
 
 function showValuesOnClick(event,plot){
     if (plot.graphToMap == null) return;
@@ -19,6 +19,6 @@ function showValuesOnClick(event,plot){
     TooltipVisualizer._showTooltipChart(plot);
 }
 
-module.exports = {
+export {
     showValuesOnClick,
 }

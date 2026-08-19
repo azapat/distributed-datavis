@@ -9,4 +9,5 @@ const FormatUtils = {
     detectFormat,
 };
 
-module.exports = FormatUtils;
+export { detectFormat };
+export default FormatUtils;

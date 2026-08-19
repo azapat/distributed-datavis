@@ -13,7 +13,7 @@ function formatField(label){
     return label;
 }
 
-module.exports = {
+export {
     getNodeIdFromEvent,
     formatField,
 }

@@ -48,4 +48,4 @@ const save = {
     exportSvg,
 }
 
-module.exports = save;
+export default save;

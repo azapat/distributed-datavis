@@ -1,4 +1,4 @@
-const PropertiesUtils = require("../properties/utils");
+import PropertiesUtils from "../properties/utils";
 
 function process(data, provider){
     var courses = null;
@@ -108,4 +108,4 @@ const courses = {
     normalize,
 }
 
-module.exports = courses;
+export default courses;

@@ -1,4 +1,4 @@
-const ObjectWithProperties = require("../properties/ObjectWithProperties");
+import ObjectWithProperties from "../properties/ObjectWithProperties";
 
 class Component extends ObjectWithProperties {
     static defaultProperties = {
@@ -123,4 +123,4 @@ class Component extends ObjectWithProperties {
     }
 }
 
-module.exports = Component;
+export default Component;

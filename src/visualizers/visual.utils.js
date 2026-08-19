@@ -161,4 +161,4 @@ const VisualUtils = {
     scaleBrightness,
 }
 
-module.exports = VisualUtils;
+export default VisualUtils;

@@ -1,6 +1,6 @@
-const ObjectWithProperties = require("./ObjectWithProperties");
-const Properties = require("./Properties");
-const PropertiesUtils = require('./utils');
+import ObjectWithProperties from "./ObjectWithProperties";
+import Properties from "./Properties";
+import PropertiesUtils from './utils';
 
 const properties = {
     ObjectWithProperties,
@@ -8,4 +8,4 @@ const properties = {
     utils : PropertiesUtils,
 }
 
-module.exports = properties;
+export default properties;

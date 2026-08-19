@@ -1,4 +1,4 @@
-const Component = require("../Component");
+import Component from "../Component";
 
 class ListVisualizer extends Component{
     static defaultProperties = {};
@@ -19,6 +19,6 @@ class ListVisualizer extends Component{
     }
 }
 
-module.exports = {
+export {
     ListVisualizer
 }

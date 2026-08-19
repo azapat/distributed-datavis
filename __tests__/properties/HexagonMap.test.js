@@ -1,13 +1,13 @@
-const d3 = require('d3');
-const d3hexbin = require('d3-hexbin').hexbin;
-d3.hexbin = d3hexbin;
+import * as d3Core from 'd3';
+import { hexbin as d3hexbin } from 'd3-hexbin';
+
+const d3 = { ...d3Core, hexbin: d3hexbin };
 global.d3 = d3;
-global.d3.hexbin = d3hexbin;
-const ddv = require('../../dist/ptx-ddv');
+
+import * as ddv from '../../src/index.js';
 
 // Jest Dependencies - Configuration JSDOM
-const { TextEncoder, TextDecoder } = require('util');
-const { normalizeValue } = require('../../src/properties/utils');
+import { TextEncoder, TextDecoder } from 'util';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
@@ -15,9 +15,9 @@ function isDictionary(obj) {
     return typeof obj === 'object' && obj !== null && obj.constructor === Object;
 }
 
-function main(){
+function main() {
     const plotType = 'hexagon';
-    const json = {data:{nodes:[],edges:[]}};
+    const json = { data: { nodes: [], edges: [] } };
 
     const invalidProps = {
         fontSize: '20px',
@@ -27,7 +27,7 @@ function main(){
         height: '500px',
         backgroundColor: ['#F0F0F0'],
         margin: [1],
-        
+
         // SvgComponent
 
         // SvgVisualization
@@ -59,7 +59,7 @@ function main(){
 
     // Properties that are modified dinamically by other processes
     const exceptions = [
-        'defaultCamera','hasCustomColors',
+        'defaultCamera', 'hasCustomColors',
     ];
 
     const defaultProps = ddv.visualizers.wordmap.HexagonMap.getDefaultProperties();
@@ -76,10 +76,10 @@ function main(){
         const defaultValue = defaultProps[propName];
         const currentValue = currentProps[propName];
 
-        if (Array.isArray(defaultValue) || isDictionary(defaultValue)){
-            test(`Property ${propName} must have default value`, ()=>{expect(currentValue).toEqual(defaultValue)});
+        if (Array.isArray(defaultValue) || isDictionary(defaultValue)) {
+            test(`Property ${propName} must have default value`, () => { expect(currentValue).toEqual(defaultValue) });
         } else {
-            test(`Property ${propName} must have default value`, ()=>{expect(currentValue).toBe(defaultValue)});
+            test(`Property ${propName} must have default value`, () => { expect(currentValue).toBe(defaultValue) });
         }
     }
 
@@ -90,7 +90,7 @@ function main(){
         width: 1111,
         height: 1112,
         backgroundColor: '#FAF0FA',
-        
+
         // SvgComponent
 
         // SvgVisualization
@@ -130,14 +130,14 @@ function main(){
         const expectedValue = correctProps[propName];
         const currentValue = currentProps[propName];
 
-        if (Array.isArray(expectedValue) || isDictionary(expectedValue)){
-            test(`Property ${propName} must have modified value`, ()=>{expect(currentValue).toEqual(expectedValue)});
+        if (Array.isArray(expectedValue) || isDictionary(expectedValue)) {
+            test(`Property ${propName} must have modified value`, () => { expect(currentValue).toEqual(expectedValue) });
         } else {
-            test(`Property ${propName} must have modified value`, ()=>{expect(currentValue).toBe(expectedValue)});
+            test(`Property ${propName} must have modified value`, () => { expect(currentValue).toBe(expectedValue) });
         }
     }
 }
 
-describe('HexagonMap Properties Tests', ()=>{
+describe('HexagonMap Properties Tests', () => {
     main();
 });

@@ -1,4 +1,4 @@
-const { ListVisualizer } = require("./ListVisualizer");
+import { ListVisualizer  } from "./ListVisualizer";
 
 import './JobVisualizer.css';
 import './ListVisualizer.css';

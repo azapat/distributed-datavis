@@ -1,4 +1,4 @@
-const { ListVisualizer } = require("./ListVisualizer");
+import { ListVisualizer  } from "./ListVisualizer";
 
 import './CourseVisualizer.css';
 import './ListVisualizer.css';
@@ -7,7 +7,6 @@ import * as bootstrap from 'bootstrap';
 import SkillsUtils from '../../data/skills.utils';
 import courses from '../../data/Courses';
 import PropertiesUtils from '../../properties/utils';
-//import * as d3 from 'd3';
 
 export class CourseVisualizer extends ListVisualizer {
     static defaultProperties = {

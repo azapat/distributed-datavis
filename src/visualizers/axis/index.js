@@ -1,9 +1,10 @@
-const AxisVisualization = require("./AxisVisualization");
-const LineChart = require("./LineChart");
+import AxisVisualization from "./AxisVisualization";
+import LineChart from "./LineChart";
 
 const axis = {
     AxisVisualization,
     LineChart,
 }
 
-module.exports = axis;
+export { AxisVisualization, LineChart };
+export default axis;

@@ -1,8 +1,9 @@
-const { initializeButtons } = require("./interaction");
-const HexagonUtils = require("./hexagon.utils");
-const WordMap = require("./WordMap");
-const VisualUtils = require('../visual.utils');
-const logo = require("../logo");
+import interaction from "./interaction/index.js";
+const { initializeButtons } = interaction;
+import HexagonUtils from "./hexagon.utils";
+import WordMap from "./WordMap";
+import VisualUtils from '../visual.utils';
+import logo from "../logo";
 
 class HexagonMap extends WordMap {
     static defaultProperties = {
@@ -301,4 +302,4 @@ class HexagonMap extends WordMap {
     }
 }
 
-module.exports = HexagonMap;
+export default HexagonMap;

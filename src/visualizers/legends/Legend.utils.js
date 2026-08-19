@@ -1,4 +1,5 @@
-const { validateType, normalizePropertyValue } = require("../../properties/utils");
+import PropertiesUtils from "../../properties/utils.js";
+const { validateType, normalizePropertyValue } = PropertiesUtils;
 
 function getSelectedGroups(plot) {
     const { legendContainer } = plot.components;
@@ -244,4 +245,5 @@ const LegendUtils = {
     getGroups,
 }
 
-module.exports = LegendUtils;
+export { getSelectedGroups, preprocessLegend, getGroups };
+export default LegendUtils;

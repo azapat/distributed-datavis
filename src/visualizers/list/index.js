@@ -1,6 +1,6 @@
-const { CourseVisualizer } = require("./CourseVisualizer");
-const { JobVisualizer } = require("./JobVisualizer");
-const { ListVisualizer } = require("./ListVisualizer");
+import { CourseVisualizer  } from "./CourseVisualizer";
+import { JobVisualizer  } from "./JobVisualizer";
+import { ListVisualizer  } from "./ListVisualizer";
 
 const list = {
     CourseVisualizer,
@@ -8,4 +8,5 @@ const list = {
     ListVisualizer,
 }
 
-module.exports = list;
+export { CourseVisualizer, JobVisualizer, ListVisualizer };
+export default list;

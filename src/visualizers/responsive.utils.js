@@ -58,4 +58,4 @@ const ResponsiveUtils = {
     enableResponsivenessToSeries,
 }
 
-module.exports = ResponsiveUtils;
+export default ResponsiveUtils;

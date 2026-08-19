@@ -45,4 +45,5 @@ const WordMapUtils = {
     centerMap,
 }
 
-module.exports = WordMapUtils;
+export { centerMap };
+export default WordMapUtils;

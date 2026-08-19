@@ -60,4 +60,4 @@ const jobs = {
     normalize,
 }
 
-module.exports = jobs;
+export default jobs;

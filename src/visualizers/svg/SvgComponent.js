@@ -1,4 +1,4 @@
-const Component = require("../Component");
+import Component from "../Component";
 
 class SvgComponent extends Component {
     static defaultProperties = {
@@ -70,4 +70,4 @@ class SvgComponent extends Component {
     }
 }
 
-module.exports = SvgComponent;
+export default SvgComponent;

@@ -1,4 +1,4 @@
-const SvgButton = require("./SvgButton");
+import SvgButton from "./SvgButton";
 
 function addButton(plot, buttonInfo, onClick) {
     if (buttonInfo == null) var buttonInfo = {};
@@ -86,4 +86,4 @@ const ButtonsUtils = {
     removeButton,
 }
 
-module.exports = ButtonsUtils;
+export default ButtonsUtils;

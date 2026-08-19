@@ -1,7 +1,7 @@
-const LegendUtils = require("../legends/Legend.utils");
-const legendUtils = require("../legends/Legend.utils");
-const logo = require("../logo");
-const SvgComponent = require("./SvgComponent");
+import LegendUtils from "../legends/Legend.utils";
+import legendUtils from "../legends/Legend.utils";
+import logo from "../logo";
+import SvgComponent from "./SvgComponent";
 
 class SvgVisualization extends SvgComponent {
     static defaultProperties = {
@@ -261,4 +261,4 @@ class SvgVisualization extends SvgComponent {
     }
 }
 
-module.exports = SvgVisualization;
+export default SvgVisualization;

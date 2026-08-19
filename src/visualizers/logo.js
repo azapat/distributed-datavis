@@ -78,4 +78,4 @@ const logo = {
     refreshLogo,
 }
 
-module.exports = logo;
+export default logo;

@@ -1,11 +1,11 @@
-const { getNodeIdFromEvent } = require("./utils");
+import { getNodeIdFromEvent  } from "./utils";
 
 const highlightOnClick = function(event,plot){
     var nodeId = getNodeIdFromEvent(event);
     plot._highlightNode(nodeId);
 }
 
-module.exports = {
+export {
     highlightOnClick,
 }
 

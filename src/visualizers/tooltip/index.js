@@ -1,7 +1,8 @@
-const { TooltipVisualizer } = require("./TooltipVisualizer");
+import { TooltipVisualizer  } from "./TooltipVisualizer";
 
 const tooltip = {
     TooltipVisualizer,
 }
 
-module.exports = tooltip;
+export { TooltipVisualizer };
+export default tooltip;

@@ -1,5 +1,5 @@
-const SvgVisualization = require("../svg/SvgVisualization");
-const VisualUtils = require("../visual.utils");
+import SvgVisualization from "../svg/SvgVisualization";
+import VisualUtils from "../visual.utils";
 
 class AxisVisualization extends SvgVisualization {
 
@@ -75,4 +75,4 @@ class AxisVisualization extends SvgVisualization {
     }
 }
 
-module.exports = AxisVisualization;
+export default AxisVisualization;

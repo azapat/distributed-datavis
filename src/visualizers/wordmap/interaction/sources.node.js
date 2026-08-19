@@ -1,4 +1,4 @@
-const { getNodeIdFromEvent } = require("./utils");
+import { getNodeIdFromEvent  } from "./utils";
 
 function sourceOnClick(event,plot){
     var nodeId = getNodeIdFromEvent(event);
@@ -71,6 +71,6 @@ function showSourceData(plot, nodeId, page){
     plot.tooltip.show();
 }
 
-module.exports = {
+export {
     sourceOnClick,
 }

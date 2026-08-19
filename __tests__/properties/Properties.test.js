@@ -1,9 +1,9 @@
-const Properties = require("../../src/properties/Properties")
+import Properties from "../../src/properties/Properties.js"
 
 const rules = {
-    age: {type:'number'},
-    color: {type:'string'},
-    happy: {type:'boolean'},
+    age: { type: 'number' },
+    color: { type: 'string' },
+    happy: { type: 'boolean' },
 }
 
 const props = new Properties(rules)
@@ -19,6 +19,6 @@ props.setProperties({
     color: 0,
 });
 
-test('Override Property',()=>expect(props.age).toBe(15));
-test("Don't override if value is incorrect",()=>expect(props.happy).toBe(true));
-test("Don't set if value is incorrect",()=>expect(props.color).toBe(undefined));
+test('Override Property', () => expect(props.age).toBe(15));
+test("Don't override if value is incorrect", () => expect(props.happy).toBe(true));
+test("Don't set if value is incorrect", () => expect(props.color).toBe(undefined));

@@ -1,7 +1,7 @@
-import data from "./data";
-import * as visualizers from "./visualizers";
-import properties from "./properties";
-import utils from "./utils";
+import data from "./data/index.js";
+import visualizers from "./visualizers/index.js";
+import properties from "./properties/index.js";
+import utils from "./utils/index.js";
 
 // External libraries
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';

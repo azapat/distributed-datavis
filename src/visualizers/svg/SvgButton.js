@@ -1,4 +1,4 @@
-const SvgComponent = require("./SvgComponent");
+import SvgComponent from "./SvgComponent";
 
 class SvgButton extends SvgComponent {
     static defaultProperties = {
@@ -33,4 +33,4 @@ class SvgButton extends SvgComponent {
     }
 }
 
-module.exports = SvgButton;
+export default SvgButton;

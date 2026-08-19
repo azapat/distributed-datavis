@@ -1,9 +1,9 @@
-const courses = require("../data/Courses");
-const { detectFormat } = require("../data/format.utils");
-const jobs = require("../data/Jobs");
-const { CourseVisualizer } = require("./list/CourseVisualizer");
-const { JobVisualizer } = require("./list/JobVisualizer");
-const { buildWordMap } = require("./wordmap/builder");
+import courses from "../data/Courses";
+import { detectFormat  } from "../data/format.utils";
+import jobs from "../data/Jobs";
+import { CourseVisualizer  } from "./list/CourseVisualizer";
+import { JobVisualizer  } from "./list/JobVisualizer";
+import { buildWordMap  } from "./wordmap/builder";
 
 function normalizeType(type){
     if (typeof(type) !== 'string') return type;
@@ -146,4 +146,4 @@ const builder = {
     buildRules,
 }
 
-module.exports = builder;
+export default builder;
