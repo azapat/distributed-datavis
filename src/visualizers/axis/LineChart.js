@@ -1,4 +1,4 @@
-const AxisVisualization = require("./AxisVisualization");
+import AxisVisualization from "./AxisVisualization";
 
 class LineChart extends AxisVisualization{
     static defaultProperties = {
@@ -166,4 +166,4 @@ class LineChart extends AxisVisualization{
     }
 }
 
-module.exports = LineChart;
+export default LineChart;

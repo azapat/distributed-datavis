@@ -2,7 +2,7 @@ const VALID_TYPES = [
     'dictionary', 'string', 'number', 'array', 'boolean',
 ]
 
-function mergeProperties(properties, newValues){
+function mergeProperties(properties, newValues) {
     Object.assign(properties, newValues);
 }
 
@@ -12,7 +12,7 @@ function mergeProperties(properties, newValues){
  * @param {*} keys 
  * @returns 
  */
-function removeDictionaryKeys(dict, keys){
+function removeDictionaryKeys(dict, keys) {
     if (!Array.isArray(keys)) return;
 
     for (let i = 0; i < keys.length; i++) {
@@ -21,13 +21,13 @@ function removeDictionaryKeys(dict, keys){
     }
 }
 
-function cleanDictionary(dict){
+function cleanDictionary(dict) {
     return Object.fromEntries(
         Object.entries(dict).filter(([_, v]) => v != null)
     );
 }
 
-function mergeDictionaries(dict1, dict2){
+function mergeDictionaries(dict1, dict2) {
     const merge = {};
     dict1 = cleanDictionary(dict1);
     dict2 = cleanDictionary(dict2);
@@ -36,7 +36,7 @@ function mergeDictionaries(dict1, dict2){
     return merge;
 }
 
-function dictionaryChanged(obj1, obj2){
+function dictionaryChanged(obj1, obj2) {
     const keys1 = Object.keys(obj1);
     const keys2 = Object.keys(obj2);
     var keys = new Set([...keys1, ...keys2]);
@@ -51,7 +51,7 @@ function dictionaryChanged(obj1, obj2){
     return false;
 }
 
-function validateType(type, value){
+function validateType(type, value) {
     if (!VALID_TYPES.includes(type)) return true;
     switch (type) {
         case 'dictionary':
@@ -63,26 +63,26 @@ function validateType(type, value){
         case 'boolean':
         case 'number':
         case 'string':
-            return (typeof(value) == type)
+            return (typeof (value) == type)
         default:
             return true;
     }
 }
 
-function validateArraySubType(subtype, array){
+function validateArraySubType(subtype, array) {
     for (let i = 0; i < array.length; i++) {
         var newValue = array[i];
-        newValue = normalizePropertyValue(subtype,newValue);
+        newValue = normalizePropertyValue(subtype, newValue);
         if (newValue == null) return false;
-        if (!PropertiesUtils.validateType(subtype,newValue)) return false;
+        if (!PropertiesUtils.validateType(subtype, newValue)) return false;
         array[i] = newValue;
     }
     return true;
 }
 
-function normalizeValue(type, value){
-    const isString = typeof(value) === 'string';
-    const isBoolean = typeof(value) === 'boolean';
+function normalizeValue(type, value) {
+    const isString = typeof (value) === 'string';
+    const isBoolean = typeof (value) === 'boolean';
 
     switch (type) {
         case 'number':
@@ -95,7 +95,7 @@ function normalizeValue(type, value){
             return String(value);
         case 'boolean':
             if (isBoolean) return value;
-            if (isString){
+            if (isString) {
                 value = value.toLowerCase();
                 if (value === 'true') return true;
                 if (value === 'false') return false;
@@ -109,9 +109,9 @@ function normalizeValue(type, value){
     }
 }
 
-function normalizeProperties(props){
+function normalizeProperties(props) {
     if (props == null) return null;
-    
+
     const keys = Object.keys(props);
 
     for (let i = 0; i < keys.length; i++) {
@@ -127,13 +127,13 @@ function normalizeProperties(props){
     return props;
 }
 
-function propertyNameToTitle(name){
+function propertyNameToTitle(name) {
     return name.replace(/([A-Z])/g, ' $1')
         .replace(/^./, str => str.toUpperCase()).trim();
 }
 
-function normalizePropertyName(name){
-    if (typeof(name) !== "string") return name;
+function normalizePropertyName(name) {
+    if (typeof (name) !== "string") return name;
     return toCamelCase(name);
 }
 
@@ -141,8 +141,8 @@ function toCamelCase(str) {
     return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
 }
 
-function normalizePropertyValue(type,value){
-    const isValid = validateType(type,value);
+function normalizePropertyValue(type, value) {
+    const isValid = validateType(type, value);
     if (isValid) return value;
 
     switch (type) {
@@ -161,11 +161,11 @@ function normalizePropertyValue(type,value){
     }
 }
 
-function normalizeToArray(value){
+function normalizeToArray(value) {
     const defaultValue = [];
-    if (Array.isArray(value)){
+    if (Array.isArray(value)) {
         return value;
-    } else if (typeof(value) == "string") {
+    } else if (typeof (value) == "string") {
         if (value.trim().length == 0) return defaultValue;
         var values = value.split(',');
         values = values.map(str => str.trim());
@@ -190,4 +190,4 @@ const PropertiesUtils = {
     normalizePropertyValue,
 }
 
-module.exports = PropertiesUtils;
+export default PropertiesUtils;

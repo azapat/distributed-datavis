@@ -1,9 +1,9 @@
-const HexagonMap = require("./HexagonMap");
-const WordMap = require("./WordMap");
+import HexagonMap from "./HexagonMap";
+import WordMap from "./WordMap";
 
-const { buildWordMap } = require("./builder");
-const interaction = require("./interaction");
-const { centerMap } = require("./utils");
+import { buildWordMap  } from "./builder";
+import interaction from "./interaction";
+import { centerMap  } from "./utils";
 
 const wordmap = {
     WordMap,
@@ -14,4 +14,5 @@ const wordmap = {
     interaction,
 }
 
-module.exports = wordmap;
+export { WordMap, HexagonMap, buildWordMap, centerMap, interaction };
+export default wordmap;

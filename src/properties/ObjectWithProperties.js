@@ -1,5 +1,6 @@
-const Properties = require('./Properties');
-const { mergeDictionaries, removeDictionaryKeys, cleanDictionary } = require('./utils');
+import Properties from './Properties';
+import PropertiesUtils from './utils.js';
+const { mergeDictionaries, removeDictionaryKeys, cleanDictionary  } = PropertiesUtils;
 
 class ObjectWithProperties {
     #properties = null;
@@ -97,4 +98,4 @@ class ObjectWithProperties {
     }
 }
 
-module.exports = ObjectWithProperties;
+export default ObjectWithProperties;

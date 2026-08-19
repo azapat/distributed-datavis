@@ -1,4 +1,4 @@
-const Tooltip = require("./Tooltip");
+import Tooltip from "./Tooltip";
 
 function enableTooltip(plot, enable) {
     enable = enable === true;
@@ -49,4 +49,4 @@ const TooltipUtils = {
     createTooltip,
 }
 
-module.exports = TooltipUtils;
+export default TooltipUtils;

@@ -1,4 +1,4 @@
-const GraphToMap = require("./GraphToMap");
+import GraphToMap from "./GraphToMap";
 
 /**
  * WideGraphToMap is an implementation of GraphToMap. It has a different algorithm to place the nodes in the space.
@@ -204,4 +204,4 @@ class WideGraphToMap extends GraphToMap {
     }
 }
 
-module.exports = WideGraphToMap;
+export default WideGraphToMap;

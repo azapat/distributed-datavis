@@ -1,9 +1,10 @@
-const NavigationButtons = require("./NavigationButtons");
-const VisualizationSeries = require("./VisualizationSeries");
+import NavigationButtons from "./NavigationButtons";
+import VisualizationSeries from "./VisualizationSeries";
 
 const groups = {
     VisualizationSeries,
     NavigationButtons,
 }
 
-module.exports = groups;
+export { VisualizationSeries, NavigationButtons };
+export default groups;

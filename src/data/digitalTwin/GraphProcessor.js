@@ -39,4 +39,4 @@ class GraphProcessor{
     }
 }
 
-module.exports = GraphProcessor;
+export default GraphProcessor;

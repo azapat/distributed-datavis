@@ -1,7 +1,7 @@
-const LegendUtils = require("./Legend.utils");
+import LegendUtils from "./Legend.utils";
 
 const legends = {
     utils: LegendUtils,    
 }
 
-module.exports = legends;
+export default legends;

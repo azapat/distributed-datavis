@@ -1,7 +1,8 @@
-const ObjectWithProperties = require("../../properties/ObjectWithProperties");
-const { getCenterNode } = require("./DigitalTwinProcessing");
-const HexagonGraphProcessor = require("./HexagonGraphProcessor");
-const SquareGraphProcessor = require("./SquareGraphProcessor");
+import ObjectWithProperties from "../../properties/ObjectWithProperties";
+import DigitalTwinProcessing from "./DigitalTwinProcessing.js";
+const { getCenterNode } = DigitalTwinProcessing;
+import HexagonGraphProcessor from "./HexagonGraphProcessor";
+import SquareGraphProcessor from "./SquareGraphProcessor";
 
 class GraphToMap extends ObjectWithProperties {
     static defaultProperties = {
@@ -375,4 +376,4 @@ class GraphToMap extends ObjectWithProperties {
     }
 }
 
-module.exports = GraphToMap;
+export default GraphToMap;

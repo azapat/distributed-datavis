@@ -109,4 +109,4 @@ const shrink =  {
     findOptimalFilters,
 }
 
-module.exports = shrink;
+export default shrink;

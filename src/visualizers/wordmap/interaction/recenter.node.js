@@ -1,4 +1,4 @@
-const { getNodeIdFromEvent } = require("./utils");
+import { getNodeIdFromEvent  } from "./utils";
 
 function recenterOnClick(event,plot){
     const { nameField } = plot.getProperties();
@@ -13,6 +13,6 @@ function recenterOnClick(event,plot){
     plot.centerCamera(nodeLabel, zoom);
 }
 
-module.exports = {
+export {
     recenterOnClick,
 }

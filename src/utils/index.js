@@ -1,7 +1,7 @@
-const UrlUtils = require("./Url.utils");
+import UrlUtils from "./Url.utils";
 
 const utils = {
     url: UrlUtils,
 }
 
-module.exports = utils;
+export default utils;

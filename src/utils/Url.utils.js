@@ -52,4 +52,4 @@ const UrlUtils = {
     getParamsFromUrl,
 };
 
-module.exports = UrlUtils;
+export default UrlUtils;

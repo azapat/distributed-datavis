@@ -1,4 +1,4 @@
-const { formatField, getNodeIdFromEvent } = require("./utils");
+import { formatField, getNodeIdFromEvent  } from "./utils";
 
 const showNodeDetails = function(event,plot){
     var nodeId = getNodeIdFromEvent(event);
@@ -45,6 +45,6 @@ function _showNodeDetails(plot, nodeId){
     plot.tooltip.show();
 }
 
-module.exports = {
+export {
     showNodeDetails,
 }

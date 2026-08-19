@@ -1,12 +1,13 @@
-const DigitalTwin = require("../../data/digitalTwin/DigitalTwin");
-const GraphToMap = require("../../data/digitalTwin/GraphToMap");
-const WideGraphToMap = require("../../data/digitalTwin/WideGraphToMap");
-const HexagonMap = require("./HexagonMap");
-const DigitalTwinProcessing = require("../../data/digitalTwin/DigitalTwinProcessing");
-const { HexagonMapWithTimeSeries } = require("./HexagonMapWithTimeSeries");
-const colors = require("../../data/digitalTwin/colors");
-const { normalizeValue } = require("../../properties/utils");
-const { preprocessLegend } = require("../legends/Legend.utils");
+import DigitalTwin from "../../data/digitalTwin/DigitalTwin";
+import GraphToMap from "../../data/digitalTwin/GraphToMap";
+import WideGraphToMap from "../../data/digitalTwin/WideGraphToMap";
+import HexagonMap from "./HexagonMap";
+import DigitalTwinProcessing from "../../data/digitalTwin/DigitalTwinProcessing";
+import { HexagonMapWithTimeSeries  } from "./HexagonMapWithTimeSeries";
+import colors from "../../data/digitalTwin/colors";
+import PropertiesUtils from "../../properties/utils.js";
+const { normalizeValue } = PropertiesUtils;
+import { preprocessLegend  } from "../legends/Legend.utils";
 
 function buildWordMap(json, plotType = 'hexagon', props = {}) {
     var plotType = plotType.toLowerCase();
@@ -95,6 +96,6 @@ function postProcessProperties(plot, props){
 }
 
 
-module.exports = {
+export {
     buildWordMap
 };

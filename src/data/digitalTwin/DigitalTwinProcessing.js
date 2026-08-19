@@ -290,4 +290,4 @@ const DigitalTwinProcessing = {
     normalizeNodeInfo,
 }
 
-module.exports = DigitalTwinProcessing;
+export default DigitalTwinProcessing;

@@ -1,8 +1,8 @@
-const interaction = require("./interaction");
-const SvgVisualization = require("../svg/SvgVisualization");
-const VisualUtils = require("../visual.utils");
-const ButtonsUtils = require("../svg/buttons.utils");
-const { getGroups } = require("../legends/Legend.utils");
+import interaction from "./interaction";
+import SvgVisualization from "../svg/SvgVisualization";
+import VisualUtils from "../visual.utils";
+import ButtonsUtils from "../svg/buttons.utils";
+import { getGroups  } from "../legends/Legend.utils";
 
 /**
  * @abstract class
@@ -508,4 +508,4 @@ class WordMap extends SvgVisualization {
     }
 }
 
-module.exports = WordMap;
+export default WordMap;

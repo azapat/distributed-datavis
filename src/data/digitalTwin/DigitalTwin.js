@@ -1,8 +1,9 @@
-const ObjectWithProperties = require("../../properties/ObjectWithProperties");
-const SkillsUtils = require("../skills.utils");
-const { getDefaultColors } = require("./colors");
-const DigitalTwinProcessing = require("./DigitalTwinProcessing");
-const shrink = require("./shrink");
+import ObjectWithProperties from "../../properties/ObjectWithProperties";
+import SkillsUtils from "../skills.utils";
+import colors from "./colors.js";
+const { getDefaultColors } = colors;
+import DigitalTwinProcessing from "./DigitalTwinProcessing";
+import shrink from "./shrink";
 
 class DigitalTwin extends ObjectWithProperties {
 /**
@@ -557,4 +558,4 @@ getNodeInfoByLabel(label)
     }
 }
 
-module.exports = DigitalTwin;
+export default DigitalTwin;

@@ -66,4 +66,4 @@ const HexagonUtils = {
     getHexagonCenter,
 }
 
-module.exports = HexagonUtils;
+export default HexagonUtils;

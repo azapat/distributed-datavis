@@ -1,5 +1,5 @@
-const SvgVisualization = require("../svg/SvgVisualization");
-const VisualUtils = require("../visual.utils");
+import SvgVisualization from "../svg/SvgVisualization";
+import VisualUtils from "../visual.utils";
 
 class Tooltip extends SvgVisualization {
     constructor(props) {
@@ -229,4 +229,4 @@ class Tooltip extends SvgVisualization {
     }
 }
 
-module.exports = Tooltip;
+export default Tooltip;

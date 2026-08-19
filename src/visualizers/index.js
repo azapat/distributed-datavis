@@ -1,14 +1,14 @@
 // Packages
-const axis = require('./axis');
-const list = require('./list');
-const svg = require('./svg');
-const tooltip = require('./tooltip');
-const wordmap = require('./wordmap');
-const groups = require('./groups');
-const ResponsiveUtils = require('./responsive.utils');
-const VisualizationSeries = require('./groups/VisualizationSeries');
-const builder = require('./builder');
-const legends = require('./legends');
+import axis from './axis';
+import list from './list';
+import svg from './svg';
+import tooltip from './tooltip';
+import wordmap from './wordmap';
+import groups from './groups';
+import ResponsiveUtils from './responsive.utils';
+import VisualizationSeries from './groups/VisualizationSeries';
+import builder from './builder';
+import legends from './legends';
 
 const visualizers = {
     axis,
@@ -23,4 +23,4 @@ const visualizers = {
     legends,
 }
 
-module.exports = visualizers;
+export default visualizers;

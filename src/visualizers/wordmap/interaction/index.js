@@ -1,13 +1,13 @@
-const save = require("../../../save");
-const LegendUtils = require("../../legends/Legend.utils");
-const TooltipUtils = require("../../tooltip/Tooltip.utils");
-const { showNodeDetails } = require("./details.node");
-const { highlightOnClick } = require("./highlight.neighborhood");
-const { recenterOnClick } = require("./recenter.node");
-const { showNodeRelations } = require("./relations.node");
-const { removeOnClick } = require("./remove.node");
-const { sourceOnClick } = require("./sources.node");
-const { showValuesOnClick } = require("./values.node");
+import save from "../../../save";
+import LegendUtils from "../../legends/Legend.utils";
+import TooltipUtils from "../../tooltip/Tooltip.utils";
+import { showNodeDetails  } from "./details.node";
+import { highlightOnClick  } from "./highlight.neighborhood";
+import { recenterOnClick  } from "./recenter.node";
+import { showNodeRelations  } from "./relations.node";
+import { removeOnClick  } from "./remove.node";
+import { sourceOnClick  } from "./sources.node";
+import { showValuesOnClick  } from "./values.node";
 
 const MAIN_MENU_BUTTONS = [
     'showDownloadMenuButton','searchButton',
@@ -526,4 +526,4 @@ const interaction = {
     _highlightActionButton,
 }
 
-module.exports = interaction;
+export default interaction;

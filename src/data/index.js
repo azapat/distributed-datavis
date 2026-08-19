@@ -1,15 +1,15 @@
-import courses from "./Courses";
-import digitalTwin from "./digitalTwin";
-import FormatUtils from "./format.utils";
-import jobs from "./Jobs";
-import SkillsUtils from "./skills.utils";
+import * as courses from "./Courses.js";
+import * as digitalTwin from "./digitalTwin/index.js";
+import * as FormatUtils from "./format.utils.js";
+import jobs from "./Jobs.js";
+import * as SkillsUtils from "./skills.utils.js";
 
 const data = {
     courses,
     jobs,
     digitalTwin,
-    utils: { 
-        skills : SkillsUtils,
+    utils: {
+        skills: SkillsUtils,
         format: FormatUtils,
     },
 }

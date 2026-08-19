@@ -1,4 +1,4 @@
-const { getNodeIdFromEvent, formatField } = require("./utils");
+import { getNodeIdFromEvent, formatField  } from "./utils";
 
 const showNodeRelations = function(event, plot){
     var nodeId = getNodeIdFromEvent(event);
@@ -74,6 +74,6 @@ function _showNodeRelationsAux(plot, nodeId, page){
     plot.tooltip.show();
 }
 
-module.exports = {
+export {
     showNodeRelations,
 }
