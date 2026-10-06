@@ -87,7 +87,7 @@ Example
  PASS  __tests__/visualizers/VisualizationSeries.test.js (6.763 s)
 
 Test Suites: 4 passed, 4 total
-Tests:       71 passed, 71 total
+Tests:       74 passed, 74 total
 Snapshots:   0 total
 Time:        7.806 s
 Ran all test suites.

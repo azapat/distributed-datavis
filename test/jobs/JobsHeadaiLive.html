@@ -1,0 +1,54 @@
+
+<script src="http://localhost:8080/ptx-ddv.js"></script>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src='https://d3js.org/d3-hexbin.v0.2.min.js'></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<div id="jobs"></div>
+
+<script>
+
+const response = {
+  "matches": [
+    {
+      "id": 58812,
+      "score": 0.88,
+      "found": ["javascript", "react", "node.js"],
+      "missing": [],
+      "text_snippet": "Full-stack developer, React and Node.js."
+    },
+    {
+      "id": 58934,
+      "score": 0.63,
+      "found": ["javascript", "react"],
+      "missing": ["node.js"],
+      "text_snippet": "React developer for e-commerce UI."
+    },
+    {
+      "id": 59007,
+      "score": 0.37,
+      "found": ["javascript"],
+      "missing": ["react", "node.js"],
+      "text_snippet": "Junior web developer, JavaScript and CSS."
+    }
+  ],
+  "target_keywords": ["javascript", "react", "node.js"],
+  "metadata": {
+    "n_candidates": 1200,
+    "target_text_length": 95
+  }
+};
+
+const provider = 'headai_live';
+const data = ddv.data.jobs.process(response, provider);
+const visualization = new ddv.visualizers.list.JobVisualizer();
+visualization.draw(data);
+visualization.attachOn('div#jobs');
+ddv.visualizers.responsive.enableResponsiveness(visualization);
+</script>
