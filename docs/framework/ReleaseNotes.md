@@ -2,6 +2,13 @@
 
 # Release Notes
 
+v0.5.1
+* Updated dependencies to fix reported vulnerabilities.
+* Minor improvements in automated tests and in containerization.
+* Added new provider and normalization function in courses.
+* Re-structured job and course data processing per provider to ensure better maintainability and extensibility.
+* Added test files for new provider.
+
 v0.5.0
 * Migration to D3 v7. This is a breaking change, as some of the APIs have changed.
 * Major breaking updates on dependencies to fix all the vulnerabilities reported by npm audit.

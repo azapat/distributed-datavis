@@ -1,0 +1,72 @@
+<script src="http://localhost:8080/ptx-ddv.js"></script>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src='https://d3js.org/d3-hexbin.v0.2.min.js'></script>
+
+<!-- Encoding configurations -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+
+<!-- Div that will contain the recommendations -->
+<div id="ddv"></div>
+
+<script>
+
+// Sample of a real Headai response
+const headaiResponse = {
+  "matches": [
+    {
+      "id": 1021,
+      "score": 0.91,
+      "found": ["python", "sql", "machine learning"],
+      "missing": [],
+      "text_snippet": "Intro to data science with Python and SQL."
+    },
+    {
+      "id": 1047,
+      "score": 0.68,
+      "found": ["python", "machine learning"],
+      "missing": ["sql"],
+      "text_snippet": "Applied machine learning in Python."
+    },
+    {
+      "id": 1103,
+      "score": 0.42,
+      "found": ["sql"],
+      "missing": ["python", "machine learning"],
+      "text_snippet": "Relational databases and SQL basics."
+    }
+  ],
+  "target_keywords": ["python", "sql", "machine learning"],
+  "metadata": {
+    "n_candidates": 250,
+    "target_text_length": 120
+  }
+};
+
+const rules = {
+    "visuals": [
+        {
+            "type": "Courses",
+            "data": headaiResponse,
+            "title": "Course Recommendations",
+            "buttonTitle": "Courses",
+            "provider": "headai_live" // Data Normalization
+        }
+    ],
+    "properties" : {
+        "showButtons": true, // Navigation button of each visual (in the bottom)
+        "showTitle": true, // Show the title of each visual (in the top)
+    }
+}
+
+
+visualization = new ddv.visualizers.VisualizationSeries(rules);
+visualization.attachOn('div#ddv');
+ddv.visualizers.responsive.enableResponsivenessToSeries(visualization);
+visualization.refresh();
+</script>

@@ -11,6 +11,7 @@ module.exports = {
   
   devServer: {
     allowedHosts: "all",
+    port: 8080,
     static: { 
       directory: path.resolve(__dirname, './test'), 
       publicPath: '/test'
@@ -39,8 +40,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'ptx-ddv.js',
-    library: "ddv",
-    libraryTarget: "umd",
+    library: { name: "ddv", type: "umd" },
     clean: true
   },
   

@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:25-alpine
 
 # Set working directory
 WORKDIR /app/
@@ -13,7 +13,8 @@ RUN npm install
 COPY src ./src
 COPY test ./test
 COPY __tests__ ./__tests__
-COPY webpack.config.js jest.config.js /app/
+COPY __mocks__ ./__mocks__
+COPY webpack.config.cjs jest.config.cjs /app/
 
 # Expose the port Webpack will serve on
 EXPOSE 8080

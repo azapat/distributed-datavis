@@ -7,7 +7,7 @@ import utils from "./utils/index.js";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
-const version = '0.4.1';
+const version = '0.5.1';
 
 export {
     version,
